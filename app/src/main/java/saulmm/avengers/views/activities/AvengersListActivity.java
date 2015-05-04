@@ -23,7 +23,8 @@ import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
 
 
-public class AvengersListActivity extends Activity implements AvengersView {
+public class AvengersListActivity extends Activity implements
+    AvengersView {
 
     @InjectView(R.id.activity_avengers_recycler) RecyclerView mAvengersRecycler;
     @Inject AvengersListPresenter avengersListPresenter;
@@ -65,7 +66,7 @@ public class AvengersListActivity extends Activity implements AvengersView {
     @Override
     public void showAvengersList(List<Character> avengers) {
 
-        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers, this);
+        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers, this, avengersListPresenter);
         mAvengersRecycler.setAdapter(avengersListAdapter);
     }
 }

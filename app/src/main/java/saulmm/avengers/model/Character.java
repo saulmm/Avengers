@@ -2,12 +2,15 @@ package saulmm.avengers.model;
 
 public class Character {
 
+    private String id;
     private String title;
     private int imageResource;
 
-    public Character(String title) {
+    public Character(String title, int thumb_resource, String id) {
 
         this.title = title;
+        this.imageResource = thumb_resource;
+        this.id = id;
     }
 
     public Character(String title, int imageResource) {
