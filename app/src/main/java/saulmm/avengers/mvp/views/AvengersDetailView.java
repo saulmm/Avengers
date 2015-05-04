@@ -5,4 +5,7 @@ public interface AvengersDetailView extends View {
     void startLoading ();
 
     void stopLoading ();
+
+    void showAvengerBio (String text);
+
 }
