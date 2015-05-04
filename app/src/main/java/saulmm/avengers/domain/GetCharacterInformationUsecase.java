@@ -2,12 +2,12 @@ package saulmm.avengers.domain;
 
 import javax.inject.Inject;
 
-public class GetCharacerInformationUsecase implements Usecase {
+public class GetCharacterInformationUsecase implements Usecase {
 
     private String mCharacterId;
 
     @Inject
-    public GetCharacerInformationUsecase(String characterId) {
+    public GetCharacterInformationUsecase(String characterId) {
 
         this.mCharacterId = characterId;
     }
