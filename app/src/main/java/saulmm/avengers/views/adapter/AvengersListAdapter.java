@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -63,10 +61,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
         public void bindAvenger(Character character) {
 
             avengerTitleTextView.setText(character.getTitle());
-
-            Glide.with(context)
-                .load(character.getThumbnail())
-                .into(avengerThumbImageView);
+            avengerThumbImageView.setImageResource(character.getImageResource());
         }
     }
 }
