@@ -9,7 +9,7 @@ import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.views.activities.AvengerDetailActivity;
 
 @ActivityScope @Component(dependencies = AppComponent.class, modules = {AvengerInformationModule.class, ActivityModule.class})
-public interface AvengerInformationComponent {
+public interface AvengerInformationComponent extends ActivityComponent {
 
     void inject (AvengerDetailActivity detailActivity);
 
