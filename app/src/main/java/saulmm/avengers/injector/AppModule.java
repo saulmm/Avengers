@@ -16,5 +16,5 @@ public class AppModule {
         this.mAvengersApplication = avengersApplication;
     }
 
-    @Provides @Singleton AvengersApplication provideAvengersApplication () { return mAvengersApplication; }
+    @Provides @Singleton AvengersApplication provideAvengersApplicationContext () { return mAvengersApplication; }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +13,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
+import saulmm.avengers.injector.AppModule;
+import saulmm.avengers.injector.components.DaggerAvengersComponent;
+import saulmm.avengers.injector.modules.ActivityModule;
+import saulmm.avengers.injector.modules.AvengersModule;
 import saulmm.avengers.model.Character;
 import saulmm.avengers.mvp.presenters.AvengersListPresenter;
 import saulmm.avengers.mvp.views.AvengersView;
@@ -34,13 +37,23 @@ public class AvengersListActivity extends Activity implements AvengersView {
 
         initializeRecyclerView();
         initializeDependencyInjector();
-        showAvengersList(createFakeCharacters());
+        initializePresenter();
+    }
+
+    private void initializePresenter() {
+
+        avengersListPresenter.attachView(this);
     }
 
     private void initializeDependencyInjector() {
 
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
-        avengersApplication.getAppComponent().inject(this);
+
+        DaggerAvengersComponent.builder()
+            .avengersModule(new AvengersModule())
+            .activityModule(new ActivityModule(this))
+            .appModule(new AppModule(avengersApplication))
+            .build().inject(this);
     }
 
     private void initializeRecyclerView() {
@@ -54,17 +67,5 @@ public class AvengersListActivity extends Activity implements AvengersView {
 
         AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers, this);
         mAvengersRecycler.setAdapter(avengersListAdapter);
-    }
-
-    // Temp
-    public ArrayList<Character> createFakeCharacters () {
-
-        ArrayList<Character> characters = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            characters.add(new Character());
-        }
-
-        return characters;
     }
 }

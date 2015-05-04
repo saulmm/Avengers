@@ -2,9 +2,7 @@ package saulmm.avengers;
 
 import android.app.Application;
 
-import saulmm.avengers.injector.AppComponent;
-import saulmm.avengers.injector.AppModule;
-import saulmm.avengers.injector.DaggerAppComponent;
+import saulmm.avengers.injector.components.AppComponent;
 
 public class AvengersApplication extends Application {
 
@@ -19,9 +17,9 @@ public class AvengersApplication extends Application {
 
     private void initializeInjector() {
 
-        mAppComponent = DaggerAppComponent.builder()
-            .appModule(new AppModule(this))
-            .build();
+//        mAppComponent = DaggerAppComponent.builder()
+//            .appModule(new AppModule(this))
+//            .build();
     }
 
     public AppComponent getAppComponent() {
