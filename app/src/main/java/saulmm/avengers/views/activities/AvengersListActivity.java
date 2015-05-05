@@ -26,6 +26,8 @@ import saulmm.avengers.views.adapter.AvengersListAdapter;
 public class AvengersListActivity extends Activity implements
     AvengersView {
 
+    public final static String EXTRA_CHARACTER_ID = "character_id";
+
     @InjectView(R.id.activity_avengers_recycler) RecyclerView mAvengersRecycler;
     @Inject AvengersListPresenter avengersListPresenter;
 
