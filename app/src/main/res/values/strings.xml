@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">Avengers</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet condimentum libero, sit amet tincidunt felis sollicitudin non. Suspendisse malesuada augue ut nibh pharetra finibus. Quisque ut metus id nulla tincidunt faucibus. Morbi eget nisi finibus, maximus est vel, malesuada lacus. Curabitur tincidunt, velit eget venenatis rhoncus, lectus sem commodo erat, et ultrices metus leo eget urna. Integer semper erat ac erat tempus, tincidunt posuere lacus placerat. Morbi lobortis odio tortor, eu euismod leo pretium et. Fusce tempor felis condimentum, elementum justo sed, commodo tellus. Vivamus et tellus tincidunt, placerat velit vitae, fringilla arcu. Nullam luctus varius iaculis.</string>
 </resources>

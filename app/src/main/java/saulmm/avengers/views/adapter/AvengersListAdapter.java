@@ -14,16 +14,20 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import saulmm.avengers.R;
 import saulmm.avengers.model.Character;
+import saulmm.avengers.views.RecyclerClickListener;
 
 public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapter.AvengerViewHolder> {
 
-    private List<Character> avengers;
+    private final RecyclerClickListener recyclerListener;
+    private final List<Character> avengers;
+
     private Context context;
 
-    public AvengersListAdapter(List<Character> avengers, Context context) {
+    public AvengersListAdapter(List<Character> avengers, Context context, RecyclerClickListener recyclerClickListener) {
 
         this.avengers = avengers;
         this.context = context;
+        this.recyclerListener = recyclerClickListener;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
         View rootView = LayoutInflater.from(context).inflate(
             R.layout.item_avenger, parent, false);
 
-        return new AvengerViewHolder(rootView);
+        return new AvengerViewHolder(rootView, recyclerListener);
     }
 
     @Override
@@ -52,16 +56,28 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
         @InjectView(R.id.item_avenger_title) TextView avengerTitleTextView;
         @InjectView(R.id.item_avenger_thumb) ImageView avengerThumbImageView;
 
-        public AvengerViewHolder(View itemView) {
+        public AvengerViewHolder(View itemView, final RecyclerClickListener recyclerClickListener) {
 
             super(itemView);
             ButterKnife.inject(this, itemView);
+            bindListener(itemView, recyclerClickListener);
         }
 
         public void bindAvenger(Character character) {
 
             avengerTitleTextView.setText(character.getTitle());
             avengerThumbImageView.setImageResource(character.getImageResource());
+        }
+
+        private void bindListener(View itemView, final RecyclerClickListener recyclerClickListener) {
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    recyclerClickListener.onElementClick(getPosition());
+                }
+            });
         }
     }
 }
