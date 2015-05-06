@@ -65,7 +65,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
 
         public void bindAvenger(Character character) {
 
-            avengerTitleTextView.setText(character.getTitle());
+            avengerTitleTextView.setText(character.getName());
             avengerThumbImageView.setImageResource(character.getImageResource());
         }
 

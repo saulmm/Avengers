@@ -29,7 +29,7 @@ public class AvengersListActivity extends Activity implements
     public final static String EXTRA_CHARACTER_ID = "character_id";
 
     @InjectView(R.id.activity_avengers_recycler) RecyclerView mAvengersRecycler;
-    @Inject AvengersListPresenter avengersListPresenter;
+    @Inject AvengersListPresenter mAvengersListPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +43,16 @@ public class AvengersListActivity extends Activity implements
         initializePresenter();
     }
 
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+        mAvengersListPresenter.onStart();
+    }
+
     private void initializePresenter() {
 
-        avengersListPresenter.attachView(this);
+        mAvengersListPresenter.attachView(this);
     }
 
     private void initializeDependencyInjector() {
@@ -68,7 +75,14 @@ public class AvengersListActivity extends Activity implements
     @Override
     public void showAvengersList(List<Character> avengers) {
 
-        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers, this, avengersListPresenter);
+        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers, this, mAvengersListPresenter);
         mAvengersRecycler.setAdapter(avengersListAdapter);
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+        mAvengersListPresenter.onStop();
     }
 }
