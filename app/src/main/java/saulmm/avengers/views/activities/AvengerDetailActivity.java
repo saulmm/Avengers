@@ -36,6 +36,13 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
         initializePresenter();
     }
 
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+        avengerDetailPresenter.onStart();
+    }
+
     private void initializePresenter() {
 
         avengerDetailPresenter.attachView(this);
@@ -72,5 +79,12 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     public void showAvengerBio(String text) {
 
         mBiographyTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+        avengerDetailPresenter.onStop();
     }
 }
