@@ -1,10 +1,12 @@
 package saulmm.avengers.injector.modules;
 
 
+import com.squareup.otto.Bus;
+
 import dagger.Module;
 import dagger.Provides;
-import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
+import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.injector.ActivityScope;
 
 @Module
@@ -18,9 +20,9 @@ public class AvengerInformationModule {
     }
 
     @Provides @ActivityScope
-    GetCharacterInformationUsecase provideGetCharacterInformationUsecase () {
+    GetCharacterInformationUsecase provideGetCharacterInformationUsecase (Bus bus) {
 
-        return new GetCharacterInformationUsecase(mCharacterId);
+        return new GetCharacterInformationUsecase(mCharacterId, bus);
     }
 
     @Provides @ActivityScope GetCharacterComicsUsecase provideGetCharacherComicsUsecase () {

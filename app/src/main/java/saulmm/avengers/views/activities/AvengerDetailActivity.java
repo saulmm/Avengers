@@ -39,6 +39,8 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     private void initializePresenter() {
 
         avengerDetailPresenter.attachView(this);
+        avengerDetailPresenter.attachIncomingIntent(getIntent());
+        avengerDetailPresenter.initializePresenter();
     }
 
     private void initializeDependencyInjector() {

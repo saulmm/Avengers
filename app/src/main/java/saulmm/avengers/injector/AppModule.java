@@ -1,5 +1,7 @@
 package saulmm.avengers.injector;
 
+import com.squareup.otto.Bus;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -17,4 +19,6 @@ public class AppModule {
     }
 
     @Provides @Singleton AvengersApplication provideAvengersApplicationContext () { return mAvengersApplication; }
+
+    @Provides @Singleton Bus provideMainBus () { return new Bus(); }
 }

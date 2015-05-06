@@ -26,7 +26,6 @@ public class AvengerDetailPresenter implements Presenter {
     public void attachView(View v) {
 
         mAvengersDetailView = (AvengersDetailView) v;
-        initializePresenter();
     }
 
     @Override
@@ -35,7 +34,7 @@ public class AvengerDetailPresenter implements Presenter {
         mIntent = intent;
     }
 
-    private void initializePresenter() {
+    public void initializePresenter() {
 
         mAvengerCharacterId = mIntent.getExtras().getString(
             AvengersListActivity.EXTRA_CHARACTER_ID);

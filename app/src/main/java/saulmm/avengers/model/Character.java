@@ -3,30 +3,33 @@ package saulmm.avengers.model;
 public class Character {
 
     private String id;
-    private String title;
+    private String name;
+    private String description;
     private int imageResource;
+    private Thumbnail thumbnail;
+    private String resourceURI;
 
-    public Character(String title, int thumb_resource, String id) {
+    public Character(String name, int thumb_resource, String id) {
 
-        this.title = title;
+        this.name = name;
         this.imageResource = thumb_resource;
         this.id = id;
     }
 
-    public Character(String title, int imageResource) {
+    public Character(String name, int imageResource) {
 
-        this.title = title;
+        this.name = name;
         this.imageResource = imageResource;
     }
 
     public String getTitle () {
 
-        return title;
+        return name;
     }
 
-    public String getThumbnail () {
+    public String getThumbnail() {
 
-        return "http://i.annihil.us/u/prod/marvel/i/mg/9/c0/527bb7b37ff55.jpg";
+        return thumbnail.getImageUrl();
     }
 
     public int getImageResource() {
