@@ -3,7 +3,7 @@ package saulmm.avengers.model.rest;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.MarvelApiWrapper;
 
 public interface MarvelApi {
 
@@ -13,5 +13,5 @@ public interface MarvelApi {
     public final String PARAM_TIMESTAMP = "ts";
 
     @GET("/v1/public/characters")
-    void getCharacter(@Query("id") String id, Callback<Character> callback);
+    void getCharacter(@Query("id") String id, Callback<MarvelApiWrapper> callback);
 }

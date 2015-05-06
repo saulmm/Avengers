@@ -1,29 +1,30 @@
 package saulmm.avengers.model;
 
-import java.util.List;
+import saulmm.avengers.model.rest.MarvelDataWrapper;
 
 public class MarvelApiWrapper {
 
     private String code;
     private String status;
 
-    private MarvelCharacterData data;
+    private MarvelDataWrapper data;
 
-}
+    public String getCode() {
 
-class MarvelCharacterData {
+        return code;
+    }
 
-    int count;
-    List<Character> results;
-}
+    public String getStatus() {
 
-class Thumbnail {
+        return status;
+    }
 
-    private String path;
-    private String extension;
+    public MarvelDataWrapper getData() {
 
-    public String getImageUrl () {
-
-        return path + extension;
+        return data;
     }
 }
+
+
+
+

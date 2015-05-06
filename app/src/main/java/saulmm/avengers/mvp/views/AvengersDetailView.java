@@ -8,4 +8,7 @@ public interface AvengersDetailView extends View {
 
     void showAvengerBio (String text);
 
+    void showAvengerImage (String url);
+
+    void showAvengerName (String name);
 }

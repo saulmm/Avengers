@@ -1,5 +1,7 @@
 package saulmm.avengers.model;
 
+import saulmm.avengers.model.rest.Thumbnail;
+
 public class Character {
 
     private String id;
@@ -27,12 +29,17 @@ public class Character {
         return id;
     }
 
-    public String getTitle () {
+    public String getName() {
 
         return name;
     }
 
-    public String getThumbnail() {
+    public String getDescription() {
+
+        return description;
+    }
+
+    public String getImageUrl() {
 
         return thumbnail.getImageUrl();
     }

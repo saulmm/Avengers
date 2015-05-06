@@ -59,7 +59,10 @@ public class AvengerDetailPresenter implements Presenter {
     @Subscribe
     public void onAvengerDetailReceived (Character character) {
 
-
+        mAvengersDetailView.stopLoading();
+        mAvengersDetailView.showAvengerName(character.getName());
+        mAvengersDetailView.showAvengerBio(character.getDescription());
+        mAvengersDetailView.showAvengerImage(character.getImageUrl());
     }
 
     @Override

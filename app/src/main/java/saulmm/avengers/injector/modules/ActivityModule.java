@@ -5,7 +5,7 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import saulmm.avengers.injector.ActivityScope;
+import saulmm.avengers.injector.Activity;
 
 @Module
 public class ActivityModule {
@@ -17,7 +17,8 @@ public class ActivityModule {
         this.mContext = mContext;
     }
 
-    @Provides @ActivityScope Context provideActivityContext() {
+    @Provides @Activity
+    Context provideActivityContext() {
         return mContext;
     }
 }

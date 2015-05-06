@@ -9,7 +9,7 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.MarvelApiWrapper;
 import saulmm.avengers.model.Repository;
 
 public class RestRepository implements Repository {
@@ -55,10 +55,10 @@ public class RestRepository implements Repository {
         @Override
         public void success(Object o, Response response) {
 
-            if (o instanceof Character) {
+            if (o instanceof MarvelApiWrapper) {
 
-                Character character = (Character) o;
-                mBus.post(character);
+                MarvelApiWrapper marvelApi = (MarvelApiWrapper) o;
+                mBus.post(o);
             }
         }
 
