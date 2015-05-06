@@ -42,7 +42,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @Override
     public void onElementClick(int position) {
-        String characterId = mAvengersList.get(position).getTitle();
+        String characterId = mAvengersList.get(position).getId();
 
         Intent i = new Intent (mContext, AvengerDetailActivity.class);
         i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);

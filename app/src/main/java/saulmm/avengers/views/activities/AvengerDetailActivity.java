@@ -47,10 +47,12 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
 
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
+        String avengerId = getIntent().getStringExtra(AvengersListActivity.EXTRA_CHARACTER_ID);
+
         DaggerAvengerInformationComponent.builder()
             .activityModule(new ActivityModule(this))
             .appComponent(avengersApplication.getAppComponent())
-            .avengerInformationModule(new AvengerInformationModule("ID"))
+            .avengerInformationModule(new AvengerInformationModule(avengerId))
             .build().inject(this);
     }
 

@@ -22,6 +22,11 @@ public class Character {
         this.imageResource = imageResource;
     }
 
+    public String getId() {
+
+        return id;
+    }
+
     public String getTitle () {
 
         return name;
