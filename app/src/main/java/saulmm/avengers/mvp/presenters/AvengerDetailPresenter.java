@@ -5,26 +5,36 @@ import android.content.Intent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
+import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
+import saulmm.avengers.model.Comic;
+import saulmm.avengers.model.rest.ComicsWrapper;
 import saulmm.avengers.mvp.views.AvengersDetailView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.activities.AvengersListActivity;
 
 public class AvengerDetailPresenter implements Presenter {
 
-    private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
-    private final Bus mMainBus;
     private AvengersDetailView mAvengersDetailView;
-    private String mAvengerCharacterId;
+
+    private final Bus mMainBus;
+    private int mAvengerCharacterId;
+    private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
+    private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
     private Intent mIntent;
 
     @Inject
-    public AvengerDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase, Bus mainBus) {
+    public AvengerDetailPresenter(Bus mainBus,
+                                  GetCharacterInformationUsecase getCharacterInformationUsecase,
+                                  GetCharacterComicsUsecase getCharacterComicsUsecase) {
 
         mGetCharacterInformationUsecase = getCharacterInformationUsecase;
+        mGetCharacterComicsUsecase = getCharacterComicsUsecase;
         mMainBus = mainBus;
     }
 
@@ -48,12 +58,13 @@ public class AvengerDetailPresenter implements Presenter {
 
     public void initializePresenter() {
 
-        mAvengerCharacterId = mIntent.getExtras().getString(
+        mAvengerCharacterId = mIntent.getExtras().getInt(
             AvengersListActivity.EXTRA_CHARACTER_ID);
 
         mAvengersDetailView.startLoading();
 
         mGetCharacterInformationUsecase.execute();
+        mGetCharacterComicsUsecase.execute();
     }
 
     @Subscribe
@@ -63,6 +74,16 @@ public class AvengerDetailPresenter implements Presenter {
         mAvengersDetailView.showAvengerName(character.getName());
         mAvengersDetailView.showAvengerBio(character.getDescription());
         mAvengersDetailView.showAvengerImage(character.getImageUrl());
+    }
+
+    @Subscribe
+    public void onAvengerComicsReceived (ComicsWrapper comicsWrapper) {
+
+        ArrayList<Comic> comics = comicsWrapper.getmComics();
+
+        for (Comic comic : comics) {
+            mAvengersDetailView.addComic(comic);
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package saulmm.avengers.mvp.views;
 
+import saulmm.avengers.model.Comic;
+
 public interface AvengersDetailView extends View {
 
     void startLoading ();
@@ -11,4 +13,6 @@ public interface AvengersDetailView extends View {
     void showAvengerImage (String url);
 
     void showAvengerName (String name);
+
+    void addComic (Comic comic);
 }

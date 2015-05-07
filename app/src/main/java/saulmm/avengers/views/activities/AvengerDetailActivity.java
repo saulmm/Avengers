@@ -2,8 +2,10 @@ package saulmm.avengers.views.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,17 +20,21 @@ import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
+import saulmm.avengers.model.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
 import saulmm.avengers.mvp.views.AvengersDetailView;
 
 public class AvengerDetailActivity extends Activity implements AvengersDetailView {
 
     @InjectView(R.id.activity_avenger_detail_progress)  ProgressBar mProgress;
+    @InjectView(R.id.activity_avenger_detail_container) LinearLayout mDetailContainer;
     @InjectView(R.id.activity_avenger_detail_biography) TextView mBiographyTextView;
-    @InjectView(R.id.activity_avenger_detail_name)  TextView mAvengerName;
-    @InjectView(R.id.activity_avenger_image) ImageView mAvengerImageView;
+    @InjectView(R.id.activity_avenger_detail_name)      TextView mAvengerName;
+    @InjectView(R.id.activity_avenger_image)            ImageView mAvengerImageView;
 
     @Inject AvengerDetailPresenter avengerDetailPresenter;
+
+    private View comicView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,7 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
 
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
-        String avengerId = getIntent().getStringExtra(AvengersListActivity.EXTRA_CHARACTER_ID);
+        int avengerId = getIntent().getIntExtra(AvengersListActivity.EXTRA_CHARACTER_ID, -1);
 
         DaggerAvengerInformationComponent.builder()
             .activityModule(new ActivityModule(this))
@@ -97,6 +103,15 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     public void showAvengerName(String name) {
 
         mAvengerName.setText(name);
+    }
+
+    @Override
+    public void addComic(Comic comic) {
+
+        View comicView = LayoutInflater.from(this).inflate(
+                R.layout.item_comic, null, true);
+
+        mDetailContainer.addView(comicView);
     }
 
     @Override

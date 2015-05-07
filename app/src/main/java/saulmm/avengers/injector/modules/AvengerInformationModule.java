@@ -13,9 +13,9 @@ import saulmm.avengers.model.Repository;
 @Module
 public class AvengerInformationModule {
 
-    private final String mCharacterId;
+    private final int mCharacterId;
 
-    public AvengerInformationModule(String characterId) {
+    public AvengerInformationModule(int characterId) {
 
         mCharacterId = characterId;
     }
@@ -27,8 +27,8 @@ public class AvengerInformationModule {
     }
 
     @Provides @Activity
-    GetCharacterComicsUsecase provideGetCharacherComicsUsecase () {
+    GetCharacterComicsUsecase provideGetCharacherComicsUsecase (Bus bus, Repository repository) {
 
-        return new GetCharacterComicsUsecase(mCharacterId);
+        return new GetCharacterComicsUsecase(mCharacterId, bus, repository);
     }
 }

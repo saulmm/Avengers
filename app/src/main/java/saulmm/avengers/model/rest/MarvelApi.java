@@ -1,9 +1,13 @@
 package saulmm.avengers.model.rest;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.Query;
-import saulmm.avengers.model.MarvelApiWrapper;
+import saulmm.avengers.model.Character;
+import saulmm.avengers.model.Comic;
 
 public interface MarvelApi {
 
@@ -13,5 +17,12 @@ public interface MarvelApi {
     public final String PARAM_TIMESTAMP = "ts";
 
     @GET("/v1/public/characters")
-    void getCharacter(@Query("id") String id, Callback<MarvelApiWrapper> callback);
+    void getCharacter(@Query("id") int id,
+                      Callback<Character> callback);
+
+    @GET("/v1/public/characters/{characterId}/comics")
+    void getCharacterComics(@Path("characterId") int id,
+                            @Query("format") String format,
+                            @Query("formatType") String fromatType,
+                            Callback<List<Comic>> callback);
 }

@@ -1,19 +1,31 @@
 package saulmm.avengers.domain;
 
+import com.squareup.otto.Bus;
+
 import javax.inject.Inject;
+
+import saulmm.avengers.model.Repository;
 
 public class GetCharacterComicsUsecase implements Usecase {
 
-    private String mCharacterId;
+    private final Bus mBus;
+    private final Repository mRepository;
+    private int mCharacterId;
 
-    @Inject
-    public GetCharacterComicsUsecase(String characterId) {
+    @Inject public GetCharacterComicsUsecase(int characterId,
+                                             Bus bus,
+                                             Repository repository) {
 
-        this.mCharacterId = characterId;
+        mBus = bus;
+        mCharacterId = characterId;
+        mRepository = repository;
     }
+
 
     @Override
     public void execute() {
 
+        mBus.register(this);
+        mRepository.getCharacterComics(mCharacterId);
     }
 }

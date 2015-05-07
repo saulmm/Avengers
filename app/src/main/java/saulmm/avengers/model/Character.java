@@ -4,14 +4,14 @@ import saulmm.avengers.model.rest.Thumbnail;
 
 public class Character {
 
-    private String id;
+    private int id;
     private String name;
     private String description;
     private int imageResource;
     private Thumbnail thumbnail;
     private String resourceURI;
 
-    public Character(String name, int thumb_resource, String id) {
+    public Character(String name, int thumb_resource, int id) {
 
         this.name = name;
         this.imageResource = thumb_resource;
@@ -24,7 +24,7 @@ public class Character {
         this.imageResource = imageResource;
     }
 
-    public String getId() {
+    public int getId() {
 
         return id;
     }

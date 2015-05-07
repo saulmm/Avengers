@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    >
+
+    <ImageView
+        android:id="@+id/item_comic_cover"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/thumb_iron_man"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/item_comic_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_dark"
+            android:textSize="17sp"
+            tools:text="An awesome title with an awesome large"
+            />
+
+        <TextView
+            android:id="@+id/item_comic_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin_small"
+            android:ellipsize="end"
+            android:maxLength="150"
+            android:textColor="@color/grey_medium"
+            android:textSize="15sp"
+            tools:text="This is an awesome description, of course is larger than the title, it must be, a well description has all the neccesar"
+            />
+    </LinearLayout>
+</LinearLayout>
+
