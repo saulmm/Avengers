@@ -5,11 +5,14 @@ import android.content.Intent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
+import saulmm.avengers.model.Comic;
 import saulmm.avengers.model.rest.ComicsWrapper;
 import saulmm.avengers.mvp.views.AvengersDetailView;
 import saulmm.avengers.mvp.views.View;
@@ -76,7 +79,11 @@ public class AvengerDetailPresenter implements Presenter {
     @Subscribe
     public void onAvengerComicsReceived (ComicsWrapper comicsWrapper) {
 
-        System.out.println("[DEBUG]" + " AvengerDetailPresenter onAvengerComicsReceived - " + "");
+        ArrayList<Comic> comics = comicsWrapper.getmComics();
+
+        for (Comic comic : comics) {
+            mAvengersDetailView.addComic(comic);
+        }
     }
 
     @Override
