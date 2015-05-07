@@ -50,6 +50,16 @@ public class RestRepository implements Repository {
         mMarvelApi.getCharacter(characterId, retrofitCallback);
     }
 
+    @Override
+    public void getCharacterComics(String characterId) {
+
+
+        final String comicsFormat   = "comic";
+        final String comicsType     = "comic";
+
+        mMarvelApi.getCharacterComics(characterId, comicsFormat, comicsType, retrofitCallback);
+    }
+
     private Callback retrofitCallback = new Callback() {
 
         @Override
@@ -68,5 +78,5 @@ public class RestRepository implements Repository {
             System.out.println("[ERROR]" + " RestRepository, failure (66)- " +
                 "error "+error.toString());
         }
-    }  ;
+    } ;
 }

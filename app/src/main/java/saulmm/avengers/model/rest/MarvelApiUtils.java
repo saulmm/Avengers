@@ -14,7 +14,6 @@ public class MarvelApiUtils {
             String timeStamp    = getUnixTimeStamp();
             String marvelData   = timeStamp + privateKey + publicKey;
 
-
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             byte[] hash = messageDigest.digest(marvelData.getBytes());
 
