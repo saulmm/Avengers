@@ -2,7 +2,7 @@ package saulmm.avengers.model;
 
 public interface Repository {
 
-    void getCharacter (final String characterId);
+    void getCharacter (final int characterId);
 
-    void getCharacterComics (final String characterId);
+    void getCharacterComics (final int characterId);
 }

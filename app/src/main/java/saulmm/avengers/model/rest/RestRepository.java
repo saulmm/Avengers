@@ -1,6 +1,10 @@
 package saulmm.avengers.model.rest;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -9,7 +13,8 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import saulmm.avengers.model.MarvelApiWrapper;
+import retrofit.converter.GsonConverter;
+import saulmm.avengers.model.Comic;
 import saulmm.avengers.model.Repository;
 
 public class RestRepository implements Repository {
@@ -23,10 +28,15 @@ public class RestRepository implements Repository {
     @Inject
     public RestRepository(Bus bus) {
 
+        Gson gson = new GsonBuilder()
+            .registerTypeAdapterFactory(new CharacterItemAdapterFactory())
+            .create();
+
         RestAdapter marvelApiAdapter = new RestAdapter.Builder()
             .setEndpoint(MarvelApi.END_POINT)
             .setLogLevel(RestAdapter.LogLevel.HEADERS_AND_ARGS)
             .setRequestInterceptor(authorizationInterceptor)
+            .setConverter(new GsonConverter(gson))
             .build();
 
         mMarvelApi = marvelApiAdapter.create(MarvelApi.class);
@@ -45,14 +55,13 @@ public class RestRepository implements Repository {
     };
 
     @Override
-    public void getCharacter(String characterId) {
+    public void getCharacter(int characterId) {
 
         mMarvelApi.getCharacter(characterId, retrofitCallback);
     }
 
     @Override
-    public void getCharacterComics(String characterId) {
-
+    public void getCharacterComics(int characterId) {
 
         final String comicsFormat   = "comic";
         final String comicsType     = "comic";
@@ -65,10 +74,15 @@ public class RestRepository implements Repository {
         @Override
         public void success(Object o, Response response) {
 
-            if (o instanceof MarvelApiWrapper) {
-
-                MarvelApiWrapper marvelApi = (MarvelApiWrapper) o;
+            if (o instanceof saulmm.avengers.model.Character)
                 mBus.post(o);
+
+            if (o instanceof ArrayList) {
+
+                ArrayList comicsList = (ArrayList) o;
+
+                if (!comicsList.isEmpty() && comicsList.get(0) instanceof Comic)
+                    mBus.post(new ComicsWrapper(comicsList));
             }
         }
 

@@ -16,12 +16,12 @@ public class AvengersModule {
     List<Character> provideAvengers() {
 
         List<Character> avengers = new ArrayList<>(6);
-        avengers.add(new Character("Iron Man", R.drawable.thumb_iron_man, "1009368"));
-        avengers.add(new Character("Thor", R.drawable.thumb_thor, "1009664"));
-        avengers.add(new Character("Captain America", R.drawable.thumb_cap,"1009220"));
-        avengers.add(new Character("Black Widow", R.drawable.thumb_nat, "1009189"));
-        avengers.add(new Character("Hawkeye", R.drawable.thumb_hawkeye, "1009338"));
-        avengers.add(new Character("Hulk", R.drawable.thumb_hulk, "1009351"));
+        avengers.add(new Character("Iron Man", R.drawable.thumb_iron_man, 1009368));
+        avengers.add(new Character("Thor", R.drawable.thumb_thor, 1009664));
+        avengers.add(new Character("Captain America", R.drawable.thumb_cap,1009220));
+        avengers.add(new Character("Black Widow", R.drawable.thumb_nat, 1009189));
+        avengers.add(new Character("Hawkeye", R.drawable.thumb_hawkeye, 1009338));
+        avengers.add(new Character("Hulk", R.drawable.thumb_hulk, 1009351));
         return avengers;
     }
 }
