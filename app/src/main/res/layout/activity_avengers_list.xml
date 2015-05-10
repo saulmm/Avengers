@@ -9,10 +9,11 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/brand_primary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/brand_primary"
+        android:minHeight="?attr/actionBarSize"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/activity_avengers_recycler"
