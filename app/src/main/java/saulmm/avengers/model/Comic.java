@@ -10,6 +10,7 @@ public class Comic {
     private String title;
     private String desccription;
     private List<Thumbnail> images;
+    private List<TextObject> textObjects;
     private int pageCount;
 
     public String getId() {
@@ -38,5 +39,13 @@ public class Comic {
     public String getDesccription() {
 
         return desccription;
+    }
+
+    public String getFirstTextObject () {
+
+        if (!textObjects.isEmpty())
+            return textObjects.get(0).getText();
+
+        return null;
     }
 }

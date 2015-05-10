@@ -2,6 +2,7 @@ package saulmm.avengers.views.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -120,8 +121,8 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
         if (comic.getFirstImageUrl() != null)
             Glide.with(this).load(comic.getFirstImageUrl()).into(comicCoverImageView);
 
-        if (comic.getDesccription() != null)
-            comicDescTextView.setText(comic.getDesccription());
+        if (comic.getFirstTextObject() != null)
+            comicDescTextView.setText(Html.fromHtml(comic.getFirstTextObject()));
 
         mDetailContainer.addView(comicView);
     }
