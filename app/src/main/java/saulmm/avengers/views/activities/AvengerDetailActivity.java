@@ -111,6 +111,18 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
         View comicView = LayoutInflater.from(this).inflate(
                 R.layout.item_comic, null, true);
 
+        TextView comicTitleTextView = ButterKnife.findById(comicView, R.id.item_comic_title);
+        TextView comicDescTextView = ButterKnife.findById(comicView, R.id.item_comic_description);
+        ImageView comicCoverImageView = ButterKnife.findById(comicView, R.id.item_comic_cover);
+
+        comicTitleTextView.setText(comic.getTitle());
+
+        if (comic.getFirstImageUrl() != null)
+            Glide.with(this).load(comic.getFirstImageUrl()).into(comicCoverImageView);
+
+        if (comic.getDesccription() != null)
+            comicDescTextView.setText(comic.getDesccription());
+
         mDetailContainer.addView(comicView);
     }
 

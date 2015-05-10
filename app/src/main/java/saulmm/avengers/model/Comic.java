@@ -21,4 +21,22 @@ public class Comic {
 
         return pageCount;
     }
+
+    public String getFirstImageUrl () {
+
+        if (!images.isEmpty() && images.get(0) != null)
+            return images.get(0).getImageUrl();
+
+        return null;
+    }
+
+    public String getTitle() {
+
+        return title;
+    }
+
+    public String getDesccription() {
+
+        return desccription;
+    }
 }
