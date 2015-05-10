@@ -41,7 +41,7 @@ public class Character {
 
     public String getImageUrl() {
 
-        return (thumbnail != null) ? thumbnail.getImageUrl() : "";
+        return (thumbnail != null) ? thumbnail.getImageUrl() : null;
     }
 
     public int getImageResource() {
