@@ -73,7 +73,9 @@ public class AvengerDetailPresenter implements Presenter {
         mAvengersDetailView.stopLoading();
         mAvengersDetailView.showAvengerName(character.getName());
         mAvengersDetailView.showAvengerBio(character.getDescription());
-        mAvengersDetailView.showAvengerImage(character.getImageUrl());
+
+        if (character.getImageUrl() != null)
+            mAvengersDetailView.showAvengerImage(character.getImageUrl());
     }
 
     @Subscribe
