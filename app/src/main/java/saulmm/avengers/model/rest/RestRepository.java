@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -14,6 +15,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+import rx.Observable;
 import saulmm.avengers.model.Comic;
 import saulmm.avengers.model.Repository;
 
@@ -55,18 +57,17 @@ public class RestRepository implements Repository {
     };
 
     @Override
-    public void getCharacter(int characterId) {
-
-        mMarvelApi.getCharacter(characterId, retrofitCallback);
+    public Observable<saulmm.avengers.model.Character> getCharacter(int characterId) {
+        return mMarvelApi.getCharacter(characterId);
     }
 
     @Override
-    public void getCharacterComics(int characterId) {
+    public Observable<List<Comic>> getCharacterComics(int characterId) {
 
         final String comicsFormat   = "comic";
         final String comicsType     = "comic";
 
-        mMarvelApi.getCharacterComics(characterId, comicsFormat, comicsType, retrofitCallback);
+        return mMarvelApi.getCharacterComics(characterId, comicsFormat, comicsType);
     }
 
     private Callback retrofitCallback = new Callback() {

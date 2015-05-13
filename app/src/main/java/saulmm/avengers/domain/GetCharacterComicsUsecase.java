@@ -1,31 +1,30 @@
 package saulmm.avengers.domain;
 
-import com.squareup.otto.Bus;
-
 import javax.inject.Inject;
 
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import saulmm.avengers.model.Repository;
 
 public class GetCharacterComicsUsecase implements Usecase {
 
-    private final Bus mBus;
     private final Repository mRepository;
     private int mCharacterId;
 
-    @Inject public GetCharacterComicsUsecase(int characterId,
-                                             Bus bus,
-                                             Repository repository) {
+    @Inject public GetCharacterComicsUsecase(int characterId, Repository repository) {
 
-        mBus = bus;
         mCharacterId = characterId;
         mRepository = repository;
     }
 
-
     @Override
-    public void execute() {
+    public Subscription execute(Subscriber subscriber) {
 
-        mBus.register(this);
-        mRepository.getCharacterComics(mCharacterId);
+        return mRepository.getCharacter(mCharacterId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(subscriber);
     }
 }
