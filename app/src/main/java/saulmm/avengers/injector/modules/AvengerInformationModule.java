@@ -1,8 +1,6 @@
 package saulmm.avengers.injector.modules;
 
 
-import com.squareup.otto.Bus;
-
 import dagger.Module;
 import dagger.Provides;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;

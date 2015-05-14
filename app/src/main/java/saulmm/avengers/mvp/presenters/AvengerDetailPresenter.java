@@ -2,7 +2,6 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Intent;
 
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
@@ -63,7 +62,6 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
 //        mGetCharacterComicsUsecase.execute(this);
     }
 
-    @Subscribe
     public void onAvengerComicsReceived (ComicsWrapper comicsWrapper) {
 
         ArrayList<Comic> comics = comicsWrapper.getmComics();

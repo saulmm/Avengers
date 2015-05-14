@@ -1,6 +1,6 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:colorPrimaryDark">@color/brand_primary</item>
+        <item name="colorPrimary">@color/brand_primary</item>
         <item name="colorPrimaryDark">@color/brand_primary_dark</item>
         <item name="colorAccent">@color/brand_secondary</item>
         <item name="actionMenuTextColor">@android:color/white</item>
