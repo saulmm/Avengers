@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="saulmm.avengers" >
+<manifest
+    package="saulmm.avengers"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".AvengersApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".AvengersListActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:theme="@style/AppTheme"
+        >
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <activity
+            android:name=".views.activities.AvengersListActivity"
+            android:label="@string/app_name"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".views.activities.AvengerDetailActivity"
+            android:theme="@style/AvengerDetailActivityTheme"/>
+
+
     </application>
 
 </manifest>

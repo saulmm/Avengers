@@ -1,8 +1,12 @@
 <resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryDark">@color/brand_primary_dark</item>
+        <item name="colorAccent">@color/brand_secondary</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
+    <style name="AvengerDetailActivityTheme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>
