@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import java.util.List;
 
@@ -13,7 +14,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
-import saulmm.avengers.injector.AppModule;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengersModule;
@@ -29,6 +29,7 @@ public class AvengersListActivity extends Activity implements
     public final static String EXTRA_CHARACTER_ID = "character_id";
 
     @InjectView(R.id.activity_avengers_recycler) RecyclerView mAvengersRecycler;
+    @InjectView(R.id.activity_avengers_toolbar) Toolbar mAvengersToolbar;
     @Inject AvengersListPresenter mAvengersListPresenter;
 
     @Override
@@ -38,9 +39,15 @@ public class AvengersListActivity extends Activity implements
         setContentView(R.layout.activity_avengers_list);
         ButterKnife.inject(this);
 
+        initializeToolbar();
         initializeRecyclerView();
         initializeDependencyInjector();
         initializePresenter();
+    }
+
+    private void initializeToolbar() {
+
+        mAvengersToolbar.setTitle("Avengers");
     }
 
     @Override
@@ -62,7 +69,7 @@ public class AvengersListActivity extends Activity implements
         DaggerAvengersComponent.builder()
             .avengersModule(new AvengersModule())
             .activityModule(new ActivityModule(this))
-            .appModule(new AppModule(avengersApplication))
+            .appComponent(avengersApplication.getAppComponent())
             .build().inject(this);
     }
 

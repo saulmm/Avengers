@@ -1,7 +1,5 @@
 package saulmm.avengers.injector.components;
 
-import com.squareup.otto.Bus;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -14,5 +12,4 @@ public interface AppComponent {
 
     AvengersApplication app();
     Repository dataRepository();
-    Bus mainBus();
 }

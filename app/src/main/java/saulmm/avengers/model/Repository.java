@@ -1,8 +1,12 @@
 package saulmm.avengers.model;
 
+import java.util.List;
+
+import rx.Observable;
+
 public interface Repository {
 
-    void getCharacter (final int characterId);
+    Observable<Character> getCharacter (final int characterId);
 
-    void getCharacterComics (final int characterId);
+    Observable<List<Comic>> getCharacterComics (final int characterId);
 }
