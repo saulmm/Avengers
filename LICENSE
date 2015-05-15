@@ -1,0 +1,32 @@
+Mozilla Public License
+About the License
+
+Mozilla is the custodian of the Mozilla Public License ("MPL"), an open source/free software license.
+
+The current version of the license is MPL 2.0 (html | plain text). If you want to use or distribute code licensed under the MPL 2.0 and have questions about it, you may want to read the FAQ.
+
+MPL 2.0 Revision Process
+
+The release of MPL 2.0 was the result of a two year process that revised MPL 1.1. A Revision FAQ documents this process, and explains the most significant changes made.
+
+Historical Documents
+
+Various historical documents relating to the Mozilla and Netscape Public Licenses are available, including deprecated versions of the license such as MPL 1.1.
+
+Mozilla Licensing Information
+
+The Mozilla Project is only one of many users of the MPL, but because many people come to this page looking for information about Mozilla's open source licensing policies and practices, we've provided the information below as a reference.
+
+Correctly Licensing New Source Code
+
+Any new code checked into Mozilla's source repositories needs to comply with Mozilla's source code licensing policy. Please use the appropriate header text at the top of each file.
+
+Licenses For Existing Source Code
+
+Most Mozilla software projects use the MPL, but some have different terms. Detailed information on the licensing of existing code can be found by inspecting its license headers, or by visiting the license information page in the relevant Mozilla software.
+
+For information on how other things are licensed, including Mozilla's trademarks and websites, see our general licensing information page.
+
+Questions?
+
+If, after reading all the above carefully (particularly the FAQ) you have a further question about the MPL or the licensing terms of Mozilla project code, please send it to licensing@mozilla.org.
