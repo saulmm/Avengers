@@ -2,12 +2,10 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Intent;
 
-
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
@@ -17,7 +15,7 @@ import saulmm.avengers.mvp.views.AvengersDetailView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.activities.AvengersListActivity;
 
-public class AvengerDetailPresenter extends Subscriber<Character>  implements Presenter {
+public class AvengerDetailPresenter implements Presenter {
 
     private AvengersDetailView mAvengersDetailView;
 
@@ -37,6 +35,13 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
     @Override
     public void onStart() {
 
+        // Unused
+    }
+
+    @Override
+    public void onStop() {
+
+        // Unused
     }
 
     @Override
@@ -58,8 +63,15 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
 
         mAvengersDetailView.startLoading();
 
-        mGetCharacterInformationUsecase.execute(this);
-//        mGetCharacterComicsUsecase.execute(this);
+        mGetCharacterInformationUsecase.execute().subscribe(
+            character -> {onAvengerReceived(character);},
+            trowable  -> {manageError (trowable);}
+        );
+    }
+
+    private void manageError(Throwable trowable) {
+
+        // TODO
     }
 
     public void onAvengerComicsReceived (ComicsWrapper comicsWrapper) {
@@ -71,25 +83,7 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
         }
     }
 
-    @Override
-    public void onStop() {
-
-    }
-
-    @Override
-    public void onCompleted() {
-        
-    }
-
-    @Override
-    public void onError(Throwable e) {
-
-        System.out.println("[DEBUG]" + " AvengerDetailPresenter onError - " + e.getMessage());
-
-    }
-
-    @Override
-    public void onNext(Character character) {
+    private void onAvengerReceived(Character character) {
 
         mAvengersDetailView.stopLoading();
         mAvengersDetailView.showAvengerName(character.getName());
