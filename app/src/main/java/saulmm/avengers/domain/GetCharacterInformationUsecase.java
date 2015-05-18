@@ -2,13 +2,13 @@ package saulmm.avengers.domain;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.Subscription;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import saulmm.avengers.model.Character;
 import saulmm.avengers.model.Repository;
 
-public class GetCharacterInformationUsecase implements Usecase {
+public class GetCharacterInformationUsecase implements Usecase<saulmm.avengers.model.Character> {
 
     private final Repository mRepository;
     private int mCharacterId;
@@ -19,13 +19,11 @@ public class GetCharacterInformationUsecase implements Usecase {
         mRepository = repository;
     }
 
-    @Override public Subscription execute(Subscriber subscriber) {
+    @Override
+    public Observable<Character> execute() {
 
-        Subscription subscription = mRepository.getCharacter(mCharacterId)
+        return mRepository.getCharacter(mCharacterId)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(subscriber);
-
-        return subscription;
+            .observeOn(AndroidSchedulers.mainThread());
     }
 }
