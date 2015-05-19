@@ -2,10 +2,9 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Intent;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
+import rx.Observable;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
@@ -64,14 +63,18 @@ public class AvengerDetailPresenter implements Presenter {
         mAvengersDetailView.startLoading();
 
         mGetCharacterInformationUsecase.execute().subscribe(
-            character   -> {onAvengerReceived(character);},
-            trowable    -> {manageError (trowable);}
+            character   -> onAvengerReceived(character),
+            error       -> manageError(error)
         );
 
         mGetCharacterComicsUsecase.execute().subscribe(
-            comics      -> { onAvengerComicsReceived(comics); },
-            trowable    -> { onAvengerComicError(trowable); }
-        );
+            comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic),
+            error       -> onAvengerComicError(error)));
+    }
+
+    private void onComicReceived(Comic comic) {
+
+        mAvengersDetailView.addComic(comic);
     }
 
     private void onAvengerComicError(Throwable trowable) {
@@ -87,12 +90,6 @@ public class AvengerDetailPresenter implements Presenter {
             ""+trowable.getMessage());
     }
 
-    public void onAvengerComicsReceived (List<Comic> comics) {
-
-        for (Comic comic : comics) {
-            mAvengersDetailView.addComic(comic);
-        }
-    }
 
     private void onAvengerReceived(Character character) {
 
