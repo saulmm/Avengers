@@ -5,6 +5,7 @@ import android.content.Intent;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Subscription;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
@@ -21,6 +22,9 @@ public class AvengerDetailPresenter implements Presenter {
     private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
     private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
     private Intent mIntent;
+
+    private Subscription mComicsSubscription;
+    private Subscription mCharacterSubscription;
 
     @Inject
     public AvengerDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
@@ -39,7 +43,11 @@ public class AvengerDetailPresenter implements Presenter {
     @Override
     public void onStop() {
 
-        // Unused
+        if (!mCharacterSubscription.isUnsubscribed())
+            mCharacterSubscription.unsubscribe();
+
+        if (!mComicsSubscription.isUnsubscribed())
+            mComicsSubscription.unsubscribe();
     }
 
     @Override
@@ -62,12 +70,12 @@ public class AvengerDetailPresenter implements Presenter {
 
         mAvengersDetailView.startLoading();
 
-        mGetCharacterInformationUsecase.execute().subscribe(
+        mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
             character   -> onAvengerReceived(character),
             error       -> manageError(error)
         );
 
-        mGetCharacterComicsUsecase.execute().subscribe(
+        mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
             comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic),
             error       -> onAvengerComicError(error)));
     }
