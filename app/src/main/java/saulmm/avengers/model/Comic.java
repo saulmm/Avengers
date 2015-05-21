@@ -11,6 +11,7 @@ public class Comic {
     private String desccription;
     private List<Thumbnail> images;
     private List<TextObject> textObjects;
+    private List<ComicDate> dates;
     private int pageCount;
 
     public String getId() {
@@ -47,5 +48,10 @@ public class Comic {
             return textObjects.get(0).getText();
 
         return null;
+    }
+
+    public List<ComicDate> getDates() {
+
+        return dates;
     }
 }

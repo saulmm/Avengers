@@ -14,6 +14,7 @@ public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
 
     private final Repository mRepository;
     private int mCharacterId;
+    private List<Comic> mComics;
 
     @Inject public GetCharacterComicsUsecase(int characterId, Repository repository) {
 
@@ -21,11 +22,22 @@ public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
         mRepository = repository;
     }
 
+    public Observable<Comic> filterByYear(String year) {
+
+        if (mComics != null) {
+
+            return Observable.from(mComics).filter(comic -> comic != null);
+        }
+
+        return null;
+    }
+
     @Override
     public Observable<List<Comic>> execute() {
 
         return mRepository.getCharacterComics(mCharacterId)
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(comics ->  mComics = comics);
     }
 }

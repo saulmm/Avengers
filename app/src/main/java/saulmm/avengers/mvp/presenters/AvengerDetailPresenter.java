@@ -2,6 +2,8 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Intent;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -25,6 +27,7 @@ public class AvengerDetailPresenter implements Presenter {
 
     private Subscription mComicsSubscription;
     private Subscription mCharacterSubscription;
+    private List<Comic> mComics;
 
     @Inject
     public AvengerDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
@@ -76,9 +79,14 @@ public class AvengerDetailPresenter implements Presenter {
         );
 
         mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
-            comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic),
+            comics      -> Observable.from(comics).subscribe(comic -> {
+                onComicReceived(comic);
+                mComics = comics;
+            },
             error       -> onAvengerComicError(error)));
     }
+
+
 
     private void onComicReceived(Comic comic) {
 
