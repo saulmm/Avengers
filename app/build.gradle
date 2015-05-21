@@ -1,3 +1,4 @@
+apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
@@ -18,6 +19,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+                sourceCompatibility JavaVersion.VERSION_1_8
+                targetCompatibility JavaVersion.VERSION_1_8
+            }
 }
 
 dependencies {
@@ -27,6 +33,7 @@ dependencies {
 
     compile 'io.reactivex:rxjava:1.0.0'
     compile 'io.reactivex:rxandroid:0.24.0'
+
 
     compile 'com.google.dagger:dagger:2.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'

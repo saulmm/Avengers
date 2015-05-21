@@ -2,22 +2,19 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Intent;
 
-
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
-import rx.Subscriber;
+import rx.Observable;
+import rx.Subscription;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
 import saulmm.avengers.model.Comic;
-import saulmm.avengers.model.rest.ComicsWrapper;
 import saulmm.avengers.mvp.views.AvengersDetailView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.activities.AvengersListActivity;
 
-public class AvengerDetailPresenter extends Subscriber<Character>  implements Presenter {
+public class AvengerDetailPresenter implements Presenter {
 
     private AvengersDetailView mAvengersDetailView;
 
@@ -25,6 +22,9 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
     private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
     private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
     private Intent mIntent;
+
+    private Subscription mComicsSubscription;
+    private Subscription mCharacterSubscription;
 
     @Inject
     public AvengerDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
@@ -37,6 +37,17 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
     @Override
     public void onStart() {
 
+        // Unused
+    }
+
+    @Override
+    public void onStop() {
+
+        if (!mCharacterSubscription.isUnsubscribed())
+            mCharacterSubscription.unsubscribe();
+
+        if (!mComicsSubscription.isUnsubscribed())
+            mComicsSubscription.unsubscribe();
     }
 
     @Override
@@ -51,6 +62,7 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
         mIntent = intent;
     }
 
+    @SuppressWarnings("Convert2MethodRef")
     public void initializePresenter() {
 
         mAvengerCharacterId = mIntent.getExtras().getInt(
@@ -58,38 +70,36 @@ public class AvengerDetailPresenter extends Subscriber<Character>  implements Pr
 
         mAvengersDetailView.startLoading();
 
-        mGetCharacterInformationUsecase.execute(this);
-//        mGetCharacterComicsUsecase.execute(this);
+        mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
+            character   -> onAvengerReceived(character),
+            error       -> manageError(error)
+        );
+
+        mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
+            comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic),
+            error       -> onAvengerComicError(error)));
     }
 
-    public void onAvengerComicsReceived (ComicsWrapper comicsWrapper) {
+    private void onComicReceived(Comic comic) {
 
-        ArrayList<Comic> comics = comicsWrapper.getmComics();
-
-        for (Comic comic : comics) {
-            mAvengersDetailView.addComic(comic);
-        }
+        mAvengersDetailView.addComic(comic);
     }
 
-    @Override
-    public void onStop() {
+    private void onAvengerComicError(Throwable trowable) {
 
-    }
-
-    @Override
-    public void onCompleted() {
-        
-    }
-
-    @Override
-    public void onError(Throwable e) {
-
-        System.out.println("[DEBUG]" + " AvengerDetailPresenter onError - " + e.getMessage());
+        System.out.println("[ERROR]" + " AvengerDetailPresenter, onAvengerComicError (79)- " +
+            ""+trowable.getMessage());
 
     }
 
-    @Override
-    public void onNext(Character character) {
+    private void manageError(Throwable trowable) {
+
+        System.out.println("[ERROR]" + " AvengerDetailPresenter, manageError (86)- " +
+            ""+trowable.getMessage());
+    }
+
+
+    private void onAvengerReceived(Character character) {
 
         mAvengersDetailView.stopLoading();
         mAvengersDetailView.showAvengerName(character.getName());
