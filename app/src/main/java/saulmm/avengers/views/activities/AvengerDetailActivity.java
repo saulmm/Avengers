@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -133,6 +134,11 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
 
         super.onStop();
         avengerDetailPresenter.onStop();
+    }
+
+    @OnClick(R.id.activity_avenger_detail_filter_button)
+    public void onButtonClicked () {
+        showFilterDialog();
     }
 
     public void showFilterDialog () {

@@ -110,6 +110,13 @@
             android:visibility="visible"
             />
 
+        <Button
+            android:id="@+id/activity_avenger_detail_filter_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Filter"
+            />
+
 
     </LinearLayout>
 </ScrollView>

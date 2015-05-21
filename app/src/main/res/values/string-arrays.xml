@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="years">
+    <string-array name="years">
         <item>2015</item>
         <item>2014</item>
         <item>2013</item>
@@ -24,5 +24,5 @@
         <item>1995</item>
         <item>1994</item>
         <item>1993</item>
-    </array>
+    </string-array>
 </resources>
