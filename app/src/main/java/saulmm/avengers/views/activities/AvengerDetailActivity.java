@@ -2,6 +2,7 @@ package saulmm.avengers.views.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -132,5 +133,16 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
 
         super.onStop();
         avengerDetailPresenter.onStop();
+    }
+
+    public void showFilterDialog () {
+
+        View filterView = LayoutInflater.from(this)
+            .inflate(R.layout.view_filter_dialog, null);
+
+        new AlertDialog.Builder(this)
+            .setTitle("Filter by:")
+            .setView(filterView)
+            .show();
     }
 }
