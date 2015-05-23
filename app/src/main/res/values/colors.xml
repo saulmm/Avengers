@@ -5,7 +5,8 @@
     <color name="brand_primary_dark">#ff184aae</color>
     <color name="brand_secondary">#CE1E40</color>
 
-    <color name="white">#FFF</color>
+    <color name="white">#ffcbcbcb</color>
+    <color name="grey_light">#ffc6c6c6</color>
     <color name="grey_medium">#ff808080</color>
     <color name="grey_dark">#ff2c2c2c</color>
 </resources>

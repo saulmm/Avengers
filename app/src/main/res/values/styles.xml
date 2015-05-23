@@ -31,5 +31,21 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
+    <style name="Avengers.Text.ComicHeader" parent="Avengers.Text">
+        <item name="android:minHeight">8dp</item>
+        <item name="android:textColor">@color/grey_medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="Avengers.Text.ComicContent" parent="Avengers.Text">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLength">75</item>
+        <item name="android:textColor">@color/grey_light</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
 
 </resources>

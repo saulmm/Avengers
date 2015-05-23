@@ -23,7 +23,6 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:orientation="vertical"
@@ -33,8 +32,7 @@
             android:id="@+id/item_comic_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey_dark"
-            android:textSize="17sp"
+            style="@style/Avengers.Text.ComicHeader"
             tools:text="An awesome title with an awesome large"
             />
 
@@ -42,11 +40,7 @@
             android:id="@+id/item_comic_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin_small"
-            android:ellipsize="end"
-            android:maxLength="150"
-            android:textColor="@color/grey_medium"
-            android:textSize="15sp"
+            style="@style/Avengers.Text.ComicContent"
             tools:text="This is an awesome description, of course is larger than the title, it must be, a well description has all the neccesar"
             />
     </LinearLayout>
