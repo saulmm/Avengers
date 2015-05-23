@@ -113,7 +113,10 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
         mAvengersDetailView.stopLoading();
         mAvengersDetailView.showAvengerName(character.getName());
-        mAvengersDetailView.showAvengerBio(character.getDescription());
+        mAvengersDetailView.showAvengerBio(
+            (character.getDescription().equals(""))
+                ? "No biography available"
+                : character.getDescription());
 
         if (character.getImageUrl() != null)
             mAvengersDetailView.showAvengerImage(character.getImageUrl());

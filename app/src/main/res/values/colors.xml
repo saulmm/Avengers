@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="brand_primary">#1855D8</color>
-    <color name="brand_primary_dark">#ff184aae</color>
-    <color name="brand_secondary">#CE1E40</color>
+    <color name="brand_primary">#ff1b61ff</color>
+    <color name="brand_primary_dark">#ff2160dd</color>
+    <color name="brand_secondary">#ffce0100</color>
 
     <color name="white">#ffcbcbcb</color>
     <color name="grey_light">#ffc6c6c6</color>
