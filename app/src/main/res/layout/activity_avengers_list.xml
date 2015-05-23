@@ -22,6 +22,8 @@
         android:id="@+id/activity_avengers_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/spacing_normal"
+        android:clipToPadding="false"
         android:scrollbars="vertical"
         tools:listitem="@layout/avenger_item"
         />
