@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="years">
+        <item>Select year</item>
         <item>2015</item>
         <item>2014</item>
         <item>2013</item>

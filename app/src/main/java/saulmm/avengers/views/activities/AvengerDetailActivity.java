@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +32,7 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
 
     @InjectView(R.id.activity_avenger_detail_progress)  ProgressBar mProgress;
     @InjectView(R.id.activity_avenger_comics_progress)  ProgressBar mComicsProgress;
-    @InjectView(R.id.activity_avenger_detail_container) LinearLayout mDetailContainer;
+    @InjectView(R.id.activity_avenger_comics_container) LinearLayout mDetailContainer;
     @InjectView(R.id.activity_avenger_detail_biography) TextView mBiographyTextView;
     @InjectView(R.id.activity_avenger_detail_name)      TextView mAvengerName;
     @InjectView(R.id.activity_avenger_image)            ImageView mAvengerImageView;
@@ -144,6 +145,14 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     }
 
     @Override
+    public void clearComicsView() {
+
+        if(mDetailContainer.getChildCount() > 0)
+            mDetailContainer.removeAllViews();
+    }
+
+
+    @Override
     protected void onStop() {
 
         super.onStop();
@@ -160,15 +169,14 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
         View filterView = LayoutInflater.from(this)
             .inflate(R.layout.view_filter_dialog, null);
 
+        Spinner yearSpinner = ButterKnife.findById(filterView, R.id.view_filter_dialog_year_spinner);
+        yearSpinner.setOnItemSelectedListener(avengerDetailPresenter);
+
         new AlertDialog.Builder(this)
             .setTitle("Filter")
+            .setPositiveButton("Accept", (dialog, which) -> avengerDetailPresenter.onDialogButton(which))
+            .setNegativeButton("Cancel", (dialog1, which) -> avengerDetailPresenter.onDialogButton(which))
             .setView(filterView)
-
-            .setPositiveButton("Accept", (dialog, which) ->
-                avengerDetailPresenter.onDialogButton(which))
-
-            .setNegativeButton("Cancel", (dialog1, which) ->
-                avengerDetailPresenter.onDialogButton(which))
             .show();
     }
 }

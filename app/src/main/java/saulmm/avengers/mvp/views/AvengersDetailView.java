@@ -19,4 +19,6 @@ public interface AvengersDetailView extends View {
     void addComic (Comic comic);
 
     void hideComicProgressIfNeeded();
+
+    void clearComicsView();
 }

@@ -8,6 +8,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import saulmm.avengers.model.Comic;
+import saulmm.avengers.model.ComicDate;
 import saulmm.avengers.model.Repository;
 
 public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
@@ -24,12 +25,15 @@ public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
 
     public Observable<Comic> filterByYear(String year) {
 
-        if (mComics != null) {
+        return Observable.from(mComics).filter(comic -> {
 
-            return Observable.from(mComics).filter(comic -> comic != null);
-        }
+                for(ComicDate comicDate: comic.getDates())
+                    if (comicDate.getDate().startsWith(year))
+                        return true;
 
-        return null;
+                return false;
+        });
+
     }
 
     @Override

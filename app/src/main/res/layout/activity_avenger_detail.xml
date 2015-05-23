@@ -100,6 +100,13 @@
             android:visibility="visible"
             />
 
+        <LinearLayout
+            android:id="@+id/activity_avenger_comics_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
         <Button
             android:id="@+id/activity_avenger_detail_filter_button"
             android:layout_width="match_parent"
