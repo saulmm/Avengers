@@ -1,8 +1,10 @@
 package saulmm.avengers.views.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +30,7 @@ import saulmm.avengers.model.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
 import saulmm.avengers.mvp.views.AvengersDetailView;
 
-public class AvengerDetailActivity extends Activity implements AvengersDetailView {
+public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
 
     @InjectView(R.id.activity_avenger_detail_progress)  ProgressBar mProgress;
     @InjectView(R.id.activity_avenger_comics_progress)  ProgressBar mComicsProgress;
@@ -36,6 +38,8 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     @InjectView(R.id.activity_avenger_detail_biography) TextView mBiographyTextView;
     @InjectView(R.id.activity_avenger_detail_name)      TextView mAvengerName;
     @InjectView(R.id.activity_avenger_image)            ImageView mAvengerImageView;
+    @InjectView(R.id.activity_avenger_detail_toolbar)
+    Toolbar mDetailToolbar;
 
     @Inject AvengerDetailPresenter avengerDetailPresenter;
 
@@ -48,6 +52,7 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
         setContentView(R.layout.activity_avenger_detail);
         ButterKnife.inject(this);
 
+        initializeToolbar();
         initializeDependencyInjector();
         initializePresenter();
     }
@@ -57,6 +62,20 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
 
         super.onStart();
         avengerDetailPresenter.onStart();
+    }
+
+    private void initializeToolbar() {
+
+        setSupportActionBar(mDetailToolbar);
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+
     }
 
     private void initializePresenter() {

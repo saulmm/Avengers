@@ -25,15 +25,19 @@ public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
 
     public Observable<Comic> filterByYear(String year) {
 
-        return Observable.from(mComics).filter(comic -> {
+        if (mComics != null) {
+            return Observable.from(mComics).filter(comic -> {
 
-                for(ComicDate comicDate: comic.getDates())
+                for (ComicDate comicDate : comic.getDates())
                     if (comicDate.getDate().startsWith(year))
                         return true;
 
                 return false;
-        });
+            });
 
+        }
+
+        return null;
     }
 
     @Override
