@@ -2,12 +2,14 @@ package saulmm.avengers.views.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +18,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -28,7 +31,8 @@ import saulmm.avengers.mvp.views.AvengersDetailView;
 public class AvengerDetailActivity extends Activity implements AvengersDetailView {
 
     @InjectView(R.id.activity_avenger_detail_progress)  ProgressBar mProgress;
-    @InjectView(R.id.activity_avenger_detail_container) LinearLayout mDetailContainer;
+    @InjectView(R.id.activity_avenger_comics_progress)  ProgressBar mComicsProgress;
+    @InjectView(R.id.activity_avenger_comics_container) LinearLayout mDetailContainer;
     @InjectView(R.id.activity_avenger_detail_biography) TextView mBiographyTextView;
     @InjectView(R.id.activity_avenger_detail_name)      TextView mAvengerName;
     @InjectView(R.id.activity_avenger_image)            ImageView mAvengerImageView;
@@ -88,6 +92,12 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     }
 
     @Override
+    public void startLoadingComics() {
+
+        mComicsProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showAvengerBio(String text) {
 
         mBiographyTextView.setVisibility(View.VISIBLE);
@@ -128,9 +138,45 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     }
 
     @Override
+    public void hideComicProgressIfNeeded() {
+
+        if (mComicsProgress.getVisibility() == View.VISIBLE)
+            mComicsProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void clearComicsView() {
+
+        if(mDetailContainer.getChildCount() > 0)
+            mDetailContainer.removeAllViews();
+    }
+
+
+    @Override
     protected void onStop() {
 
         super.onStop();
         avengerDetailPresenter.onStop();
+    }
+
+    @OnClick(R.id.activity_avenger_detail_filter_button)
+    public void onButtonClicked () {
+        showFilterDialog();
+    }
+
+    public void showFilterDialog () {
+
+        View filterView = LayoutInflater.from(this)
+            .inflate(R.layout.view_filter_dialog, null);
+
+        Spinner yearSpinner = ButterKnife.findById(filterView, R.id.view_filter_dialog_year_spinner);
+        yearSpinner.setOnItemSelectedListener(avengerDetailPresenter);
+
+        new AlertDialog.Builder(this)
+            .setTitle("Filter")
+            .setPositiveButton("Accept", (dialog, which) -> avengerDetailPresenter.onDialogButton(which))
+            .setNegativeButton("Cancel", (dialog1, which) -> avengerDetailPresenter.onDialogButton(which))
+            .setView(filterView)
+            .show();
     }
 }
