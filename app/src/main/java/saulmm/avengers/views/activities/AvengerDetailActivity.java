@@ -30,6 +30,7 @@ import saulmm.avengers.mvp.views.AvengersDetailView;
 public class AvengerDetailActivity extends Activity implements AvengersDetailView {
 
     @InjectView(R.id.activity_avenger_detail_progress)  ProgressBar mProgress;
+    @InjectView(R.id.activity_avenger_comics_progress)  ProgressBar mComicsProgress;
     @InjectView(R.id.activity_avenger_detail_container) LinearLayout mDetailContainer;
     @InjectView(R.id.activity_avenger_detail_biography) TextView mBiographyTextView;
     @InjectView(R.id.activity_avenger_detail_name)      TextView mAvengerName;
@@ -90,6 +91,12 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     }
 
     @Override
+    public void startLoadingComics() {
+
+        mComicsProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showAvengerBio(String text) {
 
         mBiographyTextView.setVisibility(View.VISIBLE);
@@ -130,6 +137,13 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
     }
 
     @Override
+    public void hideComicProgressIfNeeded() {
+
+        if (mComicsProgress.getVisibility() == View.VISIBLE)
+            mComicsProgress.setVisibility(View.GONE);
+    }
+
+    @Override
     protected void onStop() {
 
         super.onStop();
@@ -147,8 +161,14 @@ public class AvengerDetailActivity extends Activity implements AvengersDetailVie
             .inflate(R.layout.view_filter_dialog, null);
 
         new AlertDialog.Builder(this)
-            .setTitle("Filter by:")
+            .setTitle("Filter")
             .setView(filterView)
+
+            .setPositiveButton("Accept", (dialog, which) ->
+                avengerDetailPresenter.onDialogButton(which))
+
+            .setNegativeButton("Cancel", (dialog1, which) ->
+                avengerDetailPresenter.onDialogButton(which))
             .show();
     }
 }

@@ -2,12 +2,11 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Intent;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscription;
+import saulmm.avengers.Utils;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
@@ -27,7 +26,6 @@ public class AvengerDetailPresenter implements Presenter {
 
     private Subscription mComicsSubscription;
     private Subscription mCharacterSubscription;
-    private List<Comic> mComics;
 
     @Inject
     public AvengerDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
@@ -79,25 +77,23 @@ public class AvengerDetailPresenter implements Presenter {
         );
 
         mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
-            comics      -> Observable.from(comics).subscribe(comic -> {
-                onComicReceived(comic);
-                mComics = comics;
-            },
+            comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic),
             error       -> onAvengerComicError(error)));
-    }
 
+        mAvengersDetailView.startLoading();
+    }
 
 
     private void onComicReceived(Comic comic) {
 
+        mAvengersDetailView.hideComicProgressIfNeeded();
         mAvengersDetailView.addComic(comic);
     }
 
     private void onAvengerComicError(Throwable trowable) {
 
         System.out.println("[ERROR]" + " AvengerDetailPresenter, onAvengerComicError (79)- " +
-            ""+trowable.getMessage());
-
+            "" + trowable.getMessage());
     }
 
     private void manageError(Throwable trowable) {
@@ -115,5 +111,17 @@ public class AvengerDetailPresenter implements Presenter {
 
         if (character.getImageUrl() != null)
             mAvengersDetailView.showAvengerImage(character.getImageUrl());
+    }
+
+    public void onDialogButton(int which) {
+
+        if (which == Utils.DIALOG_ACCEPT)
+            System.out.println("[DEBUG]" + " AvengerDetailPresenter onDialogButton - " +
+                "Accepted");
+
+        else if (which == Utils.DIALOG_CANCEL)
+            System.out.println("[DEBUG]" + " AvengerDetailPresenter onDialogButton - " +
+                "Cancelled");
+
     }
 }
