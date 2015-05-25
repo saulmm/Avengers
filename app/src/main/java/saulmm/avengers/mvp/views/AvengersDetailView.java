@@ -6,7 +6,7 @@ public interface AvengersDetailView extends View {
 
     void startLoading ();
 
-    void stopLoading ();
+    void stopLoadingAvengersInformation();
 
     void startLoadingComics();
 
@@ -18,7 +18,9 @@ public interface AvengersDetailView extends View {
 
     void addComic (Comic comic);
 
-    void hideComicProgressIfNeeded();
+    void stopLoadingComicsIfNeeded();
 
     void clearComicsView();
+
+    void showError(String s);
 }

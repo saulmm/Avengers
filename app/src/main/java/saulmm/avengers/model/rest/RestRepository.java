@@ -3,16 +3,22 @@ package saulmm.avengers.model.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.converter.GsonConverter;
 import rx.Observable;
 import saulmm.avengers.model.Comic;
 import saulmm.avengers.model.Repository;
+import saulmm.avengers.model.rest.exceptions.NetworkErrorException;
+import saulmm.avengers.model.rest.exceptions.NetworkTimeOutException;
+import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 
 public class RestRepository implements Repository {
 
@@ -33,6 +39,7 @@ public class RestRepository implements Repository {
             .setLogLevel(RestAdapter.LogLevel.HEADERS_AND_ARGS)
             .setRequestInterceptor(authorizationInterceptor)
             .setConverter(new GsonConverter(gson))
+            .setErrorHandler(new RetrofitErrorHandler())
             .build();
 
         mMarvelApi = marvelApiAdapter.create(MarvelApi.class);
@@ -49,6 +56,28 @@ public class RestRepository implements Repository {
         }
     };
 
+    public class RetrofitErrorHandler implements retrofit.ErrorHandler {
+
+        @Override
+        public Throwable handleError(retrofit.RetrofitError cause) {
+
+            if (cause.getKind() == retrofit.RetrofitError.Kind.NETWORK) {
+
+                if (cause.getCause() instanceof SocketTimeoutException)
+                    return new NetworkTimeOutException();
+
+                else if (cause.getCause() instanceof UnknownHostException)
+                    return new NetworkUknownHostException();
+
+            } else {
+
+                return new NetworkErrorException();
+            }
+
+            return new Exception();
+        };
+    }
+
     @Override
     public Observable<saulmm.avengers.model.Character> getCharacter(int characterId) {
         return mMarvelApi.getCharacter(characterId);
@@ -61,5 +90,11 @@ public class RestRepository implements Repository {
         final String comicsType     = "comic";
 
         return mMarvelApi.getCharacterComics(characterId, comicsFormat, comicsType);
+
+    }
+
+    public Observable<RetrofitError> emitRetrofitError (RetrofitError retrofitError) {
+
+        return Observable.just(retrofitError);
     }
 }
