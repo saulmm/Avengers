@@ -105,7 +105,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     }
 
     @Override
-    public void stopLoading() {
+    public void stopLoadingAvengersInformation() {
 
         mProgress.setVisibility(View.GONE);
     }
@@ -157,7 +157,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     }
 
     @Override
-    public void hideComicProgressIfNeeded() {
+    public void stopLoadingComicsIfNeeded() {
 
         if (mComicsProgress.getVisibility() == View.VISIBLE)
             mComicsProgress.setVisibility(View.GONE);
@@ -170,6 +170,19 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
             mDetailContainer.removeAllViews();
     }
 
+    @Override
+    public void showError(String errorMessage) {
+
+        stopLoadingAvengersInformation();
+        stopLoadingComicsIfNeeded();
+
+        new AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setPositiveButton("Accept", (dialog, which) -> finish())
+            .setMessage(errorMessage)
+            .setCancelable(false)
+            .show();
+    }
 
     @Override
     protected void onStop() {
