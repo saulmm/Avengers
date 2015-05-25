@@ -14,6 +14,9 @@ import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.Character;
 import saulmm.avengers.model.Comic;
+import saulmm.avengers.model.rest.exceptions.NetworkErrorException;
+import saulmm.avengers.model.rest.exceptions.NetworkTimeOutException;
+import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 import saulmm.avengers.mvp.views.AvengersDetailView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.activities.AvengersListActivity;
@@ -78,13 +81,13 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
         mAvengersDetailView.startLoading();
 
         mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
-            character -> onAvengerReceived(character),
-            error -> manageError(error)
-        );
+            character   -> onAvengerReceived(character),
+            error       -> manageError(error));
 
         mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
-            comics -> Observable.from(comics).subscribe(comic -> onComicReceived(comic),
-                error -> onAvengerComicError(error)));
+            comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic)),
+            throwable   -> manageError(throwable));
+
 
         mAvengersDetailView.startLoading();
     }
@@ -92,26 +95,28 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
     private void onComicReceived(Comic comic) {
 
-        mAvengersDetailView.hideComicProgressIfNeeded();
+        mAvengersDetailView.stopLoadingComicsIfNeeded();
         mAvengersDetailView.addComic(comic);
     }
 
-    private void onAvengerComicError(Throwable trowable) {
 
-        System.out.println("[ERROR]" + " AvengerDetailPresenter, onAvengerComicError (79)- " +
-            "" + trowable.getMessage());
-    }
 
-    private void manageError(Throwable trowable) {
+    private void manageError(Throwable error) {
 
-        System.out.println("[ERROR]" + " AvengerDetailPresenter, manageError (86)- " +
-            "" + trowable.getMessage());
+        if (error.getCause()   instanceof NetworkUknownHostException)
+            mAvengersDetailView.showError("It has not been possible to resolve marvel api");
+
+        if (error.getCause()   instanceof NetworkTimeOutException)
+            mAvengersDetailView.showError ("It has ended the waiting time for connecting to the server marvel");
+
+        if (error.getCause()   instanceof NetworkErrorException)
+            mAvengersDetailView.showError ("There was a problem with the network");
     }
 
 
     private void onAvengerReceived(Character character) {
 
-        mAvengersDetailView.stopLoading();
+        mAvengersDetailView.stopLoadingAvengersInformation();
         mAvengersDetailView.showAvengerName(character.getName());
         mAvengersDetailView.showAvengerBio(
             (character.getDescription().equals(""))
@@ -128,7 +133,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
             System.out.println("[DEBUG]" + " AvengerDetailPresenter onDialogButton - " +
                 "Accepted");
 
-        else if (which == Utils.DIALOG_CANCEL)
+        if (which == Utils.DIALOG_CANCEL)
             System.out.println("[DEBUG]" + " AvengerDetailPresenter onDialogButton - " +
                 "Cancelled");
 
@@ -151,8 +156,6 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        // Do nothing
     }
-
-
 }
