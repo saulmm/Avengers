@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_normal"
                 android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:navigationIcon="?attr/homeAsUpIndicator"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 />
         </FrameLayout>
 

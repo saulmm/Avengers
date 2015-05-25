@@ -46,6 +46,6 @@ public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
         return mRepository.getCharacterComics(mCharacterId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map(comics ->  mComics = comics);
+            .map(comics -> mComics = comics);
     }
 }
