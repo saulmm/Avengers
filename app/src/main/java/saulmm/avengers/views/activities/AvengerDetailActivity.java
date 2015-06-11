@@ -1,6 +1,7 @@
 package saulmm.avengers.views.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,14 +33,13 @@ import saulmm.avengers.mvp.views.AvengersDetailView;
 
 public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
 
-    @InjectView(R.id.activity_avenger_detail_progress)  ProgressBar mProgress;
-    @InjectView(R.id.activity_avenger_comics_progress)  ProgressBar mComicsProgress;
-    @InjectView(R.id.activity_avenger_comics_container) LinearLayout mDetailContainer;
-    @InjectView(R.id.activity_avenger_detail_biography) TextView mBiographyTextView;
-    @InjectView(R.id.activity_avenger_detail_name)      TextView mAvengerName;
-    @InjectView(R.id.activity_avenger_image)            ImageView mAvengerImageView;
-    @InjectView(R.id.activity_avenger_detail_toolbar)
-    Toolbar mDetailToolbar;
+    @InjectView(R.id.activity_avenger_detail_progress)      ProgressBar mProgress;
+    @InjectView(R.id.activity_avenger_comics_progress)      ProgressBar mComicsProgress;
+    @InjectView(R.id.activity_avenger_comics_container)     LinearLayout mDetailContainer;
+    @InjectView(R.id.activity_avenger_detail_biography)     TextView mBiographyTextView;
+    @InjectView(R.id.activity_avenger_image)                ImageView mAvengerImageView;
+    @InjectView(R.id.activity_avenger_detail_toolbar)       Toolbar mDetailToolbar;
+    @InjectView(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mDetailCollapsingToolbar;
 
     @Inject AvengerDetailPresenter avengerDetailPresenter;
 
@@ -132,7 +132,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Override
     public void showAvengerName(String name) {
 
-        mAvengerName.setText(name);
+        mDetailCollapsingToolbar.setTitle(name);
     }
 
     @Override

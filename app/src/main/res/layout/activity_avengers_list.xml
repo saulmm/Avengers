@@ -15,7 +15,7 @@
         android:elevation="8dp"
         android:background="@color/brand_primary"
         android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Light"
         />
 
     <android.support.v7.widget.RecyclerView
