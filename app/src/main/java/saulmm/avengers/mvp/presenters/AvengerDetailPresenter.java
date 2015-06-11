@@ -88,7 +88,6 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
             comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic)),
             throwable   -> manageError(throwable));
 
-
         mAvengersDetailView.startLoading();
     }
 
@@ -149,8 +148,9 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
             String[] yearArray = mActivityContext.getResources().getStringArray(R.array.years);
             String selectedYear = yearArray[position];
 
-            mGetCharacterComicsUsecase.filterByYear(selectedYear).subscribe(
-                comic -> onComicReceived(comic));
+            mGetCharacterComicsUsecase.filterByYear(selectedYear)
+                .subscribe(
+                    comic -> onComicReceived(comic));
         }
     }
 

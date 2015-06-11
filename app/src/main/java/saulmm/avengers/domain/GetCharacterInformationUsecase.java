@@ -23,7 +23,7 @@ public class GetCharacterInformationUsecase implements Usecase<saulmm.avengers.m
     public Observable<Character> execute() {
 
         return mRepository.getCharacter(mCharacterId)
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
     }
 }
