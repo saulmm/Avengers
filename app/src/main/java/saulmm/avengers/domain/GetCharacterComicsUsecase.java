@@ -34,7 +34,6 @@ public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
 
                 return false;
             });
-
         }
 
         return null;
