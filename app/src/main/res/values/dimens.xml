@@ -1,5 +1,6 @@
 <resources>
     <!-- Typical spacing between two views -->
+    <dimen name="spacing_huge">32dp</dimen>
     <dimen name="spacing_normal">16dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
