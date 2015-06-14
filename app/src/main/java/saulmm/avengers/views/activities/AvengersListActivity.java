@@ -1,7 +1,7 @@
 package saulmm.avengers.views.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,8 +23,8 @@ import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
 
 
-public class AvengersListActivity extends Activity implements
-    AvengersView {
+public class AvengersListActivity extends AppCompatActivity
+    implements AvengersView {
 
     public final static String EXTRA_CHARACTER_ID = "character_id";
 
@@ -47,7 +47,7 @@ public class AvengersListActivity extends Activity implements
 
     private void initializeToolbar() {
 
-        mAvengersToolbar.setTitle("Avengers");
+        setSupportActionBar(mAvengersToolbar);
     }
 
     @Override
