@@ -98,17 +98,15 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
         mAvengersDetailView.addComic(comic);
     }
 
-
-
     private void manageError(Throwable error) {
 
-        if (error.getCause()   instanceof NetworkUknownHostException)
+        if (error instanceof NetworkUknownHostException)
             mAvengersDetailView.showError("It has not been possible to resolve marvel api");
 
-        if (error.getCause()   instanceof NetworkTimeOutException)
+        if (error instanceof NetworkTimeOutException)
             mAvengersDetailView.showError ("It has ended the waiting time for connecting to the server marvel");
 
-        if (error.getCause()   instanceof NetworkErrorException)
+        if (error instanceof NetworkErrorException)
             mAvengersDetailView.showError ("There was a problem with the network");
     }
 
