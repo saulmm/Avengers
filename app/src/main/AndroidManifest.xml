@@ -24,10 +24,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".views.activities.AvengerDetailActivity"
-            android:theme="@style/AvengerDetailActivityTheme"/>
-
-
+        <activity
+            android:name=".views.activities.AvengerDetailActivity"
+            android:parentActivityName=".views.activities.AvengersListActivity"
+            android:theme="@style/AvengerDetailActivityTheme"
+            />
     </application>
 
 </manifest>

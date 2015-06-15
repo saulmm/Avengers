@@ -5,18 +5,22 @@
  */
 package saulmm.avengers.domain;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
-import rx.Subscriber;
-import rx.Subscription;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import saulmm.avengers.model.Comic;
+import saulmm.avengers.model.ComicDate;
 import saulmm.avengers.model.Repository;
 
-public class GetCharacterComicsUsecase implements Usecase {
+public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
 
     private final Repository mRepository;
     private int mCharacterId;
+    private List<Comic> mComics;
 
     @Inject public GetCharacterComicsUsecase(int characterId, Repository repository) {
 
@@ -24,12 +28,28 @@ public class GetCharacterComicsUsecase implements Usecase {
         mRepository = repository;
     }
 
-    @Override
-    public Subscription execute(Subscriber subscriber) {
+    public Observable<Comic> filterByYear(String year) {
 
-        return mRepository.getCharacter(mCharacterId)
+        if (mComics != null) {
+            return Observable.from(mComics).filter(comic -> {
+
+                for (ComicDate comicDate : comic.getDates())
+                    if (comicDate.getDate().startsWith(year))
+                        return true;
+
+                return false;
+            });
+        }
+
+        return null;
+    }
+
+    @Override
+    public Observable<List<Comic>> execute() {
+
+        return mRepository.getCharacterComics(mCharacterId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(subscriber);
+            .map(comics -> mComics = comics);
     }
 }

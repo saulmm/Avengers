@@ -5,10 +5,9 @@
  */
 package saulmm.avengers.domain;
 
-import rx.Subscriber;
-import rx.Subscription;
+import rx.Observable;
 
-public interface Usecase {
+public interface Usecase<T> {
 
-    Subscription execute(Subscriber subscriber);
+    Observable<T> execute();
 }

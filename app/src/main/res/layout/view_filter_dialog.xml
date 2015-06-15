@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Avengers.ViewGroup"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filter by comic year"
+        style="@style/Avengers.Text.Header"
+        />
+
+    <Spinner
+        android:id="@+id/view_filter_dialog_year_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:entries="@array/years"
+    />
+
+</LinearLayout>

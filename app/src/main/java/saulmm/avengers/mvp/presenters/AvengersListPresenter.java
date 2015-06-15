@@ -16,6 +16,8 @@ import saulmm.avengers.model.Character;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;
+import saulmm.avengers.views.activities.AvengerDetailActivity;
+import saulmm.avengers.views.activities.AvengersListActivity;
 
 public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
@@ -52,7 +54,10 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     @Override
     public void onElementClick(int position) {
 
-        // Todo
+        int characterId = mAvengersList.get(position).getId();
+        Intent i = new Intent (mContext, AvengerDetailActivity.class);
+        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
+        mContext.startActivity(i);
     }
 
     @Override
