@@ -23,8 +23,7 @@ public class AvengerInformationModule {
         mCharacterId = characterId;
     }
 
-    @Provides @Activity
-    GetCharacterInformationUsecase provideGetCharacterInformationUsecase (Repository repository) {
+    @Provides @Activity GetCharacterInformationUsecase provideGetCharacterInformationUsecase (Repository repository) {
 
         return new GetCharacterInformationUsecase(mCharacterId, repository);
     }
