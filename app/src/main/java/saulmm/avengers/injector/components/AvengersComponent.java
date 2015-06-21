@@ -13,7 +13,7 @@ import dagger.Component;
 import saulmm.avengers.injector.Activity;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengersModule;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.views.activities.AvengersListActivity;
 
 @Activity

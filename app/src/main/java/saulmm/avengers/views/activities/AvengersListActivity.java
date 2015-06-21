@@ -22,7 +22,7 @@ import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengersModule;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.presenters.AvengersListPresenter;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;

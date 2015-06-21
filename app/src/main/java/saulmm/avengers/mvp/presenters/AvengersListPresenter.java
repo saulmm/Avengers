@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;

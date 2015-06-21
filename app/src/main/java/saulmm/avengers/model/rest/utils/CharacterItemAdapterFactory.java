@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package saulmm.avengers.model.rest;
+package saulmm.avengers.model.rest.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -38,7 +38,7 @@ public class CharacterItemAdapterFactory implements TypeAdapterFactory {
 
                 JsonElement jsonElement = elementAdapter.read(in);
 
-                if (type.getRawType() == saulmm.avengers.model.Character.class)
+                if (type.getRawType() == saulmm.avengers.model.entities.Character.class)
                    return adaptJsonToCharacter(jsonElement, type);
 
                 if (type.getRawType() == List.class)

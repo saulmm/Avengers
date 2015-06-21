@@ -1,4 +1,4 @@
-package saulmm.avengers.model;
+package saulmm.avengers.model.entities;
 
 public class ComicDate {
 

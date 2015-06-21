@@ -20,11 +20,14 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.converter.GsonConverter;
 import rx.Observable;
-import saulmm.avengers.model.Comic;
-import saulmm.avengers.model.Repository;
+import saulmm.avengers.model.entities.*;
+import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.exceptions.NetworkErrorException;
 import saulmm.avengers.model.rest.exceptions.NetworkTimeOutException;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
+import saulmm.avengers.model.rest.utils.CharacterItemAdapterFactory;
+import saulmm.avengers.model.rest.utils.MarvelApiUtils;
 
 public class RestRepository implements Repository {
 
@@ -89,8 +92,14 @@ public class RestRepository implements Repository {
     }
 
     @Override
-    public Observable<saulmm.avengers.model.Character> getCharacter(int characterId) {
+    public Observable<saulmm.avengers.model.entities.Character> getCharacter(int characterId) {
         return mMarvelApi.getCharacter(characterId);
+    }
+
+    @Override
+    public Observable<Character> getCharacters() {
+
+        return null;
     }
 
     @Override

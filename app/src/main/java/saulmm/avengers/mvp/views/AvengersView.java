@@ -7,7 +7,7 @@ package saulmm.avengers.mvp.views;
 
 import java.util.List;
 
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 
 public interface AvengersView extends View {
 

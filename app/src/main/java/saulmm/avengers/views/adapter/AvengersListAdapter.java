@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import saulmm.avengers.R;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.views.RecyclerClickListener;
 
 public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapter.AvengerViewHolder> {

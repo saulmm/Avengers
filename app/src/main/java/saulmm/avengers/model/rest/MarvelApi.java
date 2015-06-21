@@ -11,8 +11,8 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
-import saulmm.avengers.model.Character;
-import saulmm.avengers.model.Comic;
+import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.entities.Comic;
 
 public interface MarvelApi {
 
