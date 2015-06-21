@@ -21,7 +21,6 @@ import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
-import saulmm.avengers.injector.modules.AvengersModule;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.presenters.AvengersListPresenter;
 import saulmm.avengers.mvp.views.AvengersView;
@@ -72,7 +71,6 @@ public class AvengersListActivity extends AppCompatActivity
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
         DaggerAvengersComponent.builder()
-            .avengersModule(new AvengersModule())
             .activityModule(new ActivityModule(this))
             .appComponent(avengersApplication.getAppComponent())
             .build().inject(this);
