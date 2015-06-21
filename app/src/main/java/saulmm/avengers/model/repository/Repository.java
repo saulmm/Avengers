@@ -15,7 +15,7 @@ public interface Repository {
 
     Observable<Character> getCharacter (final int characterId);
 
-    Observable<saulmm.avengers.model.entities.Character> getCharacters ();
+    Observable<List<Character>> getCharacters (int offset);
 
     Observable<List<Comic>> getCharacterComics (final int characterId);
 }

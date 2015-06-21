@@ -93,13 +93,13 @@ public class RestRepository implements Repository {
 
     @Override
     public Observable<saulmm.avengers.model.entities.Character> getCharacter(int characterId) {
-        return mMarvelApi.getCharacter(characterId);
+        return mMarvelApi.getCharacterById(characterId);
     }
 
     @Override
-    public Observable<Character> getCharacters() {
+    public Observable<List<Character>> getCharacters(int currentOffset) {
 
-        return null;
+        return mMarvelApi.getCharacters(currentOffset);
     }
 
     @Override
