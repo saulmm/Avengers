@@ -16,7 +16,12 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
+
+import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.entities.Comic;
 
 public class CharacterItemAdapterFactory implements TypeAdapterFactory {
 
@@ -38,11 +43,29 @@ public class CharacterItemAdapterFactory implements TypeAdapterFactory {
 
                 JsonElement jsonElement = elementAdapter.read(in);
 
-                if (type.getRawType() == saulmm.avengers.model.entities.Character.class)
+                if (type.getRawType() == Character.class)
                    return adaptJsonToCharacter(jsonElement, type);
 
-                if (type.getRawType() == List.class)
-                    return adaptJsonToComic(jsonElement, type);
+                if (type.getRawType() == List.class) {
+
+                    // The List is parametrised, i.e List<Character>
+                    if (type.getType() instanceof ParameterizedType) {
+
+                        Type[] genericArguments = ((ParameterizedType) type.getType())
+                            .getActualTypeArguments();
+
+                        if (genericArguments.length == 1) {
+
+                            if (genericArguments[0] == Character.class)
+                                return adaptJsonToCharacterList(jsonElement, type);
+
+                             else if (genericArguments[0] == Comic.class)
+                                return adaptJsonToComic(jsonElement, type);
+                        }
+                    }
+
+
+                }
 
 
                 return delegate.fromJsonTree(jsonElement);
@@ -95,6 +118,26 @@ public class CharacterItemAdapterFactory implements TypeAdapterFactory {
                 if (comicObject.has("pageCount") && comicObject.has("isbn")) {
                     return new Gson().fromJson(marvelResultsElement, type.getType());
                 }
+            }
+        }
+
+        return null;
+    }
+
+    private <T> T adaptJsonToCharacterList(JsonElement jsonElement, TypeToken<T> type) {
+
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        if (jsonObject.has("data")) {
+
+            JsonElement marvelDataElement = jsonObject.get("data");
+            JsonObject marvelDataObject = marvelDataElement.getAsJsonObject();
+
+            if (marvelDataObject.get("count").getAsInt() > 0) {
+
+                JsonElement marvelResultsElement = marvelDataObject.get("results");
+                JsonArray marvelResults = marvelResultsElement.getAsJsonArray();
+                return new Gson().fromJson(marvelResults, type.getType());
             }
         }
 
