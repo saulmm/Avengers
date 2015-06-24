@@ -85,7 +85,9 @@ public class AvengersListActivity extends AppCompatActivity
     @Override
     public void showAvengersList(List<Character> avengers) {
 
-        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers, this, mAvengersListPresenter);
+        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers,
+            this, mAvengersListPresenter);
+
         mAvengersRecycler.setAdapter(avengersListAdapter);
     }
 
