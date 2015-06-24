@@ -10,10 +10,10 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import saulmm.avengers.model.Character;
-import saulmm.avengers.model.Repository;
+import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.repository.Repository;
 
-public class GetCharacterInformationUsecase implements Usecase<saulmm.avengers.model.Character> {
+public class GetCharacterInformationUsecase implements Usecase<saulmm.avengers.model.entities.Character> {
 
     private final Repository mRepository;
     private int mCharacterId;

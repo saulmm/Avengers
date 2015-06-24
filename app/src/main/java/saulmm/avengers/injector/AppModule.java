@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.model.Repository;
+import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.RestRepository;
 
 @Module

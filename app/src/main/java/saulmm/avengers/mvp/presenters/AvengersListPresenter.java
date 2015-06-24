@@ -12,7 +12,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import saulmm.avengers.model.Character;
+import saulmm.avengers.domain.GetCharactersUsecase;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;
@@ -21,28 +22,35 @@ import saulmm.avengers.views.activities.AvengersListActivity;
 
 public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
-    private final List<Character> mAvengersList;
-    private final Context mContext;
+    private final GetCharactersUsecase mCharactersUsecase;
     private AvengersView mAvengersView;
+    private final Context mContext;
     private Intent mIntent;
+    private List<Character> mCharacters;
 
-    @Inject public AvengersListPresenter (List<Character> avengers, Context context) {
+    @Inject public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
 
-        mAvengersList = avengers;
         mContext = context;
+        mCharactersUsecase = charactersUsecase;
     }
 
-    @Override
+
+    @Override @SuppressWarnings("Convert2MethodRef")
     public void onStart() {
 
-        // Unused
+        mCharactersUsecase.execute().subscribe(
+            characters1 -> {
+
+                mCharacters = characters1;
+                mAvengersView.showAvengersList(mCharacters);
+            }
+        );
     }
 
     @Override
     public void attachView(View v) {
 
         mAvengersView = (AvengersView) v;
-        mAvengersView.showAvengersList(mAvengersList);
     }
 
     @Override
@@ -54,7 +62,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     @Override
     public void onElementClick(int position) {
 
-        int characterId = mAvengersList.get(position).getId();
+        int characterId = mCharacters.get(position).getId();
         Intent i = new Intent (mContext, AvengerDetailActivity.class);
         i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
         mContext.startActivity(i);

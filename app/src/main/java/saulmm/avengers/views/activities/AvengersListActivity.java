@@ -21,8 +21,7 @@ import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
-import saulmm.avengers.injector.modules.AvengersModule;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.presenters.AvengersListPresenter;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
@@ -72,7 +71,6 @@ public class AvengersListActivity extends AppCompatActivity
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
         DaggerAvengersComponent.builder()
-            .avengersModule(new AvengersModule())
             .activityModule(new ActivityModule(this))
             .appComponent(avengersApplication.getAppComponent())
             .build().inject(this);
@@ -87,7 +85,9 @@ public class AvengersListActivity extends AppCompatActivity
     @Override
     public void showAvengersList(List<Character> avengers) {
 
-        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers, this, mAvengersListPresenter);
+        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers,
+            this, mAvengersListPresenter);
+
         mAvengersRecycler.setAdapter(avengersListAdapter);
     }
 

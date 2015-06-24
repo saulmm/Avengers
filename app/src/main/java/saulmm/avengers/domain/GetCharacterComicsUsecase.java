@@ -12,9 +12,9 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import saulmm.avengers.model.Comic;
-import saulmm.avengers.model.ComicDate;
-import saulmm.avengers.model.Repository;
+import saulmm.avengers.model.entities.Comic;
+import saulmm.avengers.model.entities.ComicDate;
+import saulmm.avengers.model.repository.Repository;
 
 public class GetCharacterComicsUsecase implements Usecase<List<Comic>> {
 

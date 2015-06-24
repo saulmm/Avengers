@@ -5,7 +5,7 @@
  */
 package saulmm.avengers.mvp.views;
 
-import saulmm.avengers.model.Comic;
+import saulmm.avengers.model.entities.Comic;
 
 public interface AvengersDetailView extends View {
 

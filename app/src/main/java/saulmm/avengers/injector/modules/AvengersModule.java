@@ -12,7 +12,7 @@ import dagger.Module;
 import dagger.Provides;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.Activity;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 
 @Module
 public class AvengersModule {

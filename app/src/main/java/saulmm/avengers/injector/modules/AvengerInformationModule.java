@@ -11,7 +11,7 @@ import dagger.Provides;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.injector.Activity;
-import saulmm.avengers.model.Repository;
+import saulmm.avengers.model.repository.Repository;
 
 @Module
 public class AvengerInformationModule {
@@ -23,8 +23,7 @@ public class AvengerInformationModule {
         mCharacterId = characterId;
     }
 
-    @Provides @Activity
-    GetCharacterInformationUsecase provideGetCharacterInformationUsecase (Repository repository) {
+    @Provides @Activity GetCharacterInformationUsecase provideGetCharacterInformationUsecase (Repository repository) {
 
         return new GetCharacterInformationUsecase(mCharacterId, repository);
     }

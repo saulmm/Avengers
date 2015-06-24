@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import saulmm.avengers.R;
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.views.RecyclerClickListener;
 
 public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapter.AvengerViewHolder> {
@@ -72,6 +74,11 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
 
             avengerTitleTextView.setText(character.getName());
             avengerThumbImageView.setImageResource(character.getImageResource());
+
+            Glide.with(context)
+                .load(character.getImageUrl())
+                .crossFade()
+                .into(avengerThumbImageView);
         }
 
         private void bindListener(View itemView, final RecyclerClickListener recyclerClickListener) {

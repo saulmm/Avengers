@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--suppress Annotator -->
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:orientation="vertical"
-    android:layout_marginLeft="@dimen/spacing_normal"
-    android:layout_marginRight="@dimen/spacing_normal"
+    android:layout_height="55dp"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground"
+    android:paddingLeft="@dimen/spacing_normal"
+    android:paddingRight="@dimen/spacing_normal"
     android:layout_marginBottom="@dimen/spacing_normal"
     >
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/item_avenger_thumb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
         android:scaleType="centerCrop"
         tools:src="@drawable/thumb_iron_man"
         />
@@ -22,15 +26,13 @@
         android:id="@+id/item_avenger_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_dark"
         android:gravity="bottom"
         android:paddingBottom="@dimen/spacing_normal"
         android:paddingLeft="@dimen/spacing_normal"
         android:paddingRight="@dimen/spacing_normal"
         android:paddingTop="@dimen/spacing_normal"
-        android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="16sp"
         tools:text="An amazing avenger"
         />
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

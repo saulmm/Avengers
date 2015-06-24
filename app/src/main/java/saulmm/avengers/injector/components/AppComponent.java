@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.injector.AppModule;
-import saulmm.avengers.model.Repository;
+import saulmm.avengers.model.repository.Repository;
 
 @Singleton @Component(modules = AppModule.class)
 public interface AppComponent {
