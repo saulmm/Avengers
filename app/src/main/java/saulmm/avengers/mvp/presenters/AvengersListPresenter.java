@@ -73,4 +73,11 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
         // Unused
     }
+
+    public void onListEndReached() {
+        
+        System.out.println("[DEBUG]" + " AvengersListPresenter onListEndReached - " +
+            "Reached");
+
+    }
 }

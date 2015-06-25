@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
 
 import java.util.List;
@@ -80,6 +81,7 @@ public class AvengersListActivity extends AppCompatActivity
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mAvengersRecycler.setLayoutManager(linearLayoutManager);
+        mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
 
     @Override
@@ -97,4 +99,20 @@ public class AvengersListActivity extends AppCompatActivity
         super.onStop();
         mAvengersListPresenter.onStop();
     }
+
+    private OnScrollListener mOnScrollListener = new OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int visibleItemsCount   = layoutManager.getChildCount();
+            int totalItemsCount     = layoutManager.getItemCount();
+            int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
+
+            if (visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
+
+                mAvengersListPresenter.onListEndReached();
+            }
+        }
+    };
 }
