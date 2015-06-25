@@ -6,11 +6,14 @@
 package saulmm.avengers.views.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -33,8 +36,9 @@ public class AvengersListActivity extends AppCompatActivity
 
     public final static String EXTRA_CHARACTER_ID = "character_id";
 
-    @InjectView(R.id.activity_avengers_recycler) RecyclerView mAvengersRecycler;
-    @InjectView(R.id.activity_avengers_toolbar) Toolbar mAvengersToolbar;
+    @InjectView(R.id.activity_avengers_recycler)    RecyclerView mAvengersRecycler;
+    @InjectView(R.id.activity_avengers_toolbar)     Toolbar mAvengersToolbar;
+    @InjectView(R.id.activity_avengers_progress)    ProgressBar mAvengersProgress;
     @Inject AvengersListPresenter mAvengersListPresenter;
 
     @Override
@@ -80,7 +84,7 @@ public class AvengersListActivity extends AppCompatActivity
     private void initializeRecyclerView() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mAvengersRecycler.setLayoutManager(linearLayoutManager);
+//        mAvengersRecycler.setLayoutManager(linearLayoutManager);
         mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
 
@@ -91,6 +95,25 @@ public class AvengersListActivity extends AppCompatActivity
             this, mAvengersListPresenter);
 
         mAvengersRecycler.setAdapter(avengersListAdapter);
+    }
+
+    @Override
+    public void showLoadingIndicator() {
+
+        mAvengersProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingIndicator() {
+
+        mAvengersProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showGenericError() {
+
+        Snackbar.make(mAvengersRecycler, "An error has occurred loading more characters", Snackbar.LENGTH_LONG)
+            .setAction("Try again", v -> mAvengersListPresenter.onErrorRetryRequest());
     }
 
     @Override

@@ -24,12 +24,30 @@
             />
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_avengers_recycler"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
+        >
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/activity_avengers_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            />
+
+        <ProgressBar
+            android:id="@+id/activity_avengers_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
-

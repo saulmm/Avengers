@@ -12,4 +12,10 @@ import saulmm.avengers.model.entities.Character;
 public interface AvengersView extends View {
 
     void showAvengersList (List<Character> avengers);
+
+    void showLoadingIndicator ();
+
+    void hideLoadingIndicator ();
+
+    void showGenericError();
 }
