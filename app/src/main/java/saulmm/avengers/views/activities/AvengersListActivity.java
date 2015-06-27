@@ -84,8 +84,6 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeRecyclerView() {
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        mAvengersRecycler.setLayoutManager(linearLayoutManager);
         mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
 
