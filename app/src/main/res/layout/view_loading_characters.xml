@@ -10,7 +10,6 @@
         android:id="@+id/activity_login_progress"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/spacing_normal"
         android:layout_gravity="center"
         style="?android:attr/progressBarStyleLarge"
@@ -19,10 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
         android:text="Loading characters\nplease wait"
-        android:gravity="center"
-        android:fontFamily="sans-serif-light"
-        android:layout_gravity="center"
+        style="@style/Avengers.Text.StateMessage"
         />
 </LinearLayout>
