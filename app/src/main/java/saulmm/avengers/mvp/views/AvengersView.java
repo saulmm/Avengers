@@ -18,4 +18,8 @@ public interface AvengersView extends View {
     void hideLoadingIndicator ();
 
     void showGenericError();
+
+    void showEmptyIndicator();
+
+    void hideEmptyIndicator();
 }

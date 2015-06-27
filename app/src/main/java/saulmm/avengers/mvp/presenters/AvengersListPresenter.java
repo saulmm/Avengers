@@ -38,7 +38,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         mCharacters = new ArrayList<>();
     }
 
-
     @Override @SuppressWarnings("Convert2MethodRef")
     public void onStart() {
 
@@ -47,6 +46,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
                 mCharacters.addAll(characters);
                 mAvengersView.showAvengersList(mCharacters);
+                mAvengersView.hideEmptyIndicator();
             }
         );
     }

@@ -36,9 +36,10 @@ public class AvengersListActivity extends AppCompatActivity
 
     public final static String EXTRA_CHARACTER_ID = "character_id";
 
-    @InjectView(R.id.activity_avengers_recycler)    RecyclerView mAvengersRecycler;
-    @InjectView(R.id.activity_avengers_toolbar)     Toolbar mAvengersToolbar;
-    @InjectView(R.id.activity_avengers_progress)    ProgressBar mAvengersProgress;
+    @InjectView(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
+    @InjectView(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
+    @InjectView(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
+    @InjectView(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Inject AvengersListPresenter mAvengersListPresenter;
 
     @Override
@@ -95,6 +96,7 @@ public class AvengersListActivity extends AppCompatActivity
             this, mAvengersListPresenter);
 
         mAvengersRecycler.setAdapter(avengersListAdapter);
+        mAvengersRecycler.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -114,6 +116,18 @@ public class AvengersListActivity extends AppCompatActivity
 
         Snackbar.make(mAvengersRecycler, "An error has occurred loading more characters", Snackbar.LENGTH_LONG)
             .setAction("Try again", v -> mAvengersListPresenter.onErrorRetryRequest());
+    }
+
+    @Override
+    public void showEmptyIndicator() {
+
+        mEmptyIndicator.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyIndicator() {
+
+        mEmptyIndicator.setVisibility(View.GONE);
     }
 
     @Override
