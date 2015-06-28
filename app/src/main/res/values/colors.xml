@@ -3,7 +3,8 @@
 
     <color name="brand_primary">#2673d0</color>
     <color name="brand_primary_dark">#1e61ab</color>
-º    <color name="brand_secondary">#ff0f3fce</color>
+    <color name="brand_secondary">#ff0f3fce</color>
+    <color name="brand_accent">#AA00FF</color>
 
     <color name="white">#ffcbcbcb</color>
     <color name="grey_light">#bcbcbc</color>

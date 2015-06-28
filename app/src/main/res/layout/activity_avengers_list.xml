@@ -1,35 +1,72 @@
-<android.support.design.widget.CoordinatorLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     >
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_avengers_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:elevation="8dp"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:title="Avengers"
-            />
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_avengers_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    <include
+        layout="@layout/view_loading_characters"
+        android:id="@+id/activity_avengers_empty_indicator"
+        android:layout_gravity="center"
+        tools:ignore="IncludeLayoutParam"
         />
 
-</android.support.design.widget.CoordinatorLayout>
+    <include
+        layout="@layout/view_error"
+        android:id="@+id/activity_avengers_error_view"
+        android:layout_gravity="center"
+        tools:ignore="IncludeLayoutParam"
+        />
 
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/activity_avengers_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:elevation="8dp"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:title="Avengers"
+                />
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_avengers_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                />
+
+            <ProgressBar
+                android:id="@+id/activity_avengers_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/spacing_small"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</merge>

@@ -6,10 +6,16 @@
 package saulmm.avengers.views.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -30,10 +36,13 @@ import saulmm.avengers.views.adapter.AvengersListAdapter;
 public class AvengersListActivity extends AppCompatActivity
     implements AvengersView {
 
-    public final static String EXTRA_CHARACTER_ID = "character_id";
+    public final static String EXTRA_CHARACTER_ID       = "character_id";
 
-    @InjectView(R.id.activity_avengers_recycler) RecyclerView mAvengersRecycler;
-    @InjectView(R.id.activity_avengers_toolbar) Toolbar mAvengersToolbar;
+    @InjectView(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
+    @InjectView(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
+    @InjectView(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
+    @InjectView(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
+    @InjectView(R.id.activity_avengers_error_view)      View mErrorView;
     @Inject AvengersListPresenter mAvengersListPresenter;
 
     @Override
@@ -78,8 +87,7 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeRecyclerView() {
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mAvengersRecycler.setLayoutManager(linearLayoutManager);
+        mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
 
     @Override
@@ -89,6 +97,81 @@ public class AvengersListActivity extends AppCompatActivity
             this, mAvengersListPresenter);
 
         mAvengersRecycler.setAdapter(avengersListAdapter);
+        mAvengersRecycler.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideAvengersList() {
+
+        mAvengersRecycler.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoadingIndicator() {
+
+        mAvengersProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingIndicator() {
+
+        mAvengersProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoadingView() {
+
+        mEmptyIndicator.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingView() {
+
+        mEmptyIndicator.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLightError() {
+
+        Snackbar.make(mAvengersRecycler, "An error has occurred loading characters", Snackbar.LENGTH_LONG)
+            .setAction("Try again", v -> mAvengersListPresenter.onErrorRetryRequest())
+            .show();
+    }
+
+    @Override
+    public void showErrorView(String errorMessage) {
+
+        TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
+        errorTextView.setText(errorMessage);
+
+        Button errorRetryButton = ButterKnife.findById(mErrorView, R.id.view_error_retry_button);
+        errorRetryButton.setOnClickListener(v -> mAvengersListPresenter.onErrorRetryRequest());
+
+        mErrorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideErrorView() {
+
+        mErrorView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEmptyIndicator() {
+
+        mEmptyIndicator.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyIndicator() {
+
+        mEmptyIndicator.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showAvengersList() {
+
+        mAvengersRecycler.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -97,4 +180,20 @@ public class AvengersListActivity extends AppCompatActivity
         super.onStop();
         mAvengersListPresenter.onStop();
     }
+
+    private OnScrollListener mOnScrollListener = new OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int visibleItemsCount   = layoutManager.getChildCount();
+            int totalItemsCount     = layoutManager.getItemCount();
+            int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
+
+            if (visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
+
+                mAvengersListPresenter.onListEndReached();
+            }
+        }
+    };
 }
