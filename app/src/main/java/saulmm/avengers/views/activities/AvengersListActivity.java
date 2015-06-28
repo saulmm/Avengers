@@ -31,6 +31,7 @@ import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.presenters.AvengersListPresenter;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
+import saulmm.avengers.views.views.SimpleDivider;
 
 
 public class AvengersListActivity extends AppCompatActivity
@@ -87,6 +88,7 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeRecyclerView() {
 
+        mAvengersRecycler.addItemDecoration(new SimpleDivider(this));
         mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
 
