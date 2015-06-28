@@ -41,7 +41,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
     public AvengerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View rootView = LayoutInflater.from(context).inflate(
-            R.layout.item_avenger, parent, false);
+            R.layout.item_character, parent, false);
 
         return new AvengerViewHolder(rootView, recyclerListener);
     }

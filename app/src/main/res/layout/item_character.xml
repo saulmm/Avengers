@@ -10,7 +10,7 @@
     android:background="?attr/selectableItemBackground"
     android:paddingLeft="@dimen/spacing_normal"
     android:paddingRight="@dimen/spacing_normal"
-    android:layout_marginBottom="@dimen/spacing_normal"
+    android:layout_marginBottom="@dimen/spacing_small"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -32,6 +32,7 @@
         android:paddingRight="@dimen/spacing_normal"
         android:paddingTop="@dimen/spacing_normal"
         android:textSize="16sp"
+        android:textColor="@color/black_dark"
         tools:text="An amazing avenger"
         />
 
