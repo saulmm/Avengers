@@ -7,6 +7,7 @@
     <color name="brand_accent">#AA00FF</color>
 
     <color name="white">#ffcbcbcb</color>
+    <color name="greay_really_light">#e8e8e8</color>
     <color name="grey_light">#bcbcbc</color>
     <color name="grey_medium">#ff808080</color>
     <color name="grey_dark">#ff2c2c2c</color>
