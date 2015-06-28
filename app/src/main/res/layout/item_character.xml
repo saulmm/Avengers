@@ -24,16 +24,28 @@
 
     <TextView
         android:id="@+id/item_avenger_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="bottom"
         android:paddingBottom="@dimen/spacing_normal"
         android:paddingLeft="@dimen/spacing_normal"
         android:paddingRight="@dimen/spacing_normal"
         android:paddingTop="@dimen/spacing_normal"
         android:textSize="16sp"
+        android:fontFamily="sans-serif-light"
         android:textColor="@color/black_dark"
         tools:text="An amazing avenger"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="false"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_action_favorite"
         />
 
 </LinearLayout>
