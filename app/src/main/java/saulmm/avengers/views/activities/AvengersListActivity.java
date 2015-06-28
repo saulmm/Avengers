@@ -13,7 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -34,12 +36,13 @@ import saulmm.avengers.views.adapter.AvengersListAdapter;
 public class AvengersListActivity extends AppCompatActivity
     implements AvengersView {
 
-    public final static String EXTRA_CHARACTER_ID = "character_id";
+    public final static String EXTRA_CHARACTER_ID       = "character_id";
 
     @InjectView(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
     @InjectView(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
     @InjectView(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
     @InjectView(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
+    @InjectView(R.id.activity_avengers_error_view)      View mErrorView;
     @Inject AvengersListPresenter mAvengersListPresenter;
 
     @Override
@@ -98,6 +101,12 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     @Override
+    public void hideAvengersList() {
+
+        mAvengersRecycler.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showLoadingIndicator() {
 
         mAvengersProgress.setVisibility(View.VISIBLE);
@@ -110,10 +119,41 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     @Override
-    public void showGenericError() {
+    public void showLoadingView() {
 
-        Snackbar.make(mAvengersRecycler, "An error has occurred loading more characters", Snackbar.LENGTH_LONG)
-            .setAction("Try again", v -> mAvengersListPresenter.onErrorRetryRequest());
+        mEmptyIndicator.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingView() {
+
+        mEmptyIndicator.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLightError() {
+
+        Snackbar.make(mAvengersRecycler, "An error has occurred loading characters", Snackbar.LENGTH_LONG)
+            .setAction("Try again", v -> mAvengersListPresenter.onErrorRetryRequest())
+            .show();
+    }
+
+    @Override
+    public void showErrorView(String errorMessage) {
+
+        TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
+        errorTextView.setText(errorMessage);
+
+        Button errorRetryButton = ButterKnife.findById(mErrorView, R.id.view_error_retry_button);
+        errorRetryButton.setOnClickListener(v -> mAvengersListPresenter.onErrorRetryRequest());
+
+        mErrorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideErrorView() {
+
+        mErrorView.setVisibility(View.GONE);
     }
 
     @Override
@@ -126,6 +166,12 @@ public class AvengersListActivity extends AppCompatActivity
     public void hideEmptyIndicator() {
 
         mEmptyIndicator.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showAvengersList() {
+
+        mAvengersRecycler.setVisibility(View.VISIBLE);
     }
 
     @Override

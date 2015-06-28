@@ -13,25 +13,31 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import saulmm.avengers.R;
 import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;
 import saulmm.avengers.views.activities.AvengerDetailActivity;
 import saulmm.avengers.views.activities.AvengersListActivity;
 
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     private final GetCharactersUsecase mCharactersUsecase;
-    private AvengersView mAvengersView;
     private final Context mContext;
-    private Intent mIntent;
+
+    private boolean mIsTheCharacterRequestRunning;
+
     private List<Character> mCharacters;
-    private boolean mIsTheCharacterRequestRunning = false;
+    private AvengersView mAvengersView;
+    private Intent mIntent;
 
 
-    @Inject public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
+    @Inject
+    public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
 
         mContext = context;
         mCharactersUsecase = charactersUsecase;
@@ -41,14 +47,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     @Override @SuppressWarnings("Convert2MethodRef")
     public void onStart() {
 
-        mCharactersUsecase.execute().subscribe(
-            characters -> {
-
-                mCharacters.addAll(characters);
-                mAvengersView.showAvengersList(mCharacters);
-                mAvengersView.hideEmptyIndicator();
-            }
-        );
+        askForCharacters();
     }
 
     @Override
@@ -89,30 +88,73 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         }
     }
 
+    @SuppressWarnings("Convert2MethodRef")
+    private void askForCharacters() {
+
+        showLoadingUI();
+
+        mCharactersUsecase.execute().subscribe(
+            characters -> {
+
+                mCharacters.addAll(characters);
+                mAvengersView.showAvengersList(mCharacters);
+                mAvengersView.hideEmptyIndicator();
+            },
+
+            error -> showErrorView(error)
+        );
+    }
+
     private void askForNewCharacters() {
 
+        mAvengersView.showLoadingIndicator();
+
         mCharactersUsecase.executeIncreasingOffset().subscribe(
+
             newCharacters -> {
 
                 mCharacters.addAll(newCharacters);
+                mAvengersView.showAvengersList();;
                 mAvengersView.hideLoadingIndicator();
                 mIsTheCharacterRequestRunning = false;
             },
-            error -> {
 
-                mAvengersView.hideLoadingIndicator();
-                mAvengersView.showGenericError();
+            error -> {
+                showGenericError();
+                mIsTheCharacterRequestRunning = false;
             }
         );
     }
 
-    public boolean isTheCharacterRequestRunning() {
+    private void showLoadingUI() {
 
-        return mIsTheCharacterRequestRunning;
+        mAvengersView.hideErrorView();
+        mAvengersView.showLoadingView();
+    }
+
+    private void showErrorView(Throwable error) {
+
+        if (error instanceof NetworkUknownHostException) {
+
+            String errorMessage = mContext.getString(R.string.error_network_uknownhost);
+            mAvengersView.showErrorView(errorMessage);
+        }
+
+        mAvengersView.hideEmptyIndicator();
+        mAvengersView.hideAvengersList();
+    }
+
+    private void showGenericError() {
+
+        mAvengersView.hideLoadingIndicator();
+        mAvengersView.showLightError();
     }
 
     public void onErrorRetryRequest() {
 
-        askForNewCharacters();
+        if (mCharacters.isEmpty())
+            askForCharacters();
+        else
+            askForNewCharacters();
     }
 }

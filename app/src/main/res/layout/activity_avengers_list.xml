@@ -11,6 +11,13 @@
         tools:ignore="IncludeLayoutParam"
         />
 
+    <include
+        layout="@layout/view_error"
+        android:id="@+id/activity_avengers_error_view"
+        android:layout_gravity="center"
+        tools:ignore="IncludeLayoutParam"
+        />
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
