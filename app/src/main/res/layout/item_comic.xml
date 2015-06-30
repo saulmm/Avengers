@@ -17,7 +17,6 @@
         android:layout_width="100dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/thumb_iron_man"
         />
 
     <LinearLayout

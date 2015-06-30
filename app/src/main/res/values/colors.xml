@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="brand_primary">#2673d0</color>
-    <color name="brand_primary_dark">#1e61ab</color>
-    <color name="brand_secondary">#ff0f3fce</color>
-    <color name="brand_accent">#AA00FF</color>
+    <color name="brand_primary">#F00002</color>
+    <color name="brand_primary_dark">#c80002</color>
+    <color name="brand_secondary">#ff2900</color>
+    <color name="brand_accent">#ff441a</color>
 
     <color name="white">#ffcbcbcb</color>
     <color name="greay_really_light">#e8e8e8</color>

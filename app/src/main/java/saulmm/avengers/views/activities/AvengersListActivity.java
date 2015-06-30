@@ -44,6 +44,7 @@ public class AvengersListActivity extends AppCompatActivity
     @InjectView(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
     @InjectView(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @InjectView(R.id.activity_avengers_error_view)      View mErrorView;
+    @InjectView(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
     @Inject AvengersListPresenter mAvengersListPresenter;
 
     @Override
@@ -61,6 +62,8 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeToolbar() {
 
+//        Typeface bangersFont = Typeface.createFromAsset(getAssets(), "fonts/Bangers.ttf");
+//        mAvengersActivityTitle.setTypeface(bangersFont);
         setSupportActionBar(mAvengersToolbar);
     }
 
