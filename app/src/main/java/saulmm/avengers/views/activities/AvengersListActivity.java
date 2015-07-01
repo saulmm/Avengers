@@ -5,6 +5,7 @@
  */
 package saulmm.avengers.views.activities;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -62,8 +63,8 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeToolbar() {
 
-//        Typeface bangersFont = Typeface.createFromAsset(getAssets(), "fonts/Bangers.ttf");
-//        mAvengersActivityTitle.setTypeface(bangersFont);
+        Typeface bangersFont = Typeface.createFromAsset(getAssets(), "fonts/Bangers.ttf");
+        mAvengersActivityTitle.setTypeface(bangersFont);
         setSupportActionBar(mAvengersToolbar);
     }
 
