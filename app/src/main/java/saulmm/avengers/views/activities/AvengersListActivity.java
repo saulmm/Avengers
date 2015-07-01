@@ -9,7 +9,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
@@ -32,7 +32,7 @@ import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.presenters.AvengersListPresenter;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
-import saulmm.avengers.views.views.SimpleDivider;
+import saulmm.avengers.views.views.RecyclerInsetsDecoration;
 
 
 public class AvengersListActivity extends AppCompatActivity
@@ -92,7 +92,8 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeRecyclerView() {
 
-        mAvengersRecycler.addItemDecoration(new SimpleDivider(this));
+        mAvengersRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+        mAvengersRecycler.addItemDecoration(new RecyclerInsetsDecoration(this));
         mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
 
@@ -191,7 +192,7 @@ public class AvengersListActivity extends AppCompatActivity
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
-            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
             int visibleItemsCount   = layoutManager.getChildCount();
             int totalItemsCount     = layoutManager.getItemCount();
             int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();

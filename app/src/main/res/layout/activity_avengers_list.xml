@@ -71,15 +71,16 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
+            style="@style/Avengers.ViewGroup.Small"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/activity_avengers_recycler"
                 android:layout_width="match_parent"
+                android:clipToPadding="false"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 />
 
             <ProgressBar
