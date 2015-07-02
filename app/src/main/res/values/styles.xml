@@ -4,7 +4,6 @@
         <item name="colorPrimaryDark">@color/brand_primary_dark</item>
         <item name="colorAccent">@color/brand_secondary</item>
         <item name="actionMenuTextColor">@android:color/white</item>
-        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <style name="AvengerDetailActivityTheme" parent="AppTheme">
@@ -18,5 +17,12 @@
         <item name="android:paddingRight">@dimen/spacing_normal</item>
         <item name="android:paddingTop">@dimen/spacing_normal</item>
         <item name="android:paddingBottom">@dimen/spacing_normal</item>
+    </style>
+
+    <style name="Avengers.ViewGroup.Small" parent="Avengers">
+        <item name="android:paddingLeft">@dimen/spacing_tiny</item>
+        <item name="android:paddingRight">@dimen/spacing_tiny</item>
+        <item name="android:paddingTop">@dimen/spacing_tiny</item>
+        <item name="android:paddingBottom">@dimen/spacing_tiny</item>
     </style>
 </resources>
