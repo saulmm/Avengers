@@ -14,6 +14,7 @@ import android.transition.Slide;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -24,6 +25,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import javax.inject.Inject;
+import saulmm.avengers.AnimUtils;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -107,6 +109,21 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
         mAvengerThumb.setImageBitmap(characterThumbBitmap);
         mAvengerThumb.setTransitionName(sharedViewName);
+
+        mAvengerBackground.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                mAvengerBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int width = mAvengerBackground.getWidth();
+                int height = mAvengerBackground.getHeight();
+
+                AnimUtils.showRevealEffect(mAvengerBackground, width/2, height/2, null);
+                System.out.println("[DEBUG]" + " AvengerDetailActivity onGlobalLayout - " +
+                    "");
+
+            }
+        });
     }
 
     @Override
