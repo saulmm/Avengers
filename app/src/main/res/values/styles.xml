@@ -4,6 +4,10 @@
         <item name="colorPrimaryDark">@color/brand_primary_dark</item>
         <item name="colorAccent">@color/brand_secondary</item>
         <item name="actionMenuTextColor">@android:color/white</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
     </style>
 
     <style name="AvengerDetailActivityTheme" parent="AppTheme">

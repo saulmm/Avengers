@@ -42,9 +42,11 @@
 
 
 			<ImageView
+				android:id="@+id/activity_avenger_detail_thumb"
 				android:layout_width="200dp"
 				android:layout_height="200dp"
 				android:layout_gravity="center"
+				android:scaleType="centerCrop"
 				android:background="@color/greay_really_light"
 				/>
 

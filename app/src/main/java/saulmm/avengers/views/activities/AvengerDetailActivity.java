@@ -5,10 +5,13 @@
  */
 package saulmm.avengers.views.activities;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +39,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @InjectView(R.id.activity_avenger_comics_progress)      ProgressBar mComicsProgress;
     @InjectView(R.id.activity_avenger_comics_container)     LinearLayout mDetailContainer;
     @InjectView(R.id.activity_avenger_detail_biography)     TextView mBiographyTextView;
+    @InjectView(R.id.activity_avenger_detail_thumb)         ImageView mAvengerThumb;
     @InjectView(R.id.activity_avenger_thumb_background)     View mAvengerBackground;
     @InjectView(R.id.activity_avenger_name)                 TextView mAvengerNameTextView;
 
@@ -47,11 +51,17 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_avenger_detail);
-        ButterKnife.inject(this);
 
+        initButterknife();
         initializeDependencyInjector();
         initializePresenter();
+        initIncomingTransition();
+    }
+
+    private void initButterknife() {
+
+        setContentView(R.layout.activity_avenger_detail);
+        ButterKnife.inject(this);
     }
 
     @Override
@@ -79,6 +89,24 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
             .appComponent(avengersApplication.getAppComponent())
             .avengerInformationModule(new AvengerInformationModule(avengerId))
             .build().inject(this);
+    }
+
+    private void initIncomingTransition() {
+
+        final String sharedViewName = getIntent().getStringExtra(
+            AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME);
+
+        final Bitmap characterThumbBitmap = AvengersListActivity.sPhotoCache
+            .get(AvengersListActivity.KEY_SHARED_BITMAP);
+
+        Slide slideTransition = new Slide(Gravity.BOTTOM);
+        slideTransition.excludeTarget(android.R.id.statusBarBackground, true);
+        slideTransition.excludeTarget(R.id.activity_avenger_thumb_background, true);
+        slideTransition.excludeTarget(android.R.id.navigationBarBackground, true);
+        getWindow().setEnterTransition(slideTransition);
+
+        mAvengerThumb.setImageBitmap(characterThumbBitmap);
+        mAvengerThumb.setTransitionName(sharedViewName);
     }
 
     @Override

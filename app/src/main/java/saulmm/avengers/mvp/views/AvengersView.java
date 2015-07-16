@@ -5,8 +5,8 @@
  */
 package saulmm.avengers.mvp.views;
 
+import android.app.ActivityOptions;
 import java.util.List;
-
 import saulmm.avengers.model.entities.Character;
 
 public interface AvengersView extends View {
@@ -34,4 +34,6 @@ public interface AvengersView extends View {
     void hideEmptyIndicator();
 
     void showAvengersList();
+
+    ActivityOptions getActivityOptions (int position, android.view.View clickedView);
 }

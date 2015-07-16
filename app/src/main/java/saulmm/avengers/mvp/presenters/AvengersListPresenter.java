@@ -7,13 +7,11 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
 import android.content.Intent;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import saulmm.avengers.R;
+import saulmm.avengers.Utils;
 import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
@@ -60,15 +58,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     public void attachIncomingIntent(Intent intent) {
 
         mIntent = intent;
-    }
-
-    @Override
-    public void onElementClick(int position) {
-
-        int characterId = mCharacters.get(position).getId();
-        Intent i = new Intent (mContext, AvengerDetailActivity.class);
-        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
-        mContext.startActivity(i);
     }
 
     @Override
@@ -156,5 +145,17 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             askForCharacters();
         else
             askForNewCharacters();
+    }
+
+    @Override
+    public void onElementClick(int position, android.view.View clickedView) {
+
+        int characterId = mCharacters.get(position).getId();
+        String sharedElementName = Utils.getListTransitionName(position);
+
+        Intent i = new Intent (mContext, AvengerDetailActivity.class);
+        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
+        i.putExtra(AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
+        mContext.startActivity(i, mAvengersView.getActivityOptions(position, clickedView).toBundle());
     }
 }
