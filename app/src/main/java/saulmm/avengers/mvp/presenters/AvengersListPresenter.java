@@ -7,13 +7,12 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
 import android.content.Intent;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
+import rx.Subscription;
 import saulmm.avengers.R;
+import saulmm.avengers.Utils;
 import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
@@ -31,10 +30,11 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     private boolean mIsTheCharacterRequestRunning;
 
+    private Subscription mCharactersSubscription;
+
     private List<Character> mCharacters;
     private AvengersView mAvengersView;
     private Intent mIntent;
-
 
     @Inject
     public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
@@ -44,10 +44,16 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         mCharacters = new ArrayList<>();
     }
 
-    @Override @SuppressWarnings("Convert2MethodRef")
-    public void onStart() {
+    @Override
+    public void onCreate() {
 
         askForCharacters();
+    }
+
+
+    public void onStart() {
+
+        // Unused
     }
 
     @Override
@@ -63,18 +69,9 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     }
 
     @Override
-    public void onElementClick(int position) {
-
-        int characterId = mCharacters.get(position).getId();
-        Intent i = new Intent (mContext, AvengerDetailActivity.class);
-        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
-        mContext.startActivity(i);
-    }
-
-    @Override
     public void onStop() {
 
-        // Unused
+        mCharactersSubscription.unsubscribe();
     }
 
     public void onListEndReached() {
@@ -93,7 +90,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
         showLoadingUI();
 
-        mCharactersUsecase.execute().subscribe(
+        mCharactersSubscription = mCharactersUsecase.execute().subscribe(
             characters -> {
 
                 mCharacters.addAll(characters);
@@ -109,7 +106,8 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
         mAvengersView.showLoadingIndicator();
 
-        mCharactersUsecase.executeIncreasingOffset().subscribe(
+        mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
+            .subscribe(
 
             newCharacters -> {
 
@@ -156,5 +154,17 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             askForCharacters();
         else
             askForNewCharacters();
+    }
+
+    @Override
+    public void onElementClick(int position, android.view.View clickedView) {
+
+        int characterId = mCharacters.get(position).getId();
+        String sharedElementName = Utils.getListTransitionName(position);
+
+        Intent i = new Intent (mContext, AvengerDetailActivity.class);
+        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
+        i.putExtra(AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
+        mContext.startActivity(i, mAvengersView.getActivityOptions(position, clickedView).toBundle());
     }
 }

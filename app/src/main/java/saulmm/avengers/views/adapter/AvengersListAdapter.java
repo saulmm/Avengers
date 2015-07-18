@@ -87,7 +87,8 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
                 @Override
                 public void onClick(View v) {
 
-                    recyclerClickListener.onElementClick(getPosition());
+                    recyclerClickListener.onElementClick(getPosition(),
+                        avengerThumbImageView);
                 }
             });
         }

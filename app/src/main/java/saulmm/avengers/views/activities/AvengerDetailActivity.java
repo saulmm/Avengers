@@ -5,28 +5,30 @@
  */
 package saulmm.avengers.views.activities;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import com.bumptech.glide.Glide;
+import javax.inject.Inject;
+import saulmm.avengers.views.utils.AnimUtils;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -35,6 +37,7 @@ import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
 import saulmm.avengers.mvp.views.AvengersDetailView;
+import saulmm.avengers.views.utils.TransitionListenerAdapter;
 
 public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
 
@@ -42,9 +45,10 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @InjectView(R.id.activity_avenger_comics_progress)      ProgressBar mComicsProgress;
     @InjectView(R.id.activity_avenger_comics_container)     LinearLayout mDetailContainer;
     @InjectView(R.id.activity_avenger_detail_biography)     TextView mBiographyTextView;
-    @InjectView(R.id.activity_avenger_image)                ImageView mAvengerImageView;
-    @InjectView(R.id.activity_avenger_detail_toolbar)       Toolbar mDetailToolbar;
-    @InjectView(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mDetailCollapsingToolbar;
+    @InjectView(R.id.activity_avenger_detail_thumb)         ImageView mAvengerThumb;
+    @InjectView(R.id.activity_avenger_thumb_background)     View mAvengerBackground;
+    @InjectView(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mCollapsingActionBar;
+    @InjectView(R.id.activity_avenger_detail_appbar)        AppBarLayout mAppbar;
 
     @Inject AvengerDetailPresenter avengerDetailPresenter;
 
@@ -54,12 +58,22 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_avenger_detail);
-        ButterKnife.inject(this);
 
-        initializeToolbar();
+        initButterknife();
         initializeDependencyInjector();
         initializePresenter();
+        initToolbar();
+        initTransitions();
+        initActivityColors();
+    }
+
+    private void initActivityColors() {
+    }
+
+    private void initButterknife() {
+
+        setContentView(R.layout.activity_avenger_detail);
+        ButterKnife.inject(this);
     }
 
     @Override
@@ -67,20 +81,6 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
         super.onStart();
         avengerDetailPresenter.onStart();
-    }
-
-    private void initializeToolbar() {
-
-        setSupportActionBar(mDetailToolbar);
-        ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
-
     }
 
     private void initializePresenter() {
@@ -101,6 +101,54 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
             .appComponent(avengersApplication.getAppComponent())
             .avengerInformationModule(new AvengerInformationModule(avengerId))
             .build().inject(this);
+    }
+
+    private void initTransitions() {
+
+        final String sharedViewName = getIntent().getStringExtra(
+            AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME);
+
+        final Bitmap characterThumbBitmap = AvengersListActivity.sPhotoCache
+            .get(AvengersListActivity.KEY_SHARED_BITMAP);
+
+        Slide slideTransition = new Slide(Gravity.BOTTOM);
+        slideTransition.excludeTarget(R.id.activity_avenger_detail_colltoolbar, true);
+        slideTransition.excludeTarget(R.id.activity_avenger_thumb_background, true);
+        slideTransition.excludeTarget(R.id.activity_avenger_detail_appbar, true);
+        slideTransition.excludeTarget(android.R.id.statusBarBackground, true);
+        slideTransition.excludeTarget(android.R.id.navigationBarBackground, true);
+        getWindow().setEnterTransition(slideTransition);
+
+        mAvengerThumb.setImageBitmap(characterThumbBitmap);
+        mAvengerThumb.setTransitionName(sharedViewName);
+
+        mCollapsingActionBar.getViewTreeObserver().addOnGlobalLayoutListener(
+            new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override public void onGlobalLayout() {
+
+                    mCollapsingActionBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int width = mAvengerBackground.getWidth();
+                    int height = mAvengerBackground.getHeight();
+
+                    AnimUtils.showRevealEffect(mAvengerBackground, width / 2, height / 2, null);
+                }
+            });
+
+        getWindow().getReturnTransition().addListener(new TransitionListenerAdapter() {
+
+            @Override
+            public void onTransitionStart(Transition transition) {
+
+                super.onTransitionStart(transition);
+                //mAvengerBackground.animate().alpha(0);
+            }
+        });
+    }
+
+    private void initToolbar() {
+
+        mCollapsingActionBar.setExpandedTitleTextAppearance(
+            R.style.Avengers_Text_CollapsedExpanded);
     }
 
     @Override
@@ -131,13 +179,13 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Override
     public void showAvengerImage(String url) {
 
-        Glide.with(this).load(url).into(mAvengerImageView);
+        //Glide.with(this).load(url).into(mAvengerImageView);
     }
 
     @Override
     public void showAvengerName(String name) {
 
-        mDetailCollapsingToolbar.setTitle(name);
+        mCollapsingActionBar.setTitle(name);
     }
 
     @Override

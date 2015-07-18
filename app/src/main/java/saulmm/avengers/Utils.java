@@ -1,6 +1,13 @@
 package saulmm.avengers;
 
 public class Utils {
+
+    public final static String CHARACTER_IMG_NAME           = "ch_thumb";
+
     public static final int DIALOG_ACCEPT = -1;
     public static final int DIALOG_CANCEL = -2;
+
+    public static String getListTransitionName (int position) {
+        return CHARACTER_IMG_NAME + position;
+    }
 }
