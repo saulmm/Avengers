@@ -86,6 +86,9 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     @SuppressWarnings("Convert2MethodRef")
     public void initializePresenter() {
 
+        String characterName = mIntent.getExtras().getString(
+            AvengersListActivity.EXTRA_CHARACTER_NAME);
+
         mAvengerCharacterId = mIntent.getExtras().getInt(
             AvengersListActivity.EXTRA_CHARACTER_ID);
 
@@ -100,6 +103,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
             throwable   -> manageError(throwable));
 
         mAvengersDetailView.startLoading();
+        mAvengersDetailView.showAvengerName(characterName);
     }
 
 
@@ -125,7 +129,6 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     private void onAvengerReceived(Character character) {
 
         mAvengersDetailView.stopLoadingAvengersInformation();
-        mAvengersDetailView.showAvengerName(character.getName());
         mAvengersDetailView.showAvengerBio(
             (character.getDescription().equals(""))
                 ? "No biography available"

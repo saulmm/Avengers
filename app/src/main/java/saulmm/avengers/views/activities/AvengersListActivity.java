@@ -7,7 +7,6 @@ package saulmm.avengers.views.activities;
 
 import android.app.ActivityOptions;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +19,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
@@ -42,16 +41,17 @@ public class AvengersListActivity extends AppCompatActivity
     public static SparseArray<Bitmap> sPhotoCache           = new SparseArray<Bitmap>(1);
 
     public final static String EXTRA_CHARACTER_ID           = "character_id";
+    public final static String EXTRA_CHARACTER_NAME         = "character_name";
     public final static String EXTRA_IMAGE_TRANSITION_NAME  = "transition_name";
     public final static int KEY_SHARED_BITMAP               = 41;
 
 
-    @InjectView(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
-    @InjectView(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
-    @InjectView(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
-    @InjectView(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
-    @InjectView(R.id.activity_avengers_error_view)      View mErrorView;
-    @InjectView(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
+    @Bind(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
+    @Bind(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
+    @Bind(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
+    @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
+    @Bind(R.id.activity_avengers_error_view)      View mErrorView;
+    @Bind(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
     @Inject AvengersListPresenter mAvengersListPresenter;
     private Snackbar mLoadingMoreCharactersSnack;
     private AvengersListAdapter mCharacterListAdapter;
@@ -61,7 +61,7 @@ public class AvengersListActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_avengers_list);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         initializeToolbar();
         initializeRecyclerView();
@@ -71,8 +71,7 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeToolbar() {
 
-        Typeface bangersFont = Typeface.createFromAsset(getAssets(), "fonts/Bangers.ttf");
-        mAvengersActivityTitle.setTypeface(bangersFont);
+        mAvengersActivityTitle.setTypeface(Utils.getBangersTypeface(this));
         setSupportActionBar(mAvengersToolbar);
     }
 

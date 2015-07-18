@@ -159,11 +159,13 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     public void onElementClick(int position, android.view.View clickedView) {
 
         int characterId = mCharacters.get(position).getId();
+        String characterName = mCharacters.get(position).getName();
         String sharedElementName = Utils.getListTransitionName(position);
 
         Intent i = new Intent (mContext, AvengerDetailActivity.class);
         i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
         i.putExtra(AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
+        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_NAME, characterName);
         mContext.startActivity(i, mAvengersView.getActivityOptions(position, clickedView).toBundle());
     }
 }

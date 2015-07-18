@@ -12,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-
-import java.util.List;
-
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import com.bumptech.glide.Glide;
+import java.util.List;
 import saulmm.avengers.R;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.views.RecyclerClickListener;
@@ -60,13 +57,13 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
 
     public class AvengerViewHolder extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.item_avenger_title) TextView avengerTitleTextView;
-        @InjectView(R.id.item_avenger_thumb) ImageView avengerThumbImageView;
+        @Bind(R.id.item_avenger_title) TextView avengerTitleTextView;
+        @Bind(R.id.item_avenger_thumb) ImageView avengerThumbImageView;
 
         public AvengerViewHolder(View itemView, final RecyclerClickListener recyclerClickListener) {
 
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
             bindListener(itemView, recyclerClickListener);
         }
 
