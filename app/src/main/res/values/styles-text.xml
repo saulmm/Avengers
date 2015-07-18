@@ -15,6 +15,13 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Avengers.Text.CollapsedExpanded">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
     <style name="Avengers.Text.ComicHeader" parent="Avengers.Text">
         <item name="android:minHeight">8dp</item>
         <item name="android:textColor">@color/grey_medium</item>

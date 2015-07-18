@@ -62,7 +62,12 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         initButterknife();
         initializeDependencyInjector();
         initializePresenter();
+        initToolbar();
         initTransitions();
+        initActivityColors();
+    }
+
+    private void initActivityColors() {
     }
 
     private void initButterknife() {
@@ -140,6 +145,12 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         });
     }
 
+    private void initToolbar() {
+
+        mCollapsingActionBar.setExpandedTitleTextAppearance(
+            R.style.Avengers_Text_CollapsedExpanded);
+    }
+
     @Override
     public void startLoading() {
 
@@ -174,7 +185,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Override
     public void showAvengerName(String name) {
 
-        //mAvengerNameTextView.setText(name);
+        mCollapsingActionBar.setTitle(name);
     }
 
     @Override

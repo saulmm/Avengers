@@ -34,14 +34,16 @@
 				android:background="@android:color/black"
 				/>
 
-			<ImageView
+			<de.hdodenhof.circleimageview.CircleImageView
 				android:id="@+id/activity_avenger_detail_thumb"
-				android:layout_width="150dp"
-				android:layout_height="150dp"
+				android:layout_width="100dp"
+				android:layout_height="100dp"
 				android:layout_gravity="center"
 				android:scaleType="centerCrop"
-				android:background="@color/greay_really_light"
+				app:border_width="1dp"
+				app:border_color="@android:color/white"
 				/>
+
 
 			<android.support.v7.widget.Toolbar
 				android:id="@+id/activity_avenger_detail_toolbar"
