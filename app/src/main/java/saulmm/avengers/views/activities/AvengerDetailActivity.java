@@ -6,11 +6,13 @@
 package saulmm.avengers.views.activities;
 
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.transition.Slide;
 import android.transition.Transition;
@@ -28,7 +30,6 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import javax.inject.Inject;
-import saulmm.avengers.views.utils.AnimUtils;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -37,6 +38,7 @@ import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
 import saulmm.avengers.mvp.views.AvengersDetailView;
+import saulmm.avengers.views.utils.AnimUtils;
 import saulmm.avengers.views.utils.TransitionListenerAdapter;
 
 public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
@@ -68,6 +70,21 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     }
 
     private void initActivityColors() {
+
+        final Bitmap sourceBitmap = AvengersListActivity.sPhotoCache
+            .get(AvengersListActivity.KEY_SHARED_BITMAP);
+
+        Palette.from(sourceBitmap)
+            .generate(palette -> {
+
+                int accentColor = getResources().getColor(R.color.brand_accent);
+                int darkVibrant = palette.getDarkVibrantColor(accentColor);
+
+                mAvengerBackground.setBackgroundColor(palette.getDarkVibrantColor(accentColor));
+                mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);
+                mCollapsingActionBar.setContentScrimColor(darkVibrant);
+                getWindow().setStatusBarColor(darkVibrant);
+		});
     }
 
     private void initButterknife() {
