@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Avengers.Text" parent="Avengers">
-        <item name="android:minHeight">48dp</item>
+        <!--<item name="android:minHeight">48dp</item>-->
     </style>
 
     <style name="Avengers.Text.High" parent="Avengers.Text">
@@ -17,10 +17,24 @@
 
     <style name="Avengers.Text.CollapsedExpanded">
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/transparent</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">24sp</item>
     </style>
+
+    <style name="Avengers.Text.Counters">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Avengers.Text.Counters.Label">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Avengers.Text.Counters.Number">
+        <item name="android:textSize">30sp</item>
+    </style>
+
 
     <style name="Avengers.Text.ComicHeader" parent="Avengers.Text">
         <item name="android:minHeight">8dp</item>

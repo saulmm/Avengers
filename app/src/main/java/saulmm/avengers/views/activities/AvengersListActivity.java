@@ -45,6 +45,7 @@ public class AvengersListActivity extends AppCompatActivity
     public final static String EXTRA_IMAGE_TRANSITION_NAME  = "transition_name";
     public final static int KEY_SHARED_BITMAP               = 41;
 
+
     @InjectView(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
     @InjectView(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
     @InjectView(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
@@ -52,6 +53,8 @@ public class AvengersListActivity extends AppCompatActivity
     @InjectView(R.id.activity_avengers_error_view)      View mErrorView;
     @InjectView(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
     @Inject AvengersListPresenter mAvengersListPresenter;
+    private Snackbar mLoadingMoreCharactersSnack;
+    private AvengersListAdapter mCharacterListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,13 +107,29 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     @Override
-    public void showAvengersList(List<Character> avengers) {
+    public void bindCharacterList(List<Character> avengers) {
 
-        AvengersListAdapter avengersListAdapter = new AvengersListAdapter(avengers,
+        mCharacterListAdapter = new AvengersListAdapter(avengers,
             this, mAvengersListPresenter);
 
-        mAvengersRecycler.setAdapter(avengersListAdapter);
-        mAvengersRecycler.setVisibility(View.VISIBLE);
+        mAvengersRecycler.setAdapter(mCharacterListAdapter);
+    }
+
+    @Override
+    public void showCharacterList() {
+
+        if (mAvengersRecycler.getVisibility() == View.GONE ||
+            mAvengersRecycler.getVisibility() == View.INVISIBLE)
+
+            mAvengersRecycler.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void updateCharacterList(int charactersAdded) {
+
+        mCharacterListAdapter.notifyItemRangeInserted(
+            mCharacterListAdapter.getItemCount() + charactersAdded, charactersAdded);
+
     }
 
     @Override
@@ -122,13 +141,16 @@ public class AvengersListActivity extends AppCompatActivity
     @Override
     public void showLoadingIndicator() {
 
-        mAvengersProgress.setVisibility(View.VISIBLE);
+        mLoadingMoreCharactersSnack = Snackbar.make(mAvengersRecycler,
+            "Loading more characters", Snackbar.LENGTH_INDEFINITE);
+
+        mLoadingMoreCharactersSnack.show();
     }
 
     @Override
     public void hideLoadingIndicator() {
 
-        mAvengersProgress.setVisibility(View.GONE);
+        mLoadingMoreCharactersSnack.dismiss();
     }
 
     @Override
@@ -146,8 +168,9 @@ public class AvengersListActivity extends AppCompatActivity
     @Override
     public void showLightError() {
 
-        Snackbar.make(mAvengersRecycler, "An error has occurred loading characters", Snackbar.LENGTH_LONG)
-            .setAction("Try again", v -> mAvengersListPresenter.onErrorRetryRequest())
+        Snackbar.make(mAvengersRecycler, getString(R.string.error_loading_characters), Snackbar.LENGTH_LONG)
+            .setAction(R.string.try_again,
+                v -> mAvengersListPresenter.onErrorRetryRequest())
             .show();
     }
 
@@ -179,12 +202,6 @@ public class AvengersListActivity extends AppCompatActivity
     public void hideEmptyIndicator() {
 
         mEmptyIndicator.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showAvengersList() {
-
-        mAvengersRecycler.setVisibility(View.VISIBLE);
     }
 
     @Override

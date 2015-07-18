@@ -77,10 +77,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     public void onListEndReached() {
         
         if (!mIsTheCharacterRequestRunning) {
-
-            mAvengersView.showLoadingIndicator();
-            mIsTheCharacterRequestRunning = true;
-
             askForNewCharacters();
         }
     }
@@ -94,7 +90,8 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             characters -> {
 
                 mCharacters.addAll(characters);
-                mAvengersView.showAvengersList(mCharacters);
+                mAvengersView.bindCharacterList(mCharacters);
+                mAvengersView.showCharacterList();
                 mAvengersView.hideEmptyIndicator();
             },
 
@@ -105,6 +102,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     private void askForNewCharacters() {
 
         mAvengersView.showLoadingIndicator();
+        mIsTheCharacterRequestRunning = true;
 
         mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
             .subscribe(
@@ -112,12 +110,13 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             newCharacters -> {
 
                 mCharacters.addAll(newCharacters);
-                mAvengersView.showAvengersList();;
+                mAvengersView.updateCharacterList (GetCharactersUsecase.CHARACTERS_LIMIT);
                 mAvengersView.hideLoadingIndicator();
                 mIsTheCharacterRequestRunning = false;
             },
 
             error -> {
+
                 showGenericError();
                 mIsTheCharacterRequestRunning = false;
             }

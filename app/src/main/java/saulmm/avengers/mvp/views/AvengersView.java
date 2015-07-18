@@ -11,7 +11,9 @@ import saulmm.avengers.model.entities.Character;
 
 public interface AvengersView extends View {
 
-    void showAvengersList (List<Character> avengers);
+    void bindCharacterList(List<Character> avengers);
+
+    void showCharacterList();
 
     void hideAvengersList();
 
@@ -33,7 +35,7 @@ public interface AvengersView extends View {
 
     void hideEmptyIndicator();
 
-    void showAvengersList();
-
     ActivityOptions getActivityOptions (int position, android.view.View clickedView);
+
+    void updateCharacterList(int charactersLimit);
 }
