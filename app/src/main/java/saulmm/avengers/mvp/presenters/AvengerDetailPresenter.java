@@ -50,6 +50,12 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     }
 
     @Override
+    public void onCreate() {
+
+        // Unused
+    }
+
+    @Override
     public void onStart() {
 
         // Unused

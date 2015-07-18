@@ -1,4 +1,4 @@
-package saulmm.avengers;
+package saulmm.avengers.views.utils;
 
 import android.animation.Animator;
 import android.support.annotation.Nullable;

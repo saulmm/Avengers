@@ -18,4 +18,6 @@ public interface Presenter {
     void attachView (View v);
 
     void attachIncomingIntent (Intent intent);
+
+    void onCreate();
 }

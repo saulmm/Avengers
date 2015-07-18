@@ -83,6 +83,7 @@ public class AvengersListActivity extends AppCompatActivity
     private void initializePresenter() {
 
         mAvengersListPresenter.attachView(this);
+        mAvengersListPresenter.onCreate();
     }
 
     private void initializeDependencyInjector() {

@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.transition.Slide;
+import android.transition.Transition;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import javax.inject.Inject;
-import saulmm.avengers.AnimUtils;
+import saulmm.avengers.views.utils.AnimUtils;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -34,6 +35,7 @@ import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
 import saulmm.avengers.mvp.views.AvengersDetailView;
+import saulmm.avengers.views.utils.TransitionListenerAdapter;
 
 public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
 
@@ -57,7 +59,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         initButterknife();
         initializeDependencyInjector();
         initializePresenter();
-        initIncomingTransition();
+        initTransitions();
     }
 
     private void initButterknife() {
@@ -93,7 +95,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
             .build().inject(this);
     }
 
-    private void initIncomingTransition() {
+    private void initTransitions() {
 
         final String sharedViewName = getIntent().getStringExtra(
             AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME);
@@ -110,18 +112,25 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         mAvengerThumb.setImageBitmap(characterThumbBitmap);
         mAvengerThumb.setTransitionName(sharedViewName);
 
-        mAvengerBackground.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        mAvengerBackground.getViewTreeObserver().addOnGlobalLayoutListener(
+            new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override public void onGlobalLayout() {
+
+                    mAvengerBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int width = mAvengerBackground.getWidth();
+                    int height = mAvengerBackground.getHeight();
+
+                    AnimUtils.showRevealEffect(mAvengerBackground, width / 2, height / 2, null);
+                }
+            });
+
+        getWindow().getReturnTransition().addListener(new TransitionListenerAdapter() {
+
             @Override
-            public void onGlobalLayout() {
+            public void onTransitionStart(Transition transition) {
 
-                mAvengerBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int width = mAvengerBackground.getWidth();
-                int height = mAvengerBackground.getHeight();
-
-                AnimUtils.showRevealEffect(mAvengerBackground, width/2, height/2, null);
-                System.out.println("[DEBUG]" + " AvengerDetailActivity onGlobalLayout - " +
-                    "");
-
+                super.onTransitionStart(transition);
+                //mAvengerBackground.animate().alpha(0);
             }
         });
     }

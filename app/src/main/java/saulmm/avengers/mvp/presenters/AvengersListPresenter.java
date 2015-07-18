@@ -10,6 +10,7 @@ import android.content.Intent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import rx.Subscription;
 import saulmm.avengers.R;
 import saulmm.avengers.Utils;
 import saulmm.avengers.domain.GetCharactersUsecase;
@@ -29,10 +30,11 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     private boolean mIsTheCharacterRequestRunning;
 
+    private Subscription mCharactersSubscription;
+
     private List<Character> mCharacters;
     private AvengersView mAvengersView;
     private Intent mIntent;
-
 
     @Inject
     public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
@@ -42,10 +44,16 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         mCharacters = new ArrayList<>();
     }
 
-    @Override @SuppressWarnings("Convert2MethodRef")
-    public void onStart() {
+    @Override
+    public void onCreate() {
 
         askForCharacters();
+    }
+
+
+    public void onStart() {
+
+        // Unused
     }
 
     @Override
@@ -63,7 +71,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     @Override
     public void onStop() {
 
-        // Unused
+        mCharactersSubscription.unsubscribe();
     }
 
     public void onListEndReached() {
@@ -82,7 +90,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
         showLoadingUI();
 
-        mCharactersUsecase.execute().subscribe(
+        mCharactersSubscription = mCharactersUsecase.execute().subscribe(
             characters -> {
 
                 mCharacters.addAll(characters);
@@ -98,7 +106,8 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
         mAvengersView.showLoadingIndicator();
 
-        mCharactersUsecase.executeIncreasingOffset().subscribe(
+        mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
+            .subscribe(
 
             newCharacters -> {
 
