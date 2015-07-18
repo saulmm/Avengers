@@ -18,18 +18,10 @@
 			android:id="@+id/activity_avenger_detail_colltoolbar"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:fitsSystemWindows="true"
-			app:contentScrim="@android:color/transparent"
 			app:expandedTitleMarginEnd="64dp"
 			app:expandedTitleMarginStart="48dp"
 			app:layout_scrollFlags="scroll|exitUntilCollapsed"
 			>
-
-			<View
-				android:id="@+id/activity_avenger_thumb_background"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				/>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -56,8 +48,8 @@
 					android:gravity="center"
 					android:textSize="30sp"
 					android:textColor="@android:color/white"
+					android:visibility="gone"
 					android:fontFamily="sans-serif-condensed"
-					android:text="3D Man"
 					/>
 
 				<LinearLayout
@@ -157,6 +149,7 @@
 	</android.support.design.widget.AppBarLayout>
 
 	<android.support.v4.widget.NestedScrollView
+		android:id="@+id/activity_detail_comics_scroll"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -170,6 +163,7 @@
 			>
 
 			<TextView
+				android:id="@+id/activity_avenger_detail_inf_header"
 				style="@style/Avengers.Text.Header"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -200,6 +194,7 @@
 				/>
 
 			<TextView
+				android:id="@+id/activity_avenger_detail_comics_header"
 				style="@style/Avengers.Text.Header"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

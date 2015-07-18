@@ -7,7 +7,6 @@ package saulmm.avengers.views.activities;
 
 import android.app.ActivityOptions;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +41,7 @@ public class AvengersListActivity extends AppCompatActivity
     public static SparseArray<Bitmap> sPhotoCache           = new SparseArray<Bitmap>(1);
 
     public final static String EXTRA_CHARACTER_ID           = "character_id";
+    public final static String EXTRA_CHARACTER_NAME         = "character_name";
     public final static String EXTRA_IMAGE_TRANSITION_NAME  = "transition_name";
     public final static int KEY_SHARED_BITMAP               = 41;
 
@@ -71,8 +71,7 @@ public class AvengersListActivity extends AppCompatActivity
 
     private void initializeToolbar() {
 
-        Typeface bangersFont = Typeface.createFromAsset(getAssets(), "fonts/Bangers.ttf");
-        mAvengersActivityTitle.setTypeface(bangersFont);
+        mAvengersActivityTitle.setTypeface(Utils.getBangersTypeface(this));
         setSupportActionBar(mAvengersToolbar);
     }
 
