@@ -7,6 +7,8 @@ package saulmm.avengers.views.activities;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -45,7 +47,8 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @InjectView(R.id.activity_avenger_detail_biography)     TextView mBiographyTextView;
     @InjectView(R.id.activity_avenger_detail_thumb)         ImageView mAvengerThumb;
     @InjectView(R.id.activity_avenger_thumb_background)     View mAvengerBackground;
-    @InjectView(R.id.activity_avenger_name)                 TextView mAvengerNameTextView;
+    @InjectView(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mCollapsingActionBar;
+    @InjectView(R.id.activity_avenger_detail_appbar)        AppBarLayout mAppbar;
 
     @Inject AvengerDetailPresenter avengerDetailPresenter;
 
@@ -104,19 +107,21 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
             .get(AvengersListActivity.KEY_SHARED_BITMAP);
 
         Slide slideTransition = new Slide(Gravity.BOTTOM);
-        slideTransition.excludeTarget(android.R.id.statusBarBackground, true);
+        slideTransition.excludeTarget(R.id.activity_avenger_detail_colltoolbar, true);
         slideTransition.excludeTarget(R.id.activity_avenger_thumb_background, true);
+        slideTransition.excludeTarget(R.id.activity_avenger_detail_appbar, true);
+        slideTransition.excludeTarget(android.R.id.statusBarBackground, true);
         slideTransition.excludeTarget(android.R.id.navigationBarBackground, true);
         getWindow().setEnterTransition(slideTransition);
 
         mAvengerThumb.setImageBitmap(characterThumbBitmap);
         mAvengerThumb.setTransitionName(sharedViewName);
 
-        mAvengerBackground.getViewTreeObserver().addOnGlobalLayoutListener(
+        mCollapsingActionBar.getViewTreeObserver().addOnGlobalLayoutListener(
             new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override public void onGlobalLayout() {
 
-                    mAvengerBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    mCollapsingActionBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     int width = mAvengerBackground.getWidth();
                     int height = mAvengerBackground.getHeight();
 
@@ -169,7 +174,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Override
     public void showAvengerName(String name) {
 
-        mAvengerNameTextView.setText(name);
+        //mAvengerNameTextView.setText(name);
     }
 
     @Override
