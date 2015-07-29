@@ -55,16 +55,13 @@ public class RestRepository implements Repository {
         mMarvelApi = marvelApiAdapter.create(MarvelApi.class);
     }
 
-    RequestInterceptor authorizationInterceptor = new RequestInterceptor() {
-        @Override
-        public void intercept(RequestFacade request) {
+    RequestInterceptor authorizationInterceptor = request -> {
 
-            String marvelHash = MarvelApiUtils.generateMarvelHash(publicKey, privateKey);
-            request.addQueryParam(MarvelApi.PARAM_API_KEY, publicKey);
-            request.addQueryParam(MarvelApi.PARAM_TIMESTAMP, MarvelApiUtils.getUnixTimeStamp());
-            request.addQueryParam(MarvelApi.PARAM_HASH, marvelHash);
-        }
-    };
+		String marvelHash = MarvelApiUtils.generateMarvelHash(publicKey, privateKey);
+		request.addQueryParam(MarvelApi.PARAM_API_KEY, publicKey);
+		request.addQueryParam(MarvelApi.PARAM_TIMESTAMP, MarvelApiUtils.getUnixTimeStamp());
+		request.addQueryParam(MarvelApi.PARAM_HASH, marvelHash);
+	};
 
     public class RetrofitErrorHandler implements retrofit.ErrorHandler {
 
