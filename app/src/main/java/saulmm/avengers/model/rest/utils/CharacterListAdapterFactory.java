@@ -15,17 +15,28 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import saulmm.avengers.model.entities.Character;
 
-public class CharacterItemAdapterFactory implements TypeAdapterFactory {
+public class CharacterListAdapterFactory implements TypeAdapterFactory {
 
     @Override
     public <T> TypeAdapter<T> create(Gson gson, final TypeToken<T> type) {
         final TypeAdapter<T> delegate = gson.getDelegateAdapter(this, type);
         final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
 
-        if (type.getRawType() != Character.class)
-            return null;
+        boolean rightType = false;
+
+        if (type.getType() instanceof ParameterizedType) {
+            Type[] genericArguments = ((ParameterizedType) type.getType())
+                .getActualTypeArguments();
+
+            rightType = genericArguments.length == 1
+                && genericArguments[0] == Character.class;
+        }
+
+        if (!rightType) return null;
 
         return new TypeAdapter<T>() {
 
@@ -37,24 +48,24 @@ public class CharacterItemAdapterFactory implements TypeAdapterFactory {
             @Override
             public T read(JsonReader in) throws IOException {
                 JsonElement jsonElement = elementAdapter.read(in);
-                return adaptJsonToCharacter(jsonElement, type);
-            }
+                return adaptJsonToCharacterList(jsonElement, type);
 
+            }
         }.nullSafe();
     }
 
-    private <T> T adaptJsonToCharacter(JsonElement jsonElement, TypeToken<T> type) {
+    private <T> T adaptJsonToCharacterList(JsonElement jsonElement, TypeToken<T> type) {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         JsonElement marvelDataElement = jsonObject.get("data");
         JsonObject marvelDataObject = marvelDataElement.getAsJsonObject();
 
-        if (marvelDataObject.get("count").getAsInt() == 1) {
+        if (marvelDataObject.get("count").getAsInt() > 0) {
+            JsonElement marvelResultsElement = marvelDataObject.get("results");
+            JsonArray marvelResults = marvelResultsElement.getAsJsonArray();
+            return new Gson().fromJson(marvelResults, type.getType());
 
-            JsonArray marvelResults = marvelDataObject.get("results")
-                .getAsJsonArray();
-
-            JsonElement finalElement = marvelResults.get(0);
-            return new Gson().fromJson(finalElement, type.getType());
+        } else {
+            // TODO Return Empty POJO
         }
 
         return null;

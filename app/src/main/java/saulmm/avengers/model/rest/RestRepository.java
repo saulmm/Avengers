@@ -7,26 +7,24 @@ package saulmm.avengers.model.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.converter.GsonConverter;
 import rx.Observable;
-import saulmm.avengers.model.entities.*;
 import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.exceptions.NetworkErrorException;
 import saulmm.avengers.model.rest.exceptions.NetworkTimeOutException;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 import saulmm.avengers.model.rest.utils.CharacterItemAdapterFactory;
+import saulmm.avengers.model.rest.utils.CharacterListAdapterFactory;
 import saulmm.avengers.model.rest.utils.MarvelApiUtils;
 
 public class RestRepository implements Repository {
@@ -41,7 +39,9 @@ public class RestRepository implements Repository {
     public RestRepository() {
 
         Gson gson = new GsonBuilder()
+            .registerTypeAdapterFactory(new CharacterListAdapterFactory())
             .registerTypeAdapterFactory(new CharacterItemAdapterFactory())
+            //.registerTypeAdapterFactory(new ComicListAdapterFactory())
             .create();
 
         RestAdapter marvelApiAdapter = new RestAdapter.Builder()

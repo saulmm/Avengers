@@ -8,10 +8,7 @@ package saulmm.avengers.mvp.presenters;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.AdapterView;
-
 import javax.inject.Inject;
-
-import rx.Observable;
 import rx.Subscription;
 import saulmm.avengers.R;
 import saulmm.avengers.Utils;
@@ -98,9 +95,8 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
             character   -> onAvengerReceived(character),
             error       -> manageError(error));
 
-        mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
-            comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic)),
-            throwable   -> manageError(throwable));
+        //mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
+        //    comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic)));
 
         mAvengersDetailView.startLoading();
         mAvengersDetailView.showAvengerName(characterName);

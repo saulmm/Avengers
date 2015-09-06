@@ -5,9 +5,12 @@
  */
 package saulmm.avengers.model.entities;
 
-import saulmm.avengers.model.entities.Thumbnail;
-
 public class Character {
+
+    public final static String [] MARVEL_API_CHARACTER_FIELDS = {
+        "id", "name", "description", "modified", "resourceURI", "urls", "comics",
+        "stories", "events", "series"
+    };
 
     private int id;
     private String name;
