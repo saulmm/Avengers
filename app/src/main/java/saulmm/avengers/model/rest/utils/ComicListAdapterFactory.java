@@ -33,10 +33,9 @@ public class ComicListAdapterFactory implements TypeAdapterFactory {
                     "");
             }
         }
+
         final TypeAdapter<T> delegate = gson.getDelegateAdapter(this, type);
         final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-
-
 
         final TypeAdapter<T> customTypeAdapter = new TypeAdapter<T>() {
 

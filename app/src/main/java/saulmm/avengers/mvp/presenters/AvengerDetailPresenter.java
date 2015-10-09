@@ -12,8 +12,6 @@ import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.R;
 import saulmm.avengers.Utils;
-import saulmm.avengers.domain.GetCharacterComicsUsecase;
-import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.model.rest.exceptions.NetworkErrorException;
@@ -29,20 +27,20 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     private AvengersDetailView mAvengersDetailView;
 
     private int mAvengerCharacterId;
-    private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
-    private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
+    //private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
+    //private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
     private Intent mIntent;
 
     private Subscription mComicsSubscription;
     private Subscription mCharacterSubscription;
 
     @Inject
-    public AvengerDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
-                                  GetCharacterComicsUsecase getCharacterComicsUsecase,
+    public AvengerDetailPresenter(/*GetCharacterInformationUsecase getCharacterInformationUsecase,
+                                  GetCharacterComicsUsecase getCharacterComicsUsecase,*/
                                   Context activityContext) {
 
-        mGetCharacterInformationUsecase = getCharacterInformationUsecase;
-        mGetCharacterComicsUsecase = getCharacterComicsUsecase;
+        //mGetCharacterInformationUsecase = getCharacterInformationUsecase;
+        //mGetCharacterComicsUsecase = getCharacterComicsUsecase;
         mActivityContext = activityContext;
     }
 
@@ -91,9 +89,9 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
         mAvengersDetailView.startLoading();
 
-        mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
-            character   -> onAvengerReceived(character),
-            error       -> manageError(error));
+        //mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
+        //    character   -> onAvengerReceived(character),
+        //    error       -> manageError(error));
 
         //mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
         //    comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic)));
@@ -156,9 +154,9 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
             String[] yearArray = mActivityContext.getResources().getStringArray(R.array.years);
             String selectedYear = yearArray[position];
 
-            mGetCharacterComicsUsecase.filterByYear(selectedYear)
-                .subscribe(
-                    comic -> onComicReceived(comic));
+            //mGetCharacterComicsUsecase.filterByYear(selectedYear)
+            //    .subscribe(
+            //        comic -> onComicReceived(comic));
         }
     }
 

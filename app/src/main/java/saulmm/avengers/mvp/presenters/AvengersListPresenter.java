@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.R;
 import saulmm.avengers.Utils;
-import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 import saulmm.avengers.mvp.views.AvengersView;
@@ -25,7 +24,7 @@ import saulmm.avengers.views.activities.AvengersListActivity;
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
-    private final GetCharactersUsecase mCharactersUsecase;
+    //private final GetCharactersUsecase mCharactersUsecase;
     private final Context mContext;
 
     private boolean mIsTheCharacterRequestRunning;
@@ -37,11 +36,13 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     private Intent mIntent;
 
     @Inject
-    public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
+    public AvengersListPresenter (Context context /*GetCharactersUsecase charactersUsecase*/) {
 
         mContext = context;
-        mCharactersUsecase = charactersUsecase;
+        //mCharactersUsecase = charactersUsecase;
         mCharacters = new ArrayList<>();
+
+
     }
 
     @Override
@@ -85,18 +86,20 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     private void askForCharacters() {
 
         showLoadingUI();
+        TestUsecase test = new TestUsecase();
+        test.execute();
 
-        mCharactersSubscription = mCharactersUsecase.execute().subscribe(
-            characters -> {
-
-                mCharacters.addAll(characters);
-                mAvengersView.bindCharacterList(mCharacters);
-                mAvengersView.showCharacterList();
-                mAvengersView.hideEmptyIndicator();
-            },
-
-            error -> showErrorView(error)
-        );
+        //mCharactersSubscription = mCharactersUsecase.execute().subscribe(
+        //    characters -> {
+		//
+        //        mCharacters.addAll(characters);
+        //        mAvengersView.bindCharacterList(mCharacters);
+        //        mAvengersView.showCharacterList();
+        //        mAvengersView.hideEmptyIndicator();
+        //    },
+		//
+        //    error -> showErrorView(error)
+        //);
     }
 
     private void askForNewCharacters() {
@@ -104,23 +107,23 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         mAvengersView.showLoadingIndicator();
         mIsTheCharacterRequestRunning = true;
 
-        mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
-            .subscribe(
-
-            newCharacters -> {
-
-                mCharacters.addAll(newCharacters);
-                mAvengersView.updateCharacterList (GetCharactersUsecase.CHARACTERS_LIMIT);
-                mAvengersView.hideLoadingIndicator();
-                mIsTheCharacterRequestRunning = false;
-            },
-
-            error -> {
-
-                showGenericError();
-                mIsTheCharacterRequestRunning = false;
-            }
-        );
+        //mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
+        //    .subscribe(
+		//
+        //    newCharacters -> {
+		//
+        //        mCharacters.addAll(newCharacters);
+        //        mAvengersView.updateCharacterList (GetCharactersUsecase.CHARACTERS_LIMIT);
+        //        mAvengersView.hideLoadingIndicator();
+        //        mIsTheCharacterRequestRunning = false;
+        //    },
+		//
+        //    error -> {
+		//
+        //        showGenericError();
+        //        mIsTheCharacterRequestRunning = false;
+        //    }
+        //);
     }
 
     private void showLoadingUI() {

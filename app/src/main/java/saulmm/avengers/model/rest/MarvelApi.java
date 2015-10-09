@@ -5,14 +5,10 @@
  */
 package saulmm.avengers.model.rest;
 
-import java.util.List;
-
+import retrofit.Call;
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Query;
-import rx.Observable;
-import saulmm.avengers.model.entities.Character;
-import saulmm.avengers.model.entities.Comic;
+import saulmm.avengers.TestPojo;
 
 public interface MarvelApi {
 
@@ -21,14 +17,14 @@ public interface MarvelApi {
     String PARAM_HASH      = "hash";
     String PARAM_TIMESTAMP = "ts";
 
-    @GET("/v1/public/characters")
-    Observable<List<Character>> getCharacters (@Query("offset") int offset);
+    @GET("/v1/public/characters") Call<TestPojo> getCharacters (@Query("offset") int offset);
+    //Observable<List<Character>> getCharacters (@Query("offset") int offset);
 
-    @GET("/v1/public/characters")
-    Observable<Character> getCharacterById(@Query("id") int id);
-
-    @GET("/v1/public/characters/{characterId}/comics")
-    Observable<List<Comic>> getCharacterComics(@Path("characterId") int id,
-                            @Query("format") String format,
-                            @Query("formatType") String fromatType);
+    //@GET("/v1/public/characters")
+    //Observable<Character> getCharacterById(@Query("id") int id);
+	//
+    //@GET("/v1/public/characters/{characterId}/comics")
+    //Observable<List<Comic>> getCharacterComics(@Path("characterId") int id,
+    //                        @Query("format") String format,
+    //                        @Query("formatType") String fromatType);
 }

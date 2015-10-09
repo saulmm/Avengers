@@ -24,7 +24,6 @@ public class GetCharactersUsecase implements Usecase<List<Character>> {
 
     @Override
     public Observable<List<Character>> execute() {
-
         return mRepository.getCharacters(currentOffset)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
