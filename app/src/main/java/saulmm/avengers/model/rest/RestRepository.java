@@ -5,15 +5,24 @@
  */
 package saulmm.avengers.model.rest;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import java.lang.reflect.Type;
+import java.util.List;
 import javax.inject.Inject;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
-import saulmm.avengers.TestPojo;
+import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.utils.MarvelApiUtils;
 
 public class RestRepository  /*Repository*/ {
@@ -23,6 +32,21 @@ public class RestRepository  /*Repository*/ {
 
     String publicKey    = "74129ef99c9fd5f7692608f17abb88f9";
     String privateKey   = "281eb4f077e191f7863a11620fa1865f2940ebeb";
+
+    // http://stackoverflow.com/questions/23070298/get-nested-json-object-with-gson-using-retrofit
+    class CharacterDeserialiser implements JsonDeserializer<List<Character>> {
+
+        @Override public List<Character> deserialize(JsonElement je, Type typeOfT,
+            JsonDeserializationContext context) throws JsonParseException {
+
+            Type listType = new TypeToken<List<Character>>() {}.getType();
+
+            JsonElement results = je.getAsJsonObject().get("data").getAsJsonObject()
+                .get("results");
+
+            return new Gson().fromJson(results, listType);
+        }
+    }
 
     @Inject
     public RestRepository() {
@@ -36,15 +60,6 @@ public class RestRepository  /*Repository*/ {
 			HttpUrl.Builder authorizedUrlBuilder = oldRequest.httpUrl().newBuilder()
                 .scheme(oldRequest.httpUrl().scheme())
                 .host(oldRequest.httpUrl().host());
-
-            //for (String pathSegment : oldRequest.httpUrl().pathSegments())
-            //    authorizedUrlBuilder.addPathSegment(pathSegment);
-			//
-            //for (int i = 0; i < oldRequest.httpUrl().queryParameterNames().size(); i++) {
-            //    String parameterName = oldRequest.httpUrl().queryParameterName(i);
-            //    String parameterValue = oldRequest.httpUrl().queryParameterValue(i);
-            //    authorizedUrlBuilder.addQueryParameter(parameterName, parameterValue);
-            //}
 
             authorizedUrlBuilder.addQueryParameter(MarvelApi.PARAM_API_KEY, publicKey)
                 .addQueryParameter(MarvelApi.PARAM_TIMESTAMP, MarvelApiUtils.getUnixTimeStamp())
@@ -64,13 +79,16 @@ public class RestRepository  /*Repository*/ {
                 System.out.println("[DEBUG]" + " RestRepository RestRepository - " +
                     "Response body null");
 
-
 			return newRequestResponse;
 		});
 
+        Gson gson = new GsonBuilder().registerTypeAdapter(
+            new TypeToken<List<Character>>() {}.getType(), new CharacterDeserialiser())
+            .create();
+
         Retrofit marvelApiAdapter = new Retrofit.Builder()
             .baseUrl(MarvelApi.END_POINT)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build();
 
@@ -79,23 +97,16 @@ public class RestRepository  /*Repository*/ {
 
     public void test() {
 
-        mMarvelApi.getCharacters(20).enqueue(new Callback<TestPojo>() {
+        mMarvelApi.getCharacters(0).enqueue(new Callback<List<Character>>() {
             @Override
-            public void onResponse(retrofit.Response<TestPojo> response, Retrofit retrofit) {
-                if (response.isSuccess()) {
-
-                } else {
-                    int statusCode = response.code();
-                }
-
-
-                System.out.println("[DEBUG]" + " RestRepository onResponse - " +
-                    "");
+            public void onResponse(retrofit.Response<List<Character>> response, Retrofit retrofit) {
+                    System.out.println("[DEBUG]" + " RestRepository onResponse - " +
+                        "");        
             }
 
             @Override public void onFailure(Throwable t) {
-                System.out.println("[DEBUG]" + " RestRepository onFailure - " +
-                    "");
+                    System.out.println("[DEBUG]" + " RestRepository onFailure - " +
+                        "");
             }
         });
     }
