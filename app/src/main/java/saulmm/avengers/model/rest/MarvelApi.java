@@ -6,7 +6,6 @@
 package saulmm.avengers.model.rest;
 
 import java.util.List;
-
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -25,10 +24,8 @@ public interface MarvelApi {
     Observable<List<Character>> getCharacters (@Query("offset") int offset);
 
     @GET("/v1/public/characters")
-    Observable<Character> getCharacterById(@Query("id") int id);
+    Observable<List<Character>> getCharacterById(@Query("id") int id);
 
     @GET("/v1/public/characters/{characterId}/comics")
-    Observable<List<Comic>> getCharacterComics(@Path("characterId") int id,
-                            @Query("format") String format,
-                            @Query("formatType") String fromatType);
+    Observable<List<Comic>> getCharacterComics(@Path("characterId") int id);
 }

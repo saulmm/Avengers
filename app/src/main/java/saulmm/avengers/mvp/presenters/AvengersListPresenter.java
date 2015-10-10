@@ -38,7 +38,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @Inject
     public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
-
         mContext = context;
         mCharactersUsecase = charactersUsecase;
         mCharacters = new ArrayList<>();
@@ -46,7 +45,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @Override
     public void onCreate() {
-
         askForCharacters();
     }
 
@@ -70,12 +68,10 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @Override
     public void onStop() {
-
         mCharactersSubscription.unsubscribe();
     }
 
     public void onListEndReached() {
-        
         if (!mIsTheCharacterRequestRunning) {
             askForNewCharacters();
         }
@@ -83,24 +79,20 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @SuppressWarnings("Convert2MethodRef")
     private void askForCharacters() {
-
         showLoadingUI();
 
         mCharactersSubscription = mCharactersUsecase.execute().subscribe(
             characters -> {
-
                 mCharacters.addAll(characters);
                 mAvengersView.bindCharacterList(mCharacters);
                 mAvengersView.showCharacterList();
                 mAvengersView.hideEmptyIndicator();
             },
-
             error -> showErrorView(error)
         );
     }
 
     private void askForNewCharacters() {
-
         mAvengersView.showLoadingIndicator();
         mIsTheCharacterRequestRunning = true;
 
@@ -108,7 +100,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             .subscribe(
 
             newCharacters -> {
-
                 mCharacters.addAll(newCharacters);
                 mAvengersView.updateCharacterList (GetCharactersUsecase.CHARACTERS_LIMIT);
                 mAvengersView.hideLoadingIndicator();
@@ -116,7 +107,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             },
 
             error -> {
-
                 showGenericError();
                 mIsTheCharacterRequestRunning = false;
             }

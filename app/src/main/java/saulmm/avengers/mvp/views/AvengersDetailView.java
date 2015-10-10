@@ -13,8 +13,6 @@ public interface AvengersDetailView extends View {
 
     void stopLoadingAvengersInformation();
 
-    void startLoadingComics();
-
     void showAvengerBio (String text);
 
     void showAvengerImage (String url);
@@ -28,4 +26,6 @@ public interface AvengersDetailView extends View {
     void clearComicsView();
 
     void showError(String s);
+
+    void hideComics();
 }

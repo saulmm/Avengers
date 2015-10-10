@@ -18,20 +18,17 @@ public class GetCharactersUsecase implements Usecase<List<Character>> {
     private int currentOffset;
 
     @Inject public GetCharactersUsecase(Repository repository) {
-
         mRepository = repository;
     }
 
     @Override
     public Observable<List<Character>> execute() {
-
         return mRepository.getCharacters(currentOffset)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<List<Character>> executeIncreasingOffset() {
-
         currentOffset += CHARACTERS_LIMIT;
 
         return mRepository.getCharacters(currentOffset)
