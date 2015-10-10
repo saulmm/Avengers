@@ -19,13 +19,16 @@ import com.squareup.okhttp.Response;
 import java.lang.reflect.Type;
 import java.util.List;
 import javax.inject.Inject;
-import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
+import rx.Observable;
 import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.entities.Comic;
+import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.utils.MarvelApiUtils;
 
-public class RestRepository  /*Repository*/ {
+public class RestRepository implements Repository {
 
     private final MarvelApi mMarvelApi;
     public final static int MAX_ATTEMPS = 3;
@@ -89,26 +92,11 @@ public class RestRepository  /*Repository*/ {
         Retrofit marvelApiAdapter = new Retrofit.Builder()
             .baseUrl(MarvelApi.END_POINT)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(client)
             .build();
 
         mMarvelApi =  marvelApiAdapter.create(MarvelApi.class);
-    }
-
-    public void test() {
-
-        mMarvelApi.getCharacters(0).enqueue(new Callback<List<Character>>() {
-            @Override
-            public void onResponse(retrofit.Response<List<Character>> response, Retrofit retrofit) {
-                    System.out.println("[DEBUG]" + " RestRepository onResponse - " +
-                        "");        
-            }
-
-            @Override public void onFailure(Throwable t) {
-                    System.out.println("[DEBUG]" + " RestRepository onFailure - " +
-                        "");
-            }
-        });
     }
 
 
@@ -145,11 +133,19 @@ public class RestRepository  /*Repository*/ {
 	//public Observable<saulmm.avengers.model.entities.Character> getCharacter(int characterId) {
      //   return mMarvelApi.getCharacterById(characterId);
 	//}
+	//
+	@Override public Observable<Character> getCharacter(int characterId) {
+           return null;
+	}
 
-    //@Override
-    //public Observable<List<Character>> getCharacters(int currentOffset) {
-    //    return mMarvelApi.getCharacters(currentOffset);
-    //}
+    @Override
+    public Observable<List<Character>> getCharacters(int currentOffset) {
+        return mMarvelApi.getCharacters(currentOffset);
+    }
+
+    @Override public Observable<List<Comic>> getCharacterComics(int characterId) {
+        return null;
+    }
 
     //@Override
     //public Observable<List<Comic>> getCharacterComics(int characterId) {

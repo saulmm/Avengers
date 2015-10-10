@@ -18,7 +18,6 @@ public class GetCharactersUsecase implements Usecase<List<Character>> {
     private int currentOffset;
 
     @Inject public GetCharactersUsecase(Repository repository) {
-
         mRepository = repository;
     }
 
@@ -30,7 +29,6 @@ public class GetCharactersUsecase implements Usecase<List<Character>> {
     }
 
     public Observable<List<Character>> executeIncreasingOffset() {
-
         currentOffset += CHARACTERS_LIMIT;
 
         return mRepository.getCharacters(currentOffset)

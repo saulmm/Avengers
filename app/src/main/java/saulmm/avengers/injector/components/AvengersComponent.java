@@ -15,7 +15,6 @@ import saulmm.avengers.views.activities.AvengersListActivity;
 @Activity
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface AvengersComponent extends ActivityComponent {
-
     void inject (AvengersListActivity activity);
 
     Context activityContext();

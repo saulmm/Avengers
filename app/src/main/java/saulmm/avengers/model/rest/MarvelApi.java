@@ -6,10 +6,9 @@
 package saulmm.avengers.model.rest;
 
 import java.util.List;
-import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Query;
-import saulmm.avengers.model.entities.Character;
+import rx.Observable;
 
 public interface MarvelApi {
 
@@ -18,8 +17,8 @@ public interface MarvelApi {
     String PARAM_HASH      = "hash";
     String PARAM_TIMESTAMP = "ts";
 
-    @GET("/v1/public/characters") Call<List<Character>> getCharacters (@Query("offset") int offset);
-    //Observable<List<Character>> getCharacters (@Query("offset") int offset);
+    @GET("/v1/public/characters")
+    Observable<List<saulmm.avengers.model.entities.Character>> getCharacters (@Query("offset") int offset);
 
     //@GET("/v1/public/characters")
     //Observable<Character> getCharacterById(@Query("id") int id);
