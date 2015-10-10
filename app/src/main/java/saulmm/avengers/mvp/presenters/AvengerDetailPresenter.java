@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.R;
 import saulmm.avengers.Utils;
+import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.model.rest.exceptions.NetworkErrorException;
@@ -27,7 +28,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     private AvengersDetailView mAvengersDetailView;
 
     private int mAvengerCharacterId;
-    //private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
+    private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
     //private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
     private Intent mIntent;
 
@@ -35,11 +36,11 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     private Subscription mCharacterSubscription;
 
     @Inject
-    public AvengerDetailPresenter(/*GetCharacterInformationUsecase getCharacterInformationUsecase,
-                                  GetCharacterComicsUsecase getCharacterComicsUsecase,*/
+    public AvengerDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
+                                  /*GetCharacterComicsUsecase getCharacterComicsUsecase,*/
                                   Context activityContext) {
 
-        //mGetCharacterInformationUsecase = getCharacterInformationUsecase;
+        mGetCharacterInformationUsecase = getCharacterInformationUsecase;
         //mGetCharacterComicsUsecase = getCharacterComicsUsecase;
         mActivityContext = activityContext;
     }
@@ -80,7 +81,6 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
     @SuppressWarnings("Convert2MethodRef")
     public void initializePresenter() {
-
         String characterName = mIntent.getExtras().getString(
             AvengersListActivity.EXTRA_CHARACTER_NAME);
 
@@ -89,9 +89,9 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
         mAvengersDetailView.startLoading();
 
-        //mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
-        //    character   -> onAvengerReceived(character),
-        //    error       -> manageError(error));
+        mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
+            character   -> onAvengerReceived(character),
+            error       -> manageError(error));
 
         //mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
         //    comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic)));

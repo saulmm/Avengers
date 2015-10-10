@@ -7,13 +7,8 @@ package saulmm.avengers.model.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.OkHttpClient;
-import java.lang.reflect.Type;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit.GsonConverterFactory;
@@ -33,29 +28,12 @@ public class RestRepository implements Repository {
     String publicKey    = "74129ef99c9fd5f7692608f17abb88f9";
     String privateKey   = "281eb4f077e191f7863a11620fa1865f2940ebeb";
 
-    // http://stackoverflow.com/questions/23070298/get-nested-json-object-with-gson-using-retrofit
-    class CharacterDeserialiser implements JsonDeserializer<List<Character>> {
-
-        @Override public List<Character> deserialize(JsonElement je, Type typeOfT,
-            JsonDeserializationContext context) throws JsonParseException {
-
-            Type listType = new TypeToken<List<Character>>() {}.getType();
-
-            JsonElement results = je.getAsJsonObject().get("data").getAsJsonObject()
-                .get("results");
-
-            return new Gson().fromJson(results, listType);
-        }
-    }
-
-    @Inject
-    public RestRepository() {
-
+    @Inject public RestRepository() {
         OkHttpClient client = new OkHttpClient();
         client.interceptors().add(new MarvelSigningIterceptor(publicKey, privateKey));
 
         Gson gson = new GsonBuilder().registerTypeAdapter(
-            new TypeToken<List<Character>>() {}.getType(), new CharacterDeserialiser())
+            new TypeToken<List<Character>>() {}.getType(), new MarvelResultsCharacterDeserialiser())
             .create();
 
         Retrofit marvelApiAdapter = new Retrofit.Builder()
@@ -68,43 +46,10 @@ public class RestRepository implements Repository {
         mMarvelApi =  marvelApiAdapter.create(MarvelApi.class);
     }
 
-
-	//RequestInterceptor authorizationInterceptor = request -> {
-
-	//};
-
-    //public class RetrofitErrorHandler implements retrofit.ErrorHandler {
-	//
-    //    @Override
-    //    public Throwable handleError(retrofit.RetrofitError cause) {
-	//
-    //        if (cause.getKind() == retrofit.RetrofitError.Kind.NETWORK) {
-	//
-    //            if (cause.getCause() instanceof SocketTimeoutException)
-    //                return new NetworkTimeOutException();
-	//
-    //            else if (cause.getCause() instanceof UnknownHostException)
-    //                return new NetworkUknownHostException();
-	//
-    //            else if (cause.getCause() instanceof ConnectException)
-    //                return cause.getCause();
-	//
-    //        } else {
-	//
-    //            return new NetworkErrorException();
-    //        }
-	//
-    //        return new Exception();
-    //    };
-    //}
-	//
-	//@Override
-	//public Observable<saulmm.avengers.model.entities.Character> getCharacter(int characterId) {
-     //   return mMarvelApi.getCharacterById(characterId);
-	//}
-	//
-	@Override public Observable<Character> getCharacter(int characterId) {
-           return null;
+	@Override
+    public Observable<Character> getCharacter(int characterId) {
+           return mMarvelApi.getCharacterById(characterId).flatMap(
+               characters -> Observable.just(characters.get(0)));
 	}
 
     @Override

@@ -9,6 +9,7 @@ import java.util.List;
 import retrofit.http.GET;
 import retrofit.http.Query;
 import rx.Observable;
+import saulmm.avengers.model.entities.Character;
 
 public interface MarvelApi {
 
@@ -18,11 +19,11 @@ public interface MarvelApi {
     String PARAM_TIMESTAMP = "ts";
 
     @GET("/v1/public/characters")
-    Observable<List<saulmm.avengers.model.entities.Character>> getCharacters (@Query("offset") int offset);
+    Observable<List<Character>> getCharacters (@Query("offset") int offset);
 
-    //@GET("/v1/public/characters")
-    //Observable<Character> getCharacterById(@Query("id") int id);
-	//
+    @GET("/v1/public/characters")
+    Observable<List<Character>> getCharacterById(@Query("id") int id);
+
     //@GET("/v1/public/characters/{characterId}/comics")
     //Observable<List<Comic>> getCharacterComics(@Path("characterId") int id,
     //                        @Query("format") String format,
