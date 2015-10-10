@@ -18,6 +18,8 @@ public class Character {
     private int imageResource;
     private Thumbnail thumbnail;
     private String resourceURI;
+    private ComicsCollection comics;
+
 
     public Character(String name, int thumb_resource, int id) {
 

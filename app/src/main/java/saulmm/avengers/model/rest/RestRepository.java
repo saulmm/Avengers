@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.OkHttpClient;
+import java.net.SocketTimeoutException;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit.GsonConverterFactory;
@@ -19,6 +20,8 @@ import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.utils.MarvelSigningIterceptor;
+import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsCharacterDeserialiser;
+import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsComicsDeserialiser;
 
 public class RestRepository implements Repository {
 
@@ -32,8 +35,9 @@ public class RestRepository implements Repository {
         OkHttpClient client = new OkHttpClient();
         client.interceptors().add(new MarvelSigningIterceptor(publicKey, privateKey));
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(
-            new TypeToken<List<Character>>() {}.getType(), new MarvelResultsCharacterDeserialiser())
+        Gson gson = new GsonBuilder()
+            .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(), new MarvelResultsCharacterDeserialiser())
+            .registerTypeAdapter(new TypeToken<List<Comic>>() {}.getType(), new MarvelResultsComicsDeserialiser())
             .create();
 
         Retrofit marvelApiAdapter = new Retrofit.Builder()
@@ -57,21 +61,10 @@ public class RestRepository implements Repository {
         return mMarvelApi.getCharacters(currentOffset);
     }
 
-    @Override public Observable<List<Comic>> getCharacterComics(int characterId) {
-        return null;
+    @Override
+    public Observable<List<Comic>> getCharacterComics(int characterId) {
+        return mMarvelApi.getCharacterComics(characterId)
+            .retry((attemps, error) -> error instanceof SocketTimeoutException
+                && attemps < MAX_ATTEMPS);
     }
-
-    //@Override
-    //public Observable<List<Comic>> getCharacterComics(int characterId) {
-    //    final String comicsFormat   = "comic";
-    //    final String comicsType     = "comic";
-	//
-    //    return mMarvelApi.getCharacterComics(characterId, comicsFormat, comicsType)
-    //        .retry((attemps, error) -> error instanceof SocketTimeoutException && attemps < MAX_ATTEMPS);
-    //}
-
-    //public Observable<RetrofitError> emitRetrofitError (RetrofitError retrofitError) {
-	//
-    //    return Observable.just(retrofitError);
-    //}
 }

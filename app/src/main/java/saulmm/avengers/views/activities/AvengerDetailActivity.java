@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -45,7 +46,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     @Bind(R.id.activity_avenger_detail_progress)      ProgressBar mProgress;
     @Bind(R.id.activity_avenger_comics_progress)      ProgressBar mComicsProgress;
-    @Bind(R.id.activity_avenger_comics_container)     LinearLayout mDetailContainer;
+    @Bind(R.id.activity_avenger_comics_container)     LinearLayout mComicsContainer;
     @Bind(R.id.activity_avenger_detail_biography)     TextView mBiographyTextView;
     @Bind(R.id.activity_avenger_detail_name)          TextView mCharacterNameTextView;
     @Bind(R.id.activity_avenger_detail_thumb)         ImageView mAvengerThumb;
@@ -53,7 +54,8 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Bind(R.id.activity_avenger_detail_appbar)        AppBarLayout mAppbar;
 
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
-
+    @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
+    @Bind(R.id.activity_avenger_detail_filter_button)   Button mFilterComicsButton;
     @Bind({ R.id.activity_avenger_detail_comics_header, R.id.activity_avenger_detail_inf_header})
     List<TextView> mHeaderTextViews;
 
@@ -91,7 +93,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
                 getWindow().setStatusBarColor(darkVibrant);
 
                 ButterKnife.apply(mHeaderTextViews, ButterKnifeUtils.TEXTCOLOR, darkVibrant);
-		});
+            });
     }
 
     private void initButterknife() {
@@ -145,13 +147,10 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         mCollapsingActionBar.getViewTreeObserver().addOnGlobalLayoutListener(
             new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override public void onGlobalLayout() {
-
-                    mCollapsingActionBar.getViewTreeObserver()
-                        .removeOnGlobalLayoutListener(this);
-
+                    mCollapsingActionBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     //int width = mAvengerBackground.getWidth();
                     //int height = mAvengerBackground.getHeight();
-					//
+                    //
                     //AnimUtils.showRevealEffect(mAvengerBackground, width / 2, height / 2, null);
                 }
             });
@@ -159,8 +158,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     private void initToolbar() {
 
-        mCollapsingActionBar.setExpandedTitleTextAppearance(
-            R.style.Avengers_Text_CollapsedExpanded);
+        mCollapsingActionBar.setExpandedTitleTextAppearance(R.style.Avengers_Text_CollapsedExpanded);
     }
 
     @Override
@@ -176,12 +174,6 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     }
 
     @Override
-    public void startLoadingComics() {
-
-        mComicsProgress.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void showAvengerBio(String text) {
 
         mBiographyTextView.setVisibility(View.VISIBLE);
@@ -190,7 +182,6 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     @Override
     public void showAvengerImage(String url) {
-
         //Glide.with(this).load(url).into(mAvengerImageView);
     }
 
@@ -222,21 +213,19 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         if (comic.getFirstTextObject() != null)
             comicDescTextView.setText(Html.fromHtml(comic.getFirstTextObject()));
 
-        mDetailContainer.addView(comicView);
+        mComicsContainer.addView(comicView);
     }
 
     @Override
     public void stopLoadingComicsIfNeeded() {
-
         if (mComicsProgress.getVisibility() == View.VISIBLE)
             mComicsProgress.setVisibility(View.GONE);
     }
 
     @Override
     public void clearComicsView() {
-
-        if(mDetailContainer.getChildCount() > 0)
-            mDetailContainer.removeAllViews();
+        if(mComicsContainer.getChildCount() > 0)
+            mComicsContainer.removeAllViews();
     }
 
     @Override
@@ -251,6 +240,14 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
             .setMessage(errorMessage)
             .setCancelable(false)
             .show();
+    }
+
+    @Override
+    public void hideComics() {
+        mComicsContainer.setVisibility(View.GONE);
+        mComicsHeaderTextView.setVisibility(View.GONE);
+        mComicsProgress.setVisibility(View.GONE);
+        mFilterComicsButton.setVisibility(View.GONE);
     }
 
     @Override

@@ -33,6 +33,9 @@ public class MarvelSigningIterceptor implements Interceptor {
 			.url(authorizedUrlBuilder.build())
 			.build();
 
+		System.out.println("[DEBUG]" + " Retrofit -->" +
+		    ""+authorizedUrlBuilder.build().url().toString());
+
 		return chain.proceed(newRequest);
 	}
 }
