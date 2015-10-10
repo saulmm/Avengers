@@ -12,10 +12,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import java.lang.reflect.Type;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,7 +23,7 @@ import rx.Observable;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.model.repository.Repository;
-import saulmm.avengers.model.rest.utils.MarvelApiUtils;
+import saulmm.avengers.model.rest.utils.MarvelSigningIterceptor;
 
 public class RestRepository implements Repository {
 
@@ -55,35 +52,7 @@ public class RestRepository implements Repository {
     public RestRepository() {
 
         OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(chain -> {
-
-			String marvelHash = MarvelApiUtils.generateMarvelHash(publicKey, privateKey);
-			Request oldRequest = chain.request();
-
-			HttpUrl.Builder authorizedUrlBuilder = oldRequest.httpUrl().newBuilder()
-                .scheme(oldRequest.httpUrl().scheme())
-                .host(oldRequest.httpUrl().host());
-
-            authorizedUrlBuilder.addQueryParameter(MarvelApi.PARAM_API_KEY, publicKey)
-                .addQueryParameter(MarvelApi.PARAM_TIMESTAMP, MarvelApiUtils.getUnixTimeStamp())
-                .addQueryParameter(MarvelApi.PARAM_HASH, marvelHash);
-
-            Request newRequest = oldRequest.newBuilder()
-                .method(oldRequest.method(), oldRequest.body())
-                .url(authorizedUrlBuilder.build())
-                .build();
-
-            Response newRequestResponse = chain.proceed(newRequest);
-
-            if (newRequestResponse.body() != null)
-            System.out.println("[DEBUG]" + " RestRepository RestRepository - " +
-                ""+newRequestResponse.body().toString());
-            else
-                System.out.println("[DEBUG]" + " RestRepository RestRepository - " +
-                    "Response body null");
-
-			return newRequestResponse;
-		});
+        client.interceptors().add(new MarvelSigningIterceptor(publicKey, privateKey));
 
         Gson gson = new GsonBuilder().registerTypeAdapter(
             new TypeToken<List<Character>>() {}.getType(), new CharacterDeserialiser())
