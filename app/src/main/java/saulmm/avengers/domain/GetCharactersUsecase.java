@@ -11,7 +11,6 @@ import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.repository.Repository;
 
 public class GetCharactersUsecase implements Usecase<List<Character>> {
-
     public final static int CHARACTERS_LIMIT = 20;
 
     private final Repository mRepository;
@@ -33,6 +32,9 @@ public class GetCharactersUsecase implements Usecase<List<Character>> {
 
         return mRepository.getCharacters(currentOffset)
             .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread());
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError(throwable -> {
+                currentOffset -= CHARACTERS_LIMIT;
+            });
     }
 }

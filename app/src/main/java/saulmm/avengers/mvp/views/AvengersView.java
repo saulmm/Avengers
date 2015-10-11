@@ -17,7 +17,9 @@ public interface AvengersView extends View {
 
     void hideAvengersList();
 
-    void showLoadingIndicator ();
+    void showLoadingMoreCharactersIndicator();
+
+    void hideLoadingMoreCharactersIndicator();
 
     void hideLoadingIndicator ();
 

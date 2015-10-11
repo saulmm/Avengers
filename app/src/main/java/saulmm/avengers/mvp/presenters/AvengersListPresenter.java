@@ -16,6 +16,7 @@ import saulmm.avengers.Utils;
 import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
+import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.mvp.views.AvengersView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;
@@ -48,8 +49,16 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     }
 
 
+    @Override
     public void onStart() {
         // Unused
+    }
+
+    @Override
+    public void onPause() {
+        mAvengersView.hideLoadingMoreCharactersIndicator();
+        mCharactersSubscription.unsubscribe();
+        mIsTheCharacterRequestRunning = false;
     }
 
     @Override
@@ -64,32 +73,29 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @Override
     public void onStop() {
-        mCharactersSubscription.unsubscribe();
+        // Unused
     }
 
     public void onListEndReached() {
-        if (!mIsTheCharacterRequestRunning) {
-            askForNewCharacters();
-        }
+        if (!mIsTheCharacterRequestRunning) askForNewCharacters();
     }
 
     @SuppressWarnings("Convert2MethodRef")
     private void askForCharacters() {
+        mIsTheCharacterRequestRunning = true;
         showLoadingUI();
 
-        mCharactersSubscription = mCharactersUsecase.execute().subscribe(
-            characters -> {
+        mCharactersSubscription = mCharactersUsecase.execute().subscribe(characters -> {
                 mCharacters.addAll(characters);
                 mAvengersView.bindCharacterList(mCharacters);
                 mAvengersView.showCharacterList();
                 mAvengersView.hideEmptyIndicator();
-            },
-            error -> showErrorView(error)
-        );
+                mIsTheCharacterRequestRunning = false;
+            }, error -> showErrorView(error));
     }
 
     private void askForNewCharacters() {
-        mAvengersView.showLoadingIndicator();
+        mAvengersView.showLoadingMoreCharactersIndicator();
         mIsTheCharacterRequestRunning = true;
 
         mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
@@ -118,8 +124,13 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         if (error instanceof NetworkUknownHostException) {
             String errorMessage = mContext.getString(R.string.error_network_uknownhost);
             mAvengersView.showErrorView(errorMessage);
+
+        } else if (error instanceof ServerErrorException) {
+            String errorMessage = mContext.getString(R.string.errors_marvel_server);
+            mAvengersView.showErrorView(errorMessage);
         }
 
+        mAvengersView.hideLoadingMoreCharactersIndicator();
         mAvengersView.hideEmptyIndicator();
         mAvengersView.hideAvengersList();
     }

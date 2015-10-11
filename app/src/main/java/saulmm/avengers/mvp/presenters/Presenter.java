@@ -11,9 +11,11 @@ import saulmm.avengers.mvp.views.View;
 
 public interface Presenter {
 
-    void onStart ();
+    void onStart();
 
-    void onStop ();
+    void onStop();
+
+    void onPause();
 
     void attachView (View v);
 
