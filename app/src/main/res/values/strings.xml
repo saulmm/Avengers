@@ -6,4 +6,6 @@
     <string name="error.default.characters">Something happened loading characters</string>
     <string name="error.network.uknownhost">Can\'t connect with marvel API</string>
     <string name="errors.image_not_found">Image not found</string>
+    <string name="errors.marvel_server">Marvel API Server has failed</string>
+    <string name="message.loading.more_characters">Loading more characters</string>
 </resources>

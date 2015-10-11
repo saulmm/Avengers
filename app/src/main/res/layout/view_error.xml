@@ -15,7 +15,6 @@
         android:layout_height="55dp"
         android:layout_marginBottom="@dimen/spacing_normal"
         android:layout_gravity="center"
-        android:src="@drawable/warning"
         />
 
     <TextView

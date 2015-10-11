@@ -19,6 +19,8 @@ import rx.Observable;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.model.repository.Repository;
+import saulmm.avengers.model.rest.exceptions.ServerErrorException;
+import saulmm.avengers.model.rest.exceptions.UknownErrorException;
 import saulmm.avengers.model.rest.utils.MarvelSigningIterceptor;
 import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsCharacterDeserialiser;
 import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsComicsDeserialiser;
@@ -58,7 +60,11 @@ public class RestRepository implements Repository {
 
     @Override
     public Observable<List<Character>> getCharacters(int currentOffset) {
-        return mMarvelApi.getCharacters(currentOffset);
+        return mMarvelApi.getCharacters(currentOffset)
+            .onErrorResumeNext(throwable -> {
+                boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
+                return  Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
+            });
     }
 
     @Override

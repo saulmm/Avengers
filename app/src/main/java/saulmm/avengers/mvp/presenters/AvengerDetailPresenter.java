@@ -54,12 +54,16 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
     @Override
     public void onStop() {
-
         if (!mCharacterSubscription.isUnsubscribed())
             mCharacterSubscription.unsubscribe();
 
         if (!mComicsSubscription.isUnsubscribed())
             mComicsSubscription.unsubscribe();
+    }
+
+    @Override
+    public void onPause() {
+
     }
 
     @Override

@@ -81,6 +81,12 @@ public class AvengersListActivity extends AppCompatActivity
         mAvengersListPresenter.onStart();
     }
 
+    @Override
+    protected void onPause() {
+        super.onStart();
+        mAvengersListPresenter.onPause();
+    }
+
     private void initializePresenter() {
         mAvengersListPresenter.attachView(this);
         mAvengersListPresenter.onCreate();
@@ -121,7 +127,6 @@ public class AvengersListActivity extends AppCompatActivity
     public void updateCharacterList(int charactersAdded) {
         mCharacterListAdapter.notifyItemRangeInserted(
             mCharacterListAdapter.getItemCount() + charactersAdded, charactersAdded);
-
     }
 
     @Override
@@ -130,11 +135,16 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     @Override
-    public void showLoadingIndicator() {
+    public void showLoadingMoreCharactersIndicator() {
         mLoadingMoreCharactersSnack = Snackbar.make(mAvengersRecycler,
-            "Loading more characters", Snackbar.LENGTH_INDEFINITE);
+            getString(R.string.message_loading_more_characters), Snackbar.LENGTH_INDEFINITE);
 
         mLoadingMoreCharactersSnack.show();
+    }
+
+    @Override
+    public void hideLoadingMoreCharactersIndicator() {
+        if (mLoadingMoreCharactersSnack != null) mLoadingMoreCharactersSnack.dismiss();
     }
 
     @Override
@@ -155,8 +165,7 @@ public class AvengersListActivity extends AppCompatActivity
     @Override
     public void showLightError() {
         Snackbar.make(mAvengersRecycler, getString(R.string.error_loading_characters), Snackbar.LENGTH_LONG)
-            .setAction(R.string.try_again,
-                v -> mAvengersListPresenter.onErrorRetryRequest())
+            .setAction(R.string.try_again, v -> mAvengersListPresenter.onErrorRetryRequest())
             .show();
     }
 
@@ -201,7 +210,6 @@ public class AvengersListActivity extends AppCompatActivity
             int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
 
             if (visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
-
                 mAvengersListPresenter.onListEndReached();
             }
         }
