@@ -87,7 +87,6 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeDependencyInjector() {
-
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
         DaggerAvengersComponent.builder()
@@ -97,7 +96,6 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeRecyclerView() {
-
         mAvengersRecycler.setLayoutManager(new GridLayoutManager(this, 2));
         mAvengersRecycler.addItemDecoration(new RecyclerInsetsDecoration(this));
         mAvengersRecycler.addOnScrollListener(mOnScrollListener);
@@ -105,7 +103,6 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public void bindCharacterList(List<Character> avengers) {
-
         mCharacterListAdapter = new AvengersListAdapter(avengers,
             this, mAvengersListPresenter);
 
@@ -114,7 +111,6 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public void showCharacterList() {
-
         if (mAvengersRecycler.getVisibility() == View.GONE ||
             mAvengersRecycler.getVisibility() == View.INVISIBLE)
 
@@ -123,7 +119,6 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public void updateCharacterList(int charactersAdded) {
-
         mCharacterListAdapter.notifyItemRangeInserted(
             mCharacterListAdapter.getItemCount() + charactersAdded, charactersAdded);
 
@@ -131,13 +126,11 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public void hideAvengersList() {
-
         mAvengersRecycler.setVisibility(View.GONE);
     }
 
     @Override
     public void showLoadingIndicator() {
-
         mLoadingMoreCharactersSnack = Snackbar.make(mAvengersRecycler,
             "Loading more characters", Snackbar.LENGTH_INDEFINITE);
 
@@ -146,25 +139,21 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public void hideLoadingIndicator() {
-
         mLoadingMoreCharactersSnack.dismiss();
     }
 
     @Override
     public void showLoadingView() {
-
         mEmptyIndicator.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoadingView() {
-
         mEmptyIndicator.setVisibility(View.GONE);
     }
 
     @Override
     public void showLightError() {
-
         Snackbar.make(mAvengersRecycler, getString(R.string.error_loading_characters), Snackbar.LENGTH_LONG)
             .setAction(R.string.try_again,
                 v -> mAvengersListPresenter.onErrorRetryRequest())
@@ -173,7 +162,6 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public void showErrorView(String errorMessage) {
-
         TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
         errorTextView.setText(errorMessage);
 
@@ -185,25 +173,21 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public void hideErrorView() {
-
         mErrorView.setVisibility(View.GONE);
     }
 
     @Override
     public void showEmptyIndicator() {
-
         mEmptyIndicator.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideEmptyIndicator() {
-
         mEmptyIndicator.setVisibility(View.GONE);
     }
 
     @Override
     protected void onStop() {
-
         super.onStop();
         mAvengersListPresenter.onStop();
     }
@@ -211,7 +195,6 @@ public class AvengersListActivity extends AppCompatActivity
     private OnScrollListener mOnScrollListener = new OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
             GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
             int visibleItemsCount   = layoutManager.getChildCount();
             int totalItemsCount     = layoutManager.getItemCount();
@@ -226,7 +209,6 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     public ActivityOptions getActivityOptions(int position, View clickedView) {
-
         String sharedViewName = Utils.getListTransitionName(position);
         clickedView.setTransitionName(sharedViewName);
         clickedView.buildDrawingCache();
