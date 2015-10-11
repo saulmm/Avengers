@@ -52,13 +52,14 @@ public class AvengersListActivity extends AppCompatActivity
     @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Bind(R.id.activity_avengers_error_view)      View mErrorView;
     @Bind(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
+
     @Inject AvengersListPresenter mAvengersListPresenter;
-    private Snackbar mLoadingMoreCharactersSnack;
+
     private AvengersListAdapter mCharacterListAdapter;
+    private Snackbar mLoadingMoreCharactersSnack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_avengers_list);
         ButterKnife.bind(this);
@@ -70,20 +71,17 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeToolbar() {
-
         mAvengersActivityTitle.setTypeface(Utils.getBangersTypeface(this));
         setSupportActionBar(mAvengersToolbar);
     }
 
     @Override
     protected void onStart() {
-
         super.onStart();
         mAvengersListPresenter.onStart();
     }
 
     private void initializePresenter() {
-
         mAvengersListPresenter.attachView(this);
         mAvengersListPresenter.onCreate();
     }

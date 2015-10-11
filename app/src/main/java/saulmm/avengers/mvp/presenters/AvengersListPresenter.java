@@ -24,7 +24,6 @@ import saulmm.avengers.views.activities.AvengersListActivity;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class AvengersListPresenter implements Presenter, RecyclerClickListener {
-
     private final GetCharactersUsecase mCharactersUsecase;
     private final Context mContext;
 
@@ -50,19 +49,16 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
 
     public void onStart() {
-
         // Unused
     }
 
     @Override
     public void attachView(View v) {
-
         mAvengersView = (AvengersView) v;
     }
 
     @Override
     public void attachIncomingIntent(Intent intent) {
-
         mIntent = intent;
     }
 
@@ -114,15 +110,12 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     }
 
     private void showLoadingUI() {
-
         mAvengersView.hideErrorView();
         mAvengersView.showLoadingView();
     }
 
     private void showErrorView(Throwable error) {
-
         if (error instanceof NetworkUknownHostException) {
-
             String errorMessage = mContext.getString(R.string.error_network_uknownhost);
             mAvengersView.showErrorView(errorMessage);
         }
@@ -132,13 +125,11 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     }
 
     private void showGenericError() {
-
         mAvengersView.hideLoadingIndicator();
         mAvengersView.showLightError();
     }
 
     public void onErrorRetryRequest() {
-
         if (mCharacters.isEmpty())
             askForCharacters();
         else
@@ -147,7 +138,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @Override
     public void onElementClick(int position, android.view.View clickedView) {
-
         int characterId = mCharacters.get(position).getId();
         String characterName = mCharacters.get(position).getName();
         String sharedElementName = Utils.getListTransitionName(position);
