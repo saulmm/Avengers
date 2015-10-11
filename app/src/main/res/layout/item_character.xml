@@ -19,14 +19,33 @@
         android:orientation="vertical"
         >
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            >
+
         <ImageView
             android:id="@+id/item_avenger_thumb"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:scaleType="centerCrop"
-            tools:src="@drawable/marvel_placeholder"
+            android:background="@color/grey.light.hight"
             />
+
+            <TextView
+                android:id="@+id/item_avenger_placeholder_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/errors.image_not_found"
+                android:gravity="center"
+                android:fontFamily="sans-serif-light"
+                android:textSize="30sp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +65,7 @@
                 android:gravity="center"
                 android:ellipsize="end"
                 android:ems="4"
-                android:textColor="@color/grey_dark"
+                android:textColor="@color/grey.dark"
                 android:textSize="16sp"
                 tools:text="An amazing avenger"
                 />

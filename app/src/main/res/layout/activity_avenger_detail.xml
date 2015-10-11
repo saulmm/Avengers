@@ -178,7 +178,7 @@
 				android:lineSpacingExtra="8dp"
 				android:paddingLeft="@dimen/spacing_normal"
 				android:paddingRight="@dimen/spacing_normal"
-				android:textColor="@color/grey_medium"
+				android:textColor="@color/grey.medium"
 				android:textSize="20sp"
 				android:visibility="gone"
 				tools:visibility="gone"
