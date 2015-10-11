@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:visibility="gone"
+    style="@style/Avengers.ViewGroup"
+    >
+
+    <ImageView
+        android:id="@+id/activity_login_progress"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/view_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_normal"
+        android:text="@string/error.default.characters"
+        tools:text="Can't fetch\ncharacters list"
+        style="@style/Avengers.Text.StateMessage"
+        />
+
+    <Button
+        android:id="@+id/view_error_retry_button"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:minHeight="55dp"
+        android:text="Retry"
+        />
+</LinearLayout>

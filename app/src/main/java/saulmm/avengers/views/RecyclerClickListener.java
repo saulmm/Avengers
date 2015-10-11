@@ -5,7 +5,9 @@
  */
 package saulmm.avengers.views;
 
+import android.view.View;
+
 public interface RecyclerClickListener {
 
-    void onElementClick (int position);
+    void onElementClick (int position, View clickedView);
 }

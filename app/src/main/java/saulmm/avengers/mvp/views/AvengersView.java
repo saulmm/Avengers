@@ -5,11 +5,39 @@
  */
 package saulmm.avengers.mvp.views;
 
+import android.app.ActivityOptions;
 import java.util.List;
-
-import saulmm.avengers.model.Character;
+import saulmm.avengers.model.entities.Character;
 
 public interface AvengersView extends View {
 
-    void showAvengersList (List<Character> avengers);
+    void bindCharacterList(List<Character> avengers);
+
+    void showCharacterList();
+
+    void hideAvengersList();
+
+    void showLoadingMoreCharactersIndicator();
+
+    void hideLoadingMoreCharactersIndicator();
+
+    void hideLoadingIndicator ();
+
+    void showLoadingView();
+
+    void hideLoadingView();
+
+    void showLightError();
+
+    void showErrorView(String errorMessage);
+
+    void hideErrorView();
+
+    void showEmptyIndicator();
+
+    void hideEmptyIndicator();
+
+    ActivityOptions getActivityOptions (int position, android.view.View clickedView);
+
+    void updateCharacterList(int charactersLimit);
 }

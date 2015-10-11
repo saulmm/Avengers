@@ -8,20 +8,14 @@ package saulmm.avengers.mvp.presenters;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.AdapterView;
-
 import javax.inject.Inject;
-
 import rx.Observable;
 import rx.Subscription;
 import saulmm.avengers.R;
-import saulmm.avengers.Utils;
 import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
-import saulmm.avengers.model.Character;
-import saulmm.avengers.model.Comic;
-import saulmm.avengers.model.rest.exceptions.NetworkErrorException;
-import saulmm.avengers.model.rest.exceptions.NetworkTimeOutException;
-import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
+import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.mvp.views.AvengersDetailView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.activities.AvengersListActivity;
@@ -31,7 +25,6 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     private final Context mActivityContext;
     private AvengersDetailView mAvengersDetailView;
 
-    private int mAvengerCharacterId;
     private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
     private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
     private Intent mIntent;
@@ -50,19 +43,27 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     }
 
     @Override
-    public void onStart() {
+    public void onCreate() {
+        // Unused
+    }
 
+    @Override
+    public void onStart() {
         // Unused
     }
 
     @Override
     public void onStop() {
-
         if (!mCharacterSubscription.isUnsubscribed())
             mCharacterSubscription.unsubscribe();
 
         if (!mComicsSubscription.isUnsubscribed())
             mComicsSubscription.unsubscribe();
+    }
+
+    @Override
+    public void onPause() {
+
     }
 
     @Override
@@ -79,47 +80,47 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
 
     @SuppressWarnings("Convert2MethodRef")
     public void initializePresenter() {
-
-        mAvengerCharacterId = mIntent.getExtras().getInt(
-            AvengersListActivity.EXTRA_CHARACTER_ID);
+        String characterName = mIntent.getExtras().getString(
+            AvengersListActivity.EXTRA_CHARACTER_NAME);
 
         mAvengersDetailView.startLoading();
 
         mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
             character   -> onAvengerReceived(character),
-            error       -> manageError(error));
+            error       -> manageCharacterError(error));
 
-        mComicsSubscription = mGetCharacterComicsUsecase.execute().subscribe(
-            comics      -> Observable.from(comics).subscribe(comic -> onComicReceived(comic)),
-            throwable   -> manageError(throwable));
+        mComicsSubscription = mGetCharacterComicsUsecase.execute()
+            .subscribe(comics-> {
+                if (!comics.isEmpty())
+                    Observable.from(comics).subscribe(comic -> onComicReceived(comic));
+
+                else {
+                    mAvengersDetailView.stopLoadingComicsIfNeeded();
+                    mAvengersDetailView.hideComics();
+
+                }
+            }, throwable -> manageComicsError(throwable));
 
         mAvengersDetailView.startLoading();
+        mAvengersDetailView.showAvengerName(characterName);
     }
 
+    private void manageComicsError(Throwable throwable) {
+        mAvengersDetailView.stopLoadingComicsIfNeeded();
+        mAvengersDetailView.hideComics();
+    }
+
+    private void manageCharacterError(Throwable error) {
+        // TODO
+    }
 
     private void onComicReceived(Comic comic) {
-
         mAvengersDetailView.stopLoadingComicsIfNeeded();
         mAvengersDetailView.addComic(comic);
     }
 
-    private void manageError(Throwable error) {
-
-        if (error instanceof NetworkUknownHostException)
-            mAvengersDetailView.showError("It has not been possible to resolve marvel api");
-
-        if (error instanceof NetworkTimeOutException)
-            mAvengersDetailView.showError ("It has ended the waiting time for connecting to the server marvel");
-
-        if (error instanceof NetworkErrorException)
-            mAvengersDetailView.showError ("There was a problem with the network");
-    }
-
-
     private void onAvengerReceived(Character character) {
-
         mAvengersDetailView.stopLoadingAvengersInformation();
-        mAvengersDetailView.showAvengerName(character.getName());
         mAvengersDetailView.showAvengerBio(
             (character.getDescription().equals(""))
                 ? "No biography available"
@@ -130,30 +131,21 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     }
 
     public void onDialogButton(int which) {
-
-        if (which == Utils.DIALOG_ACCEPT)
-            System.out.println("[DEBUG]" + " AvengerDetailPresenter onDialogButton - " +
-                "Accepted");
-
-        if (which == Utils.DIALOG_CANCEL)
-            System.out.println("[DEBUG]" + " AvengerDetailPresenter onDialogButton - " +
-                "Cancelled");
-
+        //if (which == Utils.DIALOG_ACCEPT)
+        //    // TODO
+        //if (which == Utils.DIALOG_CANCEL)
+        //    // TODO
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
-
         if (position != 0) {
-
             mAvengersDetailView.clearComicsView();
             String[] yearArray = mActivityContext.getResources().getStringArray(R.array.years);
             String selectedYear = yearArray[position];
 
             mGetCharacterComicsUsecase.filterByYear(selectedYear)
-                .subscribe(
-                    comic -> onComicReceived(comic));
+                .subscribe(this::onComicReceived);
         }
     }
 

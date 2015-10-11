@@ -7,7 +7,6 @@ package saulmm.avengers.injector.components;
 
 import dagger.Component;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
-import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.injector.Activity;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -20,5 +19,5 @@ public interface AvengerInformationComponent extends ActivityComponent {
     void inject (AvengerDetailActivity detailActivity);
 
     GetCharacterInformationUsecase getCharacerInformationUsecase();
-    GetCharacterComicsUsecase getCharacterComicsUsecase();
+    //GetCharacterComicsUsecase getCharacterComicsUsecase();
 }

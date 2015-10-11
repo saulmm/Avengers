@@ -1,124 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+ 	>
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="256dp"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
+	<android.support.design.widget.AppBarLayout
+		android:id="@+id/activity_avenger_detail_appbar"
+		android:layout_width="match_parent"
+		android:layout_height="300dp"
+ 		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+		>
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/activity_avenger_detail_colltoolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            >
+		<android.support.design.widget.CollapsingToolbarLayout
+			android:id="@+id/activity_avenger_detail_colltoolbar"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:expandedTitleMarginEnd="64dp"
+			app:expandedTitleMarginStart="48dp"
+			app:layout_scrollFlags="scroll|exitUntilCollapsed"
+			>
 
-            <ImageView
-                android:id="@+id/activity_avenger_image"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                />
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/spacing_normal"
+				android:orientation="vertical"
+				>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/activity_avenger_detail_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                />
+				<de.hdodenhof.circleimageview.CircleImageView
+					android:id="@+id/activity_avenger_detail_thumb"
+					android:layout_width="150dp"
+					android:layout_height="150dp"
+					android:layout_gravity="center"
+					android:scaleType="centerCrop"
+					app:border_width="1dp"
+					app:border_color="@android:color/white"
+					/>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+				<TextView
+					android:id="@+id/activity_avenger_detail_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/spacing_normal"
+					android:gravity="center"
+					android:textSize="30sp"
+					android:textColor="@android:color/white"
+					android:visibility="gone"
+					android:fontFamily="sans-serif-condensed"
+					/>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:layout_marginTop="@dimen/spacing_huge"
+					android:orientation="horizontal"
+					android:visibility="gone"
+					>
 
-        <LinearLayout
-            android:id="@+id/activity_avenger_detail_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+					<LinearLayout
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginRight="@dimen/spacing_huge"
+						android:orientation="vertical"
+						>
 
-            <TextView
-                style="@style/Avengers.Text.Header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/spacing_normal"
-                android:text="Avenger information"
-                />
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							style="@style/Avengers.Text.Counters.Label"
+							android:text="Comics"
+							/>
 
-            <TextView
-                android:id="@+id/activity_avenger_detail_biography"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="8dp"
-                android:paddingLeft="@dimen/spacing_normal"
-                android:paddingRight="@dimen/spacing_normal"
-                android:textColor="@color/grey_medium"
-                android:textSize="20sp"
-                android:visibility="gone"
-                tools:visibility="gone"
-                />
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:layout_gravity="center_horizontal"
+							style="@style/Avengers.Text.Counters.Number"
+							android:text="1"
+							/>
+					</LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/activity_avenger_detail_progress"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"
-                android:visibility="visible"
-                />
+					<LinearLayout
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:orientation="vertical"
+						>
 
-            <TextView
-                style="@style/Avengers.Text.Header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:paddingLeft="@dimen/spacing_normal"
-                android:text="Comics"
-                />
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							style="@style/Avengers.Text.Counters.Label"
+							android:text="Comics"
+							/>
 
-            <ProgressBar
-                android:id="@+id/activity_avenger_comics_progress"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_horizontal"
-                android:visibility="visible"
-                />
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:layout_gravity="center_horizontal"
+							style="@style/Avengers.Text.Counters.Number"
+							android:text="1"
+							/>
+					</LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/activity_avenger_comics_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                />
 
-            <Button
-                android:id="@+id/activity_avenger_detail_filter_button"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="Filter"
-                />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+					<LinearLayout
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="@dimen/spacing_huge"
+						android:orientation="vertical"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							style="@style/Avengers.Text.Counters.Label"
+							android:text="Stories"
+							/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:layout_gravity="center_horizontal"
+							style="@style/Avengers.Text.Counters.Number"
+							android:text="1k"
+							/>
+					</LinearLayout>
+
+
+				</LinearLayout>
+
+
+			</LinearLayout>
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/activity_avenger_detail_toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				app:layout_collapseMode="pin"
+				/>
+
+		</android.support.design.widget.CollapsingToolbarLayout>
+	</android.support.design.widget.AppBarLayout>
+
+	<android.support.v4.widget.NestedScrollView
+		android:id="@+id/activity_detail_comics_scroll"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		>
+
+		<LinearLayout
+			android:id="@+id/activity_avenger_detail_container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			>
+
+			<TextView
+				android:id="@+id/activity_avenger_detail_inf_header"
+				style="@style/Avengers.Text.Header"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/spacing_normal"
+				android:text="Avenger information"
+				/>
+
+			<TextView
+				android:id="@+id/activity_avenger_detail_biography"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:lineSpacingExtra="8dp"
+				android:paddingLeft="@dimen/spacing_normal"
+				android:paddingRight="@dimen/spacing_normal"
+				android:textColor="@color/grey.medium"
+				android:textSize="20sp"
+				android:visibility="gone"
+				tools:visibility="gone"
+				/>
+
+			<ProgressBar
+				android:id="@+id/activity_avenger_detail_progress"
+				style="?android:attr/progressBarStyleLarge"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_gravity="center_horizontal"
+				android:visibility="visible"
+				/>
+
+			<TextView
+				android:id="@+id/activity_avenger_detail_comics_header"
+				style="@style/Avengers.Text.Header"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/spacing_normal"
+				android:paddingLeft="@dimen/spacing_normal"
+				android:text="Comics"
+				/>
+
+			<ProgressBar
+				android:id="@+id/activity_avenger_comics_progress"
+				style="?android:attr/progressBarStyleLarge"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_gravity="center_horizontal"
+				android:visibility="visible"
+				/>
+
+			<LinearLayout
+				android:id="@+id/activity_avenger_comics_container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				/>
+
+			<Button
+				android:id="@+id/activity_avenger_detail_filter_button"
+				android:layout_width="match_parent"
+				android:layout_height="48dp"
+				android:text="Filter"
+				/>
+		</LinearLayout>
+	</android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
