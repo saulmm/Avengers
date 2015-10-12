@@ -5,6 +5,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="200dp"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:background="?attr/selectableItemBackground"
 	android:clickable="true"
 	android:orientation="horizontal"
@@ -48,25 +49,25 @@
 		android:gravity="right"
 		>
 
-		<TextView
+		<saulmm.avengers.views.views.CustomTextView
 			android:id="@+id/item_avenger_title"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:layout_gravity="center_vertical"
 			android:textColor="@color/white"
 			android:textAllCaps="true"
 			android:textSize="16sp"
+			android:gravity="center_vertical"
+			app:typeface="Abel.ttf"
 			tools:text="An amazing avenger"
 			/>
 
-		<ImageView
-			android:layout_width="wrap_content"
+		<ImageButton
+			android:layout_width="56dp"
 			android:layout_height="match_parent"
-			style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
 			android:src="@drawable/ic_more"
-			android:layout_gravity="center_vertical"
 			android:clickable="true"
-			android:background="?attr/selectableItemBackgroundBorderless"
+			android:background="?attr/selectableItemBackground"
 			/>
 
 	</LinearLayout>
