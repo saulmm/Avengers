@@ -5,5 +5,6 @@
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
     <dimen name="insets">2dp</dimen>
+    <dimen name="elevation.normal">8dp</dimen>
 
 </resources>

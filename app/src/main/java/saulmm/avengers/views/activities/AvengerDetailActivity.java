@@ -157,25 +157,21 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     }
 
     private void initToolbar() {
-
-        mCollapsingActionBar.setExpandedTitleTextAppearance(R.style.Avengers_Text_CollapsedExpanded);
+        mCollapsingActionBar.setExpandedTitleTextAppearance(R.style.Text_CollapsedExpanded);
     }
 
     @Override
     public void startLoading() {
-
         mProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void stopLoadingAvengersInformation() {
-
         mProgress.setVisibility(View.GONE);
     }
 
     @Override
     public void showAvengerBio(String text) {
-
         mBiographyTextView.setVisibility(View.VISIBLE);
         mBiographyTextView.setText(text);
     }

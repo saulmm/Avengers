@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="brand_primary">#F00002</color>
-    <color name="brand_primary_dark">#c80002</color>
+    <color name="brand_primary">#333F49</color>
+    <color name="brand_primary_dark">#28292C</color>
     <color name="brand_secondary">#ff2900</color>
     <color name="brand_accent">#ff441a</color>
+    
+    <color name="garnet">#3B0000</color>
 
     <color name="white">#FFFFFF</color>
     <color name="grey.light.hight">#e8e8e8</color>

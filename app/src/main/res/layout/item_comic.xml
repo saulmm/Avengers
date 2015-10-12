@@ -31,7 +31,7 @@
             android:id="@+id/item_comic_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Avengers.Text.ComicHeader"
+            style="@style/Text.ComicHeader"
             tools:text="An awesome title with an awesome large"
             />
 
@@ -39,7 +39,7 @@
             android:id="@+id/item_comic_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Avengers.Text.ComicContent"
+            style="@style/Text.ComicContent"
             tools:text="This is an awesome description, of course is larger than the title, it must be, a well description has all the neccesar"
             />
     </LinearLayout>

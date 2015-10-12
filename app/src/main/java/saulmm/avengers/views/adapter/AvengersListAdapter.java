@@ -6,6 +6,7 @@
 package saulmm.avengers.views.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import java.util.List;
@@ -55,6 +57,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
         @Bind(R.id.item_avenger_title)              TextView avengerTitleTextView;
         @Bind(R.id.item_avenger_thumb)              ImageView avengerThumbImageView;
         @Bind(R.id.item_avenger_placeholder_name)   TextView avengerPlaceholderTitleTextView;
+        @BindColor(R.color.brand_primary)           int mColorPrimary;
 
         public CharacterViewHolder(View itemView, final RecyclerClickListener recyclerClickListener) {
             super(itemView);
@@ -67,10 +70,8 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
             avengerThumbImageView.setImageResource(character.getImageResource());
 
             if (character.getImageUrl().equals(NOT_AVAILABLE_URL)) {
-                Glide.with(mContext)
-                    .load(R.drawable.error_placeholder)
-                    .crossFade()
-                    .into(avengerThumbImageView);
+                ColorDrawable colorDrawable = new ColorDrawable(mColorPrimary);
+                avengerThumbImageView.setImageDrawable(colorDrawable);
 
             } else {
                 Glide.with(mContext)

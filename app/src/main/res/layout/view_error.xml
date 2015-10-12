@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:visibility="gone"
-    style="@style/Avengers.ViewGroup"
+    style="@style/ViewGroup"
     >
 
     <ImageView
@@ -24,7 +24,7 @@
         android:layout_marginBottom="@dimen/spacing_normal"
         android:text="@string/error.default.characters"
         tools:text="Can't fetch\ncharacters list"
-        style="@style/Avengers.Text.StateMessage"
+        style="@style/Text.StateMessage"
         />
 
     <Button

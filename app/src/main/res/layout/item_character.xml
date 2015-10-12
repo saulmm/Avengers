@@ -24,22 +24,20 @@
 			android:layout_height="match_parent"
 			android:layout_gravity="center_vertical"
 			android:scaleType="centerCrop"
-			android:background="@color/grey.light.hight"
-			tools:src="@drawable/marvel"
+			android:background="@color/brand_primary"
 			/>
 
 		<TextView
 			android:id="@+id/item_avenger_placeholder_name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/errors.image_not_found"
+			android:text="@string/error.network.image_not_found"
 			android:gravity="center"
 			android:fontFamily="sans-serif-light"
 			android:textSize="30sp"
 			android:layout_gravity="center"
 			android:visibility="gone"
 			/>
-
 
 	</FrameLayout>
 

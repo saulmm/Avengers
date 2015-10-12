@@ -51,7 +51,6 @@ public class AvengersListActivity extends AppCompatActivity
     @Bind(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
     @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Bind(R.id.activity_avengers_error_view)      View mErrorView;
-    @Bind(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
 
     @Inject AvengersListPresenter mAvengersListPresenter;
 
@@ -71,7 +70,6 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeToolbar() {
-        mAvengersActivityTitle.setTypeface(Utils.getBangersTypeface(this));
         setSupportActionBar(mAvengersToolbar);
     }
 

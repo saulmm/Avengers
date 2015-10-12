@@ -126,7 +126,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             mAvengersView.showErrorView(errorMessage);
 
         } else if (error instanceof ServerErrorException) {
-            String errorMessage = mContext.getString(R.string.errors_marvel_server);
+            String errorMessage = mContext.getString(R.string.error_network_marvel_server);
             mAvengersView.showErrorView(errorMessage);
         }
 
