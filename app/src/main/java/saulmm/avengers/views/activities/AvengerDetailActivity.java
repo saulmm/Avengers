@@ -5,14 +5,12 @@
  */
 package saulmm.avengers.views.activities;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,10 +29,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.ButterKnifeUtils;
 import saulmm.avengers.R;
 import saulmm.avengers.TransitionUtils;
-import saulmm.avengers.Utils;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -44,6 +40,7 @@ import saulmm.avengers.mvp.views.AvengersDetailView;
 
 public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
 
+    private static final String CHRT_NAME_EXTRA = "extra_character_name";
     @Bind(R.id.activity_avenger_detail_progress)      ProgressBar mProgress;
     @Bind(R.id.activity_avenger_comics_progress)      ProgressBar mComicsProgress;
     @Bind(R.id.activity_avenger_comics_container)     LinearLayout mComicsContainer;
@@ -78,26 +75,25 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     private void initActivityColors() {
 
-        final Bitmap sourceBitmap = AvengersListActivity.sPhotoCache
-            .get(AvengersListActivity.KEY_SHARED_BITMAP);
+        //final Bitmap sourceBitmap = AvengersListActivity.sPhotoCache
+        //    .get(AvengersListActivity.KEY_SHARED_BITMAP);
 
-        Palette.from(sourceBitmap)
-            .generate(palette -> {
-
-                int accentColor = getResources().getColor(R.color.brand_accent);
-                int darkVibrant = palette.getDarkVibrantColor(accentColor);
-
-                mCollapsingActionBar.setBackgroundColor(darkVibrant);
-                mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);
-                mCollapsingActionBar.setContentScrimColor(darkVibrant);
-                getWindow().setStatusBarColor(darkVibrant);
-
-                ButterKnife.apply(mHeaderTextViews, ButterKnifeUtils.TEXTCOLOR, darkVibrant);
-            });
+        //Palette.from(sourceBitmap)
+        //    .generate(palette -> {
+		//
+        //        int accentColor = getResources().getColor(R.color.brand_accent);
+        //        int darkVibrant = palette.getDarkVibrantColor(accentColor);
+		//
+        //        mCollapsingActionBar.setBackgroundColor(darkVibrant);
+        //        mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);
+        //        mCollapsingActionBar.setContentScrimColor(darkVibrant);
+        //        getWindow().setStatusBarColor(darkVibrant);
+		//
+        //        ButterKnife.apply(mHeaderTextViews, ButterKnifeUtils.TEXTCOLOR, darkVibrant);
+        //    });
     }
 
     private void initButterknife() {
-
         setContentView(R.layout.activity_avenger_detail);
         ButterKnife.bind(this);
     }
@@ -130,17 +126,15 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     }
 
     private void initTransitions() {
-
         final String sharedViewName = getIntent().getStringExtra(
             AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME);
 
-        final Bitmap characterThumbBitmap = AvengersListActivity.sPhotoCache
-            .get(AvengersListActivity.KEY_SHARED_BITMAP);
+        String characterTitle = getIntent().getStringExtra(AvengersListActivity.EXTRA_CHARACTER_NAME);
+        mCharacterNameTextView.setTransitionName(sharedViewName);
+        mCharacterNameTextView.setText(characterTitle);
 
-        mAvengerThumb.setImageBitmap(characterThumbBitmap);
-        mAvengerThumb.setTransitionName(sharedViewName);
-
-        getWindow().setEnterTransition(TransitionUtils.buildExplodeTransition());
+        getWindow().setEnterTransition(TransitionUtils.buildSlideTransition(Gravity.BOTTOM));
+        getWindow().setReturnTransition(TransitionUtils.buildSlideTransition(Gravity.BOTTOM));
         getWindow().setReenterTransition(TransitionUtils.buildSlideTransition(
             Gravity.BOTTOM));
 
@@ -178,17 +172,14 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     @Override
     public void showAvengerImage(String url) {
-        //Glide.with(this).load(url).into(mAvengerImageView);
+        Glide.with(this).load(url).into(mAvengerThumb);
     }
 
     @Override
     public void showAvengerName(String name) {
-
         mCollapsingActionBar.setTitle(name);
         mCharacterNameTextView.setText(name);
-        mCharacterNameTextView.setTypeface(Utils.getBangersTypeface(this));
         mCharacterNameTextView.setVisibility(View.VISIBLE);
-
     }
 
     @Override

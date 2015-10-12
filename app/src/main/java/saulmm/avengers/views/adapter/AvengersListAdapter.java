@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import java.util.List;
 import saulmm.avengers.R;
+import saulmm.avengers.Utils;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.views.RecyclerClickListener;
 
@@ -67,6 +68,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
 
         public void bindAvenger(Character character) {
             avengerTitleTextView.setText(character.getName());
+            avengerTitleTextView.setTransitionName(Utils.getListTransitionName(getPosition()));
             avengerThumbImageView.setImageResource(character.getImageResource());
 
             if (character.getImageUrl().equals(NOT_AVAILABLE_URL)) {
@@ -84,7 +86,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
         private void bindListener(View itemView, final RecyclerClickListener recyclerClickListener) {
             itemView.setOnClickListener(v ->
                 recyclerClickListener.onElementClick(getPosition(),
-				avengerThumbImageView));
+				avengerTitleTextView));
         }
     }
 }

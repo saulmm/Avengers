@@ -216,8 +216,7 @@ public class AvengersListActivity extends AppCompatActivity
     @Override
     public ActivityOptions getActivityOptions(int position, View clickedView) {
         String sharedViewName = Utils.getListTransitionName(position);
-        clickedView.setTransitionName(sharedViewName);
-        clickedView.buildDrawingCache();
+
         Bitmap characterThumb = clickedView.getDrawingCache();
         sPhotoCache.put(KEY_SHARED_BITMAP, characterThumb);
 

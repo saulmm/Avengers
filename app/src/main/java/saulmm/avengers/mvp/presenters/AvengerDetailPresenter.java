@@ -86,8 +86,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
         mAvengersDetailView.startLoading();
 
         mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
-            character   -> onAvengerReceived(character),
-            error       -> manageCharacterError(error));
+            this::onCharacterReceived, this::manageCharacterError);
 
         mComicsSubscription = mGetCharacterComicsUsecase.execute()
             .subscribe(comics-> {
@@ -119,12 +118,13 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
         mAvengersDetailView.addComic(comic);
     }
 
-    private void onAvengerReceived(Character character) {
+    private void onCharacterReceived(Character character) {
         mAvengersDetailView.stopLoadingAvengersInformation();
         mAvengersDetailView.showAvengerBio(
             (character.getDescription().equals(""))
                 ? "No biography available"
                 : character.getDescription());
+
 
         if (character.getImageUrl() != null)
             mAvengersDetailView.showAvengerImage(character.getImageUrl());
