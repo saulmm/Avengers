@@ -1,79 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--suppress Annotator -->
 <android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:clickable="true"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/spacing_normal"
-    android:paddingRight="@dimen/spacing_normal"
-    >
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="200dp"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:background="?attr/selectableItemBackground"
+	android:clickable="true"
+	android:orientation="horizontal"
+	android:paddingLeft="@dimen/spacing_normal"
+	android:paddingRight="@dimen/spacing_normal"
+	>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        >
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:foreground="@drawable/gradient_dark"
+		>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            >
+		<ImageView
+			android:id="@+id/item_avenger_thumb"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_gravity="center_vertical"
+			android:scaleType="centerCrop"
+			android:background="@color/brand_primary"
+			/>
 
-        <ImageView
-            android:id="@+id/item_avenger_thumb"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerCrop"
-            android:background="@color/grey.light.hight"
-            />
+		<TextView
+			android:id="@+id/item_avenger_placeholder_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/error.network.image_not_found"
+			android:gravity="center"
+			android:fontFamily="sans-serif-light"
+			android:textSize="30sp"
+			android:layout_gravity="center"
+			android:visibility="gone"
+			/>
 
-            <TextView
-                android:id="@+id/item_avenger_placeholder_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/errors.image_not_found"
-                android:gravity="center"
-                android:fontFamily="sans-serif-light"
-                android:textSize="30sp"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                />
+	</FrameLayout>
 
-        </FrameLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:orientation="horizontal"
+		android:gravity="right"
+		>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/spacing_small"
-            android:paddingRight="@dimen/spacing_small"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingBottom="@dimen/spacing_small"
-            android:orientation="horizontal"
-            >
+		<saulmm.avengers.views.views.CustomTextView
+			android:id="@+id/item_avenger_title"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_gravity="center_vertical"
+			android:textColor="@color/white"
+			android:textAllCaps="true"
+			android:textSize="16sp"
+			android:gravity="center_vertical"
+			app:typeface="Abel.ttf"
+			tools:text="An amazing avenger"
+			/>
 
-            <TextView
-                android:id="@+id/item_avenger_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:ellipsize="end"
-                android:ems="4"
-                android:textColor="@color/grey.dark"
-                android:textSize="16sp"
-                tools:text="An amazing avenger"
-                />
-        </LinearLayout>
-    </LinearLayout>
+		<ImageButton
+			android:layout_width="56dp"
+			android:layout_height="match_parent"
+			android:src="@drawable/ic_more"
+			android:clickable="true"
+			android:background="?attr/selectableItemBackground"
+			/>
 
-
-
+	</LinearLayout>
 
 
 </android.support.v7.widget.CardView>

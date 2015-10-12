@@ -33,36 +33,10 @@
                 android:id="@+id/activity_avengers_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ED031A"
-                android:elevation="8dp"
-                android:minHeight="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
+                app:title="@string/app_name"
+                style="@style/Toolbar"
                 >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    >
-
-                    <TextView
-                        android:id="@+id/activity_avenger_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Amazing heroes of "
-                        android:textColor="#FFF"
-                        android:textSize="22sp"
-                        />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="@dimen/spacing_small"
-                        android:scaleType="fitStart"
-                        android:src="@drawable/marvel"
-                        />
-                </LinearLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
@@ -71,7 +45,6 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            style="@style/Avengers.ViewGroup.Small"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
 
@@ -79,8 +52,10 @@
                 android:id="@+id/activity_avengers_recycler"
                 android:layout_width="match_parent"
                 android:clipToPadding="false"
+                android:paddingTop="@dimen/spacing_tiny"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                tools:listitem="@layout/item_character"
                 />
 
             <ProgressBar

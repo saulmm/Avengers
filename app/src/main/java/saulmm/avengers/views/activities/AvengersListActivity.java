@@ -10,7 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
@@ -51,7 +51,6 @@ public class AvengersListActivity extends AppCompatActivity
     @Bind(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
     @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Bind(R.id.activity_avengers_error_view)      View mErrorView;
-    @Bind(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
 
     @Inject AvengersListPresenter mAvengersListPresenter;
 
@@ -71,7 +70,6 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeToolbar() {
-        mAvengersActivityTitle.setTypeface(Utils.getBangersTypeface(this));
         setSupportActionBar(mAvengersToolbar);
     }
 
@@ -102,7 +100,7 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeRecyclerView() {
-        mAvengersRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+        mAvengersRecycler.setLayoutManager(new LinearLayoutManager(this));
         mAvengersRecycler.addItemDecoration(new RecyclerInsetsDecoration(this));
         mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
@@ -204,7 +202,7 @@ public class AvengersListActivity extends AppCompatActivity
     private OnScrollListener mOnScrollListener = new OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             int visibleItemsCount   = layoutManager.getChildCount();
             int totalItemsCount     = layoutManager.getItemCount();
             int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
