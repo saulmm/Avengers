@@ -34,17 +34,30 @@
 					android:layout_width="match_parent"
 					android:layout_height="350dp"
 					android:layout_gravity="center"
+					android:scaleType="fitCenter"
 					tools:src="@color/brand_accent"
 					/>
+
+				<View
+					android:id="@+id/activity_avenger_reveal_view"
+					android:layout_width="match_parent"
+					android:layout_height="350dp"
+					android:background="@color/brand_accent"
+					/>
+
 
 				<saulmm.avengers.views.views.CustomTextView
 					android:id="@+id/activity_avenger_detail_name"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:textSize="30sp"
 					android:textColor="@color/white"
+					android:textAllCaps="true"
+					android:textSize="18sp"
+					android:ellipsize="none"
+					android:singleLine="true"
+					android:gravity="center_vertical"
 					android:layout_gravity="bottom|right"
-					android:layout_marginBottom="@dimen/spacing_normal"
+					android:layout_marginBottom="@dimen/spacing_huge"
 					android:layout_marginRight="@dimen/spacing_huge"
 					tools:text="Amazing"
 					app:typeface="Abel.ttf"

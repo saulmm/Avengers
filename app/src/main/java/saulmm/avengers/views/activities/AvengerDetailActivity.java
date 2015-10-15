@@ -5,6 +5,8 @@
  */
 package saulmm.avengers.views.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -12,6 +14,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.transition.Transition;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +40,7 @@ import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
 import saulmm.avengers.mvp.views.AvengersDetailView;
+import saulmm.avengers.views.utils.AnimUtils;
 
 public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
 
@@ -49,6 +53,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Bind(R.id.activity_avenger_detail_thumb)         ImageView mAvengerThumb;
     @Bind(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mCollapsingActionBar;
     @Bind(R.id.activity_avenger_detail_appbar)        AppBarLayout mAppbar;
+    @Bind(R.id.activity_avenger_reveal_view)          View mRevealView;
 
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
     @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
@@ -129,23 +134,31 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         final String sharedViewName = getIntent().getStringExtra(
             AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME);
 
-        String characterTitle = getIntent().getStringExtra(AvengersListActivity.EXTRA_CHARACTER_NAME);
+        String characterTitle = getIntent().getStringExtra(
+            AvengersListActivity.EXTRA_CHARACTER_NAME);
         mCharacterNameTextView.setTransitionName(sharedViewName);
         mCharacterNameTextView.setText(characterTitle);
 
-        getWindow().setEnterTransition(TransitionUtils.buildSlideTransition(Gravity.BOTTOM));
-        getWindow().setReturnTransition(TransitionUtils.buildSlideTransition(Gravity.BOTTOM));
-        getWindow().setReenterTransition(TransitionUtils.buildSlideTransition(
-            Gravity.BOTTOM));
+        Transition enterTransition = TransitionUtils.buildSlideTransition(Gravity.BOTTOM);
+        enterTransition.setDuration(500);
+
+        getWindow().setEnterTransition(enterTransition);
+        getWindow().setReturnTransition(enterTransition);
+        getWindow().setReenterTransition(enterTransition);
 
         mCollapsingActionBar.getViewTreeObserver().addOnGlobalLayoutListener(
             new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override public void onGlobalLayout() {
                     mCollapsingActionBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    //int width = mAvengerBackground.getWidth();
-                    //int height = mAvengerBackground.getHeight();
-                    //
-                    //AnimUtils.showRevealEffect(mAvengerBackground, width / 2, height / 2, null);
+                    int width = mRevealView.getWidth();
+                    int height = mRevealView.getHeight();
+
+                    AnimUtils.showRevealEffect(mRevealView, width / 2, height / 2, new AnimatorListenerAdapter() {
+                        @Override public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            mRevealView.animate().alpha(0f).setDuration(1000).start();
+                        }
+                    });
                 }
             });
     }
