@@ -34,10 +34,8 @@ import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.ButterKnifeUtils;
 import saulmm.avengers.R;
 import saulmm.avengers.TransitionUtils;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -60,13 +58,11 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Bind(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mCollapsingActionBar;
     @Bind(R.id.activity_avenger_detail_appbar)        AppBarLayout mAppbar;
     @Bind(R.id.activity_avenger_reveal_view)          View mRevealView;
+    @Bind(R.id.activity_avenger_detail_stats_view)    View mDetailStatsView;
 
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
     @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
     @Bind(R.id.activity_avenger_detail_filter_button)   Button mFilterComicsButton;
-
-    @Bind({ R.id.activity_avenger_detail_comics_header,
-        R.id.activity_avenger_detail_inf_header})       List<TextView> mHeaderTextViews;
 
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
@@ -102,13 +98,25 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
                 ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
                 colorAnimation.addUpdateListener(animator -> {
-					mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
-				});
+                    mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
+                });
                 colorAnimation.start();
 
-                getWindow().setStatusBarColor(darkVibrant);
+                mDetailStatsView.setBackgroundColor(darkVibrant);
+                mDetailStatsView.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override public void onGlobalLayout() {
+                            mDetailStatsView.getViewTreeObserver()
+                                .removeOnGlobalLayoutListener(this);
 
-                ButterKnife.apply(mHeaderTextViews, ButterKnifeUtils.TEXTCOLOR, darkVibrant);
+                            AnimUtils.showRevealEffect(mDetailStatsView,
+                                mDetailStatsView.getWidth() / 2, 0, null);
+                        }
+                    });
+
+
+
+                getWindow().setStatusBarColor(darkVibrant);
             });
     }
 
@@ -197,8 +205,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     public void showAvengerImage(String url) {
         Glide.with(this).load(url)
             .asBitmap().into(new BitmapImageViewTarget(mAvengerThumb) {
-            @Override public void onResourceReady(Bitmap resource,
-                GlideAnimation<? super Bitmap> glideAnimation) {
+            @Override public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 super.onResourceReady(resource, glideAnimation);
                 mAvengerThumb.setImageBitmap(resource);
                 avengerDetailPresenter.onCharacterBitmapReceived(resource);

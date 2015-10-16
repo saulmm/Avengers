@@ -14,10 +14,10 @@ public class AnimUtils {
 
 		v.setVisibility(View.VISIBLE);
 
-		int height = v.getHeight();
+		int finalRadius = Math.max(v.getWidth(), v.getHeight());
 
 		Animator anim = ViewAnimationUtils.createCircularReveal(
-			v, centerX, centerY, 0, height);
+			v, centerX, centerY, 0, finalRadius);
 
 		anim.setDuration(REVEAL_DURATION);
 
