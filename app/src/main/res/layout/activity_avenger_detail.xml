@@ -87,6 +87,23 @@
 			android:orientation="vertical"
 			>
 
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="100dp"
+				android:elevation="@dimen/elevation.normal"
+				android:background="?colorPrimaryDark"
+				>
+
+				<View
+					android:id="@+id/activity_avenger_detail_stats_view"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:visibility="invisible"
+					/>
+
+			</FrameLayout>
+
+
 			<TextView
 				android:id="@+id/activity_avenger_detail_inf_header"
 				style="@style/Text.Header"

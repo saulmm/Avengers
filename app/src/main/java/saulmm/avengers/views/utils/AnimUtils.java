@@ -17,7 +17,7 @@ public class AnimUtils {
 		int height = v.getHeight();
 
 		Animator anim = ViewAnimationUtils.createCircularReveal(
-			v, centerX, centerY, 0, height);
+			v, centerX, centerY, 0, v.getWidth());
 
 		anim.setDuration(REVEAL_DURATION);
 

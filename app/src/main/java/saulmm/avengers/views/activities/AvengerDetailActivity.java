@@ -60,6 +60,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Bind(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mCollapsingActionBar;
     @Bind(R.id.activity_avenger_detail_appbar)        AppBarLayout mAppbar;
     @Bind(R.id.activity_avenger_reveal_view)          View mRevealView;
+    @Bind(R.id.activity_avenger_detail_stats_view)    View mDetailStatsView;
 
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
     @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
@@ -102,9 +103,23 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
                 ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
                 colorAnimation.addUpdateListener(animator -> {
-					mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
-				});
+                    mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
+                });
                 colorAnimation.start();
+
+                mDetailStatsView.setBackgroundColor(darkVibrant);
+                mDetailStatsView.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override public void onGlobalLayout() {
+                            mDetailStatsView.getViewTreeObserver()
+                                .removeOnGlobalLayoutListener(this);
+
+                            AnimUtils.showRevealEffect(mDetailStatsView,
+                                mDetailStatsView.getWidth() / 2, 0, null);
+                        }
+                    });
+
+
 
                 getWindow().setStatusBarColor(darkVibrant);
 
