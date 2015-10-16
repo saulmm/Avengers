@@ -34,10 +34,8 @@ import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.ButterKnifeUtils;
 import saulmm.avengers.R;
 import saulmm.avengers.TransitionUtils;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -65,9 +63,6 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
     @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
     @Bind(R.id.activity_avenger_detail_filter_button)   Button mFilterComicsButton;
-
-    @Bind({ R.id.activity_avenger_detail_comics_header,
-        R.id.activity_avenger_detail_inf_header})       List<TextView> mHeaderTextViews;
 
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
@@ -122,8 +117,6 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
 
                 getWindow().setStatusBarColor(darkVibrant);
-
-                ButterKnife.apply(mHeaderTextViews, ButterKnifeUtils.TEXTCOLOR, darkVibrant);
             });
     }
 
