@@ -212,8 +212,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     public void showAvengerImage(String url) {
         Glide.with(this).load(url)
             .asBitmap().into(new BitmapImageViewTarget(mAvengerThumb) {
-            @Override public void onResourceReady(Bitmap resource,
-                GlideAnimation<? super Bitmap> glideAnimation) {
+            @Override public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 super.onResourceReady(resource, glideAnimation);
                 mAvengerThumb.setImageBitmap(resource);
                 avengerDetailPresenter.onCharacterBitmapReceived(resource);
