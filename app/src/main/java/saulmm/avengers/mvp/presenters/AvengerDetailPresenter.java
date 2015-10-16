@@ -7,6 +7,7 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.widget.AdapterView;
 import javax.inject.Inject;
 import rx.Observable;
@@ -121,8 +122,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     private void onCharacterReceived(Character character) {
         mAvengersDetailView.stopLoadingAvengersInformation();
         mAvengersDetailView.showAvengerBio(
-            (character.getDescription().equals(""))
-                ? "No biography available"
+            (character.getDescription().equals("")) ? "No biography available"
                 : character.getDescription());
 
 
@@ -152,5 +152,10 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Do nothing
+    }
+
+    public void onCharacterBitmapReceived(Bitmap resource) {
+        mAvengersDetailView.hideRevealViewByAlpha();
+        mAvengersDetailView.initActivityColors(resource);
     }
 }

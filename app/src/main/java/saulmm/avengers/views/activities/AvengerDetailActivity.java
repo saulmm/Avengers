@@ -5,14 +5,15 @@
  */
 package saulmm.avengers.views.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.transition.Transition;
 import android.view.Gravity;
@@ -26,12 +27,17 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.BindColor;
+import butterknife.BindInt;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
+import saulmm.avengers.ButterKnifeUtils;
 import saulmm.avengers.R;
 import saulmm.avengers.TransitionUtils;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
@@ -58,8 +64,13 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
     @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
     @Bind(R.id.activity_avenger_detail_filter_button)   Button mFilterComicsButton;
-    @Bind({ R.id.activity_avenger_detail_comics_header, R.id.activity_avenger_detail_inf_header})
-    List<TextView> mHeaderTextViews;
+
+    @Bind({ R.id.activity_avenger_detail_comics_header,
+        R.id.activity_avenger_detail_inf_header})       List<TextView> mHeaderTextViews;
+
+    @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
+    @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
+    @BindColor(R.color.brand_primary_dark)              int mColorPrimaryDark;
 
     @Inject AvengerDetailPresenter avengerDetailPresenter;
 
@@ -75,27 +86,30 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         initializePresenter();
         initToolbar();
         initTransitions();
-        initActivityColors();
     }
 
-    private void initActivityColors() {
+    @Override public void initActivityColors(Bitmap sourceBitmap) {
+        Palette.from(sourceBitmap)
+            .generate(palette -> {
 
-        //final Bitmap sourceBitmap = AvengersListActivity.sPhotoCache
-        //    .get(AvengersListActivity.KEY_SHARED_BITMAP);
+                int accentColor = getResources().getColor(R.color.brand_accent);
+                int darkVibrant = palette.getDarkVibrantColor(accentColor);
 
-        //Palette.from(sourceBitmap)
-        //    .generate(palette -> {
-		//
-        //        int accentColor = getResources().getColor(R.color.brand_accent);
-        //        int darkVibrant = palette.getDarkVibrantColor(accentColor);
-		//
-        //        mCollapsingActionBar.setBackgroundColor(darkVibrant);
-        //        mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);
-        //        mCollapsingActionBar.setContentScrimColor(darkVibrant);
-        //        getWindow().setStatusBarColor(darkVibrant);
-		//
-        //        ButterKnife.apply(mHeaderTextViews, ButterKnifeUtils.TEXTCOLOR, darkVibrant);
-        //    });
+                mCollapsingActionBar.setBackgroundColor(darkVibrant);
+                mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);
+                mCollapsingActionBar.setContentScrimColor(darkVibrant);
+                mRevealView.setBackgroundColor(darkVibrant);
+
+                ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
+                colorAnimation.addUpdateListener(animator -> {
+					mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
+				});
+                colorAnimation.start();
+
+                getWindow().setStatusBarColor(darkVibrant);
+
+                ButterKnife.apply(mHeaderTextViews, ButterKnifeUtils.TEXTCOLOR, darkVibrant);
+            });
     }
 
     private void initButterknife() {
@@ -105,20 +119,17 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     @Override
     protected void onStart() {
-
         super.onStart();
         avengerDetailPresenter.onStart();
     }
 
     private void initializePresenter() {
-
         avengerDetailPresenter.attachView(this);
         avengerDetailPresenter.attachIncomingIntent(getIntent());
         avengerDetailPresenter.initializePresenter();
     }
 
     private void initializeDependencyInjector() {
-
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
         int avengerId = getIntent().getIntExtra(AvengersListActivity.EXTRA_CHARACTER_ID, -1);
@@ -140,11 +151,10 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         mCharacterNameTextView.setText(characterTitle);
 
         Transition enterTransition = TransitionUtils.buildSlideTransition(Gravity.BOTTOM);
-        enterTransition.setDuration(500);
+        enterTransition.setDuration(mAnimMediumDuration);
 
         getWindow().setEnterTransition(enterTransition);
-        getWindow().setReturnTransition(enterTransition);
-        getWindow().setReenterTransition(enterTransition);
+        getWindow().setReturnTransition(TransitionUtils.buildSlideTransition(Gravity.BOTTOM));
 
         mCollapsingActionBar.getViewTreeObserver().addOnGlobalLayoutListener(
             new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -153,14 +163,14 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
                     int width = mRevealView.getWidth();
                     int height = mRevealView.getHeight();
 
-                    AnimUtils.showRevealEffect(mRevealView, width / 2, height / 2, new AnimatorListenerAdapter() {
-                        @Override public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            mRevealView.animate().alpha(0f).setDuration(1000).start();
-                        }
-                    });
+                    AnimUtils.showRevealEffect(mRevealView, width / 2, height / 2, null);
                 }
             });
+    }
+
+    @Override
+    public void hideRevealViewByAlpha() {
+        mRevealView.animate().alpha(0f).setDuration(mAnimHugeDuration).start();
     }
 
     private void initToolbar() {
@@ -185,7 +195,15 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     @Override
     public void showAvengerImage(String url) {
-        Glide.with(this).load(url).into(mAvengerThumb);
+        Glide.with(this).load(url)
+            .asBitmap().into(new BitmapImageViewTarget(mAvengerThumb) {
+            @Override public void onResourceReady(Bitmap resource,
+                GlideAnimation<? super Bitmap> glideAnimation) {
+                super.onResourceReady(resource, glideAnimation);
+                mAvengerThumb.setImageBitmap(resource);
+                avengerDetailPresenter.onCharacterBitmapReceived(resource);
+            }
+        });;
     }
 
     @Override
@@ -197,7 +215,6 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     @Override
     public void addComic(Comic comic) {
-
         View comicView = LayoutInflater.from(this).inflate(
                 R.layout.item_comic, null, true);
 
@@ -235,8 +252,8 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         stopLoadingComicsIfNeeded();
 
         new AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setPositiveButton("Accept", (dialog, which) -> finish())
+            .setTitle(getString(R.string.dialog_error))
+            .setPositiveButton(getString(R.string.action_accept), (dialog, which) -> finish())
             .setMessage(errorMessage)
             .setCancelable(false)
             .show();
@@ -252,7 +269,6 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     @Override
     protected void onStop() {
-
         super.onStop();
         avengerDetailPresenter.onStop();
     }
@@ -271,9 +287,9 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
         yearSpinner.setOnItemSelectedListener(avengerDetailPresenter);
 
         new AlertDialog.Builder(this)
-            .setTitle("Filter")
-            .setPositiveButton("Accept", (dialog, which) -> avengerDetailPresenter.onDialogButton(which))
-            .setNegativeButton("Cancel", (dialog1, which) -> avengerDetailPresenter.onDialogButton(which))
+            .setTitle(getString(R.string.dialog_filter))
+            .setPositiveButton(getString(R.string.action_accept), (dialog, which) -> avengerDetailPresenter.onDialogButton(which))
+            .setNegativeButton(getString(R.string.action_cancel), (dialog1, which) -> avengerDetailPresenter.onDialogButton(which))
             .setView(filterView)
             .show();
     }

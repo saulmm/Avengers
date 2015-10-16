@@ -73,6 +73,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
 
             if (character.getImageUrl().equals(NOT_AVAILABLE_URL)) {
                 ColorDrawable colorDrawable = new ColorDrawable(mColorPrimary);
+                avengerThumbImageView.setDrawingCacheEnabled(true);
                 avengerThumbImageView.setImageDrawable(colorDrawable);
 
             } else {
@@ -85,8 +86,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
 
         private void bindListener(View itemView, final RecyclerClickListener recyclerClickListener) {
             itemView.setOnClickListener(v ->
-                recyclerClickListener.onElementClick(getPosition(),
-				avengerTitleTextView));
+                recyclerClickListener.onElementClick(getPosition(), avengerTitleTextView, avengerThumbImageView));
         }
     }
 }
