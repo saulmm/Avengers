@@ -1,8 +1,5 @@
 package saulmm.avengers;
 
-import android.content.Context;
-import android.graphics.Typeface;
-
 public class Utils {
 
     public final static String CHARACTER_IMG_NAME           = "ch_thumb";
@@ -13,9 +10,5 @@ public class Utils {
 
     public static String getListTransitionName (int position) {
         return CHARACTER_IMG_NAME + position;
-    }
-
-    public static Typeface getBangersTypeface (Context context) {
-        return Typeface.createFromAsset(context.getAssets(), BANGERS_TTF);
     }
 }

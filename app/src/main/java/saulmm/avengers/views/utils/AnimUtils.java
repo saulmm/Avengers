@@ -7,7 +7,7 @@ import android.view.ViewAnimationUtils;
 
 public class AnimUtils {
 
-	public static final int REVEAL_DURATION = 350;
+	public static final int REVEAL_DURATION = 500;
 
 	public static void showRevealEffect(final View v, int centerX, int centerY,
 		@Nullable Animator.AnimatorListener lis) {

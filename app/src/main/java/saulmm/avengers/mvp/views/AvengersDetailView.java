@@ -5,9 +5,14 @@
  */
 package saulmm.avengers.mvp.views;
 
+import android.graphics.Bitmap;
 import saulmm.avengers.model.entities.Comic;
 
 public interface AvengersDetailView extends View {
+
+    void initActivityColors(Bitmap sourceBitmap);
+
+    void hideRevealViewByAlpha();
 
     void startLoading ();
 
