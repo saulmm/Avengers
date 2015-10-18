@@ -4,7 +4,16 @@
     <dimen name="spacing_normal">16dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="spacing_tiny">4dp</dimen>
+
+    <dimen name="header.final_height">36dp</dimen>
+    <dimen name="header.start_width">140dp</dimen>
+
+
     <dimen name="insets">2dp</dimen>
     <dimen name="elevation.normal">8dp</dimen>
+    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="image_width">250dp</dimen>
+    <dimen name="avenger_header_height">200dp</dimen>
+    <dimen name="toolbarHeight">56dp</dimen>
 
 </resources>
