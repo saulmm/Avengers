@@ -1,9 +1,15 @@
 package saulmm.avengers.model.entities;
 
-import java.util.List;
-
+@SuppressWarnings("unused")
 public class ComicsCollection {
 	private int available;
 	private String collectionURI;
-	private List<ItemPreview> items;
+
+	public int getAvailable() {
+		return available;
+	}
+
+	public String getCollectionURI() {
+		return collectionURI;
+	}
 }

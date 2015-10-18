@@ -5,24 +5,18 @@
  */
 package saulmm.avengers.model.entities;
 
+@SuppressWarnings("unused")
 public class Character {
-
-    public final static String [] MARVEL_API_CHARACTER_FIELDS = {
-        "id", "name", "description", "modified", "resourceURI", "urls", "comics",
-        "stories", "events", "series"
-    };
-
     private int id;
+    private int imageResource;
     private String name;
     private String description;
-    private int imageResource;
     private Thumbnail thumbnail;
     private String resourceURI;
     private ComicsCollection comics;
     private ComicsCollection series;
     private ComicsCollection stories;
     private ComicsCollection events;
-
 
     public Character(String name, int thumb_resource, int id) {
         this.name = name;
@@ -54,6 +48,4 @@ public class Character {
     public int getImageResource() {
         return imageResource;
     }
-
-
 }
