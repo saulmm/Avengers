@@ -49,9 +49,6 @@ public class AvengersListActivity extends AppCompatActivity
     @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Bind(R.id.activity_avengers_error_view)      View mErrorView;
 
-    @BindDimen(R.dimen.avenger_header_height)       int mHeaderHeight;
-    @BindDimen(R.dimen.toolbarHeight)                int mToolbarSize;
-
     @Inject AvengersListPresenter mAvengersListPresenter;
 
     private AvengersListAdapter mCharacterListAdapter;

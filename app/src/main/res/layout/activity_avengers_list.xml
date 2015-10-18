@@ -34,7 +34,26 @@
 				android:layout_width="match_parent"
 				android:layout_height="150dp"
 				app:layout_scrollFlags="scroll|exitUntilCollapsed"
+
 				>
+
+				<ImageView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@drawable/header_background"
+					android:scaleType="centerCrop"
+					app:layout_collapseMode="parallax"
+					/>
+
+				<android.support.v7.widget.Toolbar
+					android:id="@+id/activity_avengers_toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="?actionBarSize"
+					android:background="@null"
+					app:layout_anchor="@id/activity_avengers_appbar"
+					app:layout_collapseMode="pin"
+					style="@style/Toolbar"
+					/>
 			</android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -69,29 +88,14 @@
 
 		</LinearLayout>
 
-		<android.support.v7.widget.Toolbar
-			android:id="@+id/activity_avengers_toolbar"
-			android:layout_width="match_parent"
-			android:layout_height="?actionBarSize"
-			android:layout_gravity="bottom"
-			app:layout_anchor="@id/activity_avengers_appbar"
-			app:layout_anchorGravity="bottom"
-			app:layout_collapseMode="pin"
-			android:elevation="0dp"
-			style="@style/Toolbar"
-			/>
-
-
 		<ImageView
-			android:layout_width="175dp"
-			android:layout_height="130dp"
+			android:layout_width="240dp"
+			android:layout_height="150dp"
 			android:layout_gravity="center_horizontal"
-			android:background="@drawable/avengers_header"
+			android:src="@drawable/avengers_header"
 			app:layout_behavior="saulmm.avengers.ResizeBehavior"
+			android:elevation="10dp"
+			tools:visibility="gone"
 			/>
-
-
-
-
 	</android.support.design.widget.CoordinatorLayout>
 </merge>

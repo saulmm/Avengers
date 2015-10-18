@@ -1,8 +1,8 @@
 package saulmm.avengers;
 
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,8 +19,9 @@ public class ResizeBehavior extends CoordinatorLayout.Behavior<ImageView> {
 
     private float mFinalLeftAvatarPadding;
     private float mStartPosition;
-    private int mStartXPosition;
     private float mStartToolbarPosition;
+    private int mStartWidth;
+    private int mFinalWidth;
 
     public ResizeBehavior(Context context, AttributeSet attrs) {
         mContext = context;
@@ -38,15 +39,12 @@ public class ResizeBehavior extends CoordinatorLayout.Behavior<ImageView> {
         mAvatarMaxSize = mContext.getResources().getDimension(R.dimen.image_width);
     }
 
-    private int mStartYPosition;
-
-    private int mFinalYPosition;
     private int finalHeight;
     private int mStartHeight;
-    private int mFinalXPosition;
+
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, ImageView child, View dependency) {
-        return dependency instanceof Toolbar;
+        return dependency instanceof AppBarLayout;
     }
 
     @Override
@@ -56,40 +54,33 @@ public class ResizeBehavior extends CoordinatorLayout.Behavior<ImageView> {
         final int maxScrollDistance = (int) (mStartToolbarPosition - getStatusBarHeight());
         float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
 
-        float distanceYToSubtract = ((mStartYPosition - mFinalYPosition)
-            * (1f - expandedPercentageFactor)) + (child.getHeight()/2);
+        // The child will remain always in the middle of its dependency
+        child.setY(((dependency.getY() /2) + (dependency.getHeight() /2)) - child.getHeight()/2);
 
-        float heightToSubtract = ((mStartHeight - finalHeight) * (1f - expandedPercentageFactor));
+        float collapsedHeight = ((mStartHeight) * (1f - Math.abs(expandedPercentageFactor)));
 
-        child.setY(mStartYPosition - distanceYToSubtract);
-
-        int proportionalAvatarSize = (int) (mAvatarMaxSize * (expandedPercentageFactor));
+            String log = String.format("%d * (1f - %.2f) = %d", (int) mStartHeight, Math.abs(expandedPercentageFactor), (int) collapsedHeight);
+            System.out.println("[DEBUG]" + " ResizeBehavior onDependentViewChanged - " + log);
+        //float widthToSubtract = ((mStartWidth - mFinalWidth) * (1f - expandedPercentageFactor));
 
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
-        lp.width = (int) (mStartHeight - heightToSubtract);
-        lp.height = (int) (mStartHeight - heightToSubtract);
+        //lp.width = (int) (mStartWidth - widthToSubtract);
+        if (collapsedHeight > finalHeight) lp.height = (int) collapsedHeight;
         child.setLayoutParams(lp);
         return true;
     }
 
     private void shouldInitProperties(ImageView child, View dependency) {
-        if (mStartYPosition == 0)
-            mStartYPosition = (int) (dependency.getY() - (child.getHeight() / 2));
-
-        if (mFinalYPosition == 0)
-            mFinalYPosition = (dependency.getHeight() /2);
-
         if (mStartHeight == 0)
             mStartHeight = child.getHeight();
 
-        if (finalHeight == 0)
-            finalHeight = mContext.getResources().getDimensionPixelOffset(R.dimen.image_final_width);
+        if (mStartWidth == 0)
+            mStartWidth = child.getWidth();
 
-        if (mStartXPosition == 0)
-            mStartXPosition = (int) (child.getX() + (child.getWidth() / 2));
+        if (finalHeight == 0) finalHeight =
+            mContext.getResources().getDimensionPixelOffset(R.dimen.image_final_height);
 
-        if (mFinalXPosition == 0)
-            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + (finalHeight / 2);
+
 
         if (mStartToolbarPosition == 0)
             mStartToolbarPosition = dependency.getY() + (dependency.getHeight()/2);
