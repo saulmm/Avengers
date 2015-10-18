@@ -17,14 +17,14 @@ import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.Comic;
-import saulmm.avengers.mvp.views.AvengersDetailView;
+import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
-import saulmm.avengers.views.activities.AvengersListActivity;
+import saulmm.avengers.views.activities.CharacterListListActivity;
 
 public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSelectedListener {
 
     private final Context mActivityContext;
-    private AvengersDetailView mAvengersDetailView;
+    private CharacterDetailView mCharacterDetailView;
 
     private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
     private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
@@ -70,7 +70,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     @Override
     public void attachView(View v) {
 
-        mAvengersDetailView = (AvengersDetailView) v;
+        mCharacterDetailView = (CharacterDetailView) v;
     }
 
     @Override
@@ -82,9 +82,9 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     @SuppressWarnings("Convert2MethodRef")
     public void initializePresenter() {
         String characterName = mIntent.getExtras().getString(
-            AvengersListActivity.EXTRA_CHARACTER_NAME);
+            CharacterListListActivity.EXTRA_CHARACTER_NAME);
 
-        mAvengersDetailView.startLoading();
+        mCharacterDetailView.startLoading();
 
         mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
             this::onCharacterReceived, this::manageCharacterError);
@@ -95,19 +95,19 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
                     Observable.from(comics).subscribe(comic -> onComicReceived(comic));
 
                 else {
-                    mAvengersDetailView.stopLoadingComicsIfNeeded();
-                    mAvengersDetailView.hideComics();
+                    mCharacterDetailView.stopLoadingComicsIfNeeded();
+                    mCharacterDetailView.hideComics();
 
                 }
             }, throwable -> manageComicsError(throwable));
 
-        mAvengersDetailView.startLoading();
-        mAvengersDetailView.showAvengerName(characterName);
+        mCharacterDetailView.startLoading();
+        mCharacterDetailView.showAvengerName(characterName);
     }
 
     private void manageComicsError(Throwable throwable) {
-        mAvengersDetailView.stopLoadingComicsIfNeeded();
-        mAvengersDetailView.hideComics();
+        mCharacterDetailView.stopLoadingComicsIfNeeded();
+        mCharacterDetailView.hideComics();
     }
 
     private void manageCharacterError(Throwable error) {
@@ -115,19 +115,19 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     }
 
     private void onComicReceived(Comic comic) {
-        mAvengersDetailView.stopLoadingComicsIfNeeded();
-        mAvengersDetailView.addComic(comic);
+        mCharacterDetailView.stopLoadingComicsIfNeeded();
+        mCharacterDetailView.addComic(comic);
     }
 
     private void onCharacterReceived(Character character) {
-        mAvengersDetailView.stopLoadingAvengersInformation();
-        mAvengersDetailView.showAvengerBio(
+        mCharacterDetailView.stopLoadingAvengersInformation();
+        mCharacterDetailView.showAvengerBio(
             (character.getDescription().equals("")) ? "No biography available"
                 : character.getDescription());
 
 
         if (character.getImageUrl() != null)
-            mAvengersDetailView.showAvengerImage(character.getImageUrl());
+            mCharacterDetailView.showAvengerImage(character.getImageUrl());
     }
 
     public void onDialogButton(int which) {
@@ -140,7 +140,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
         if (position != 0) {
-            mAvengersDetailView.clearComicsView();
+            mCharacterDetailView.clearComicsView();
             String[] yearArray = mActivityContext.getResources().getStringArray(R.array.years);
             String selectedYear = yearArray[position];
 
@@ -155,7 +155,7 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
     }
 
     public void onCharacterBitmapReceived(Bitmap resource) {
-        mAvengersDetailView.hideRevealViewByAlpha();
-        mAvengersDetailView.initActivityColors(resource);
+        mCharacterDetailView.hideRevealViewByAlpha();
+        mCharacterDetailView.initActivityColors(resource);
     }
 }

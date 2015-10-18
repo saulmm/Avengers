@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
-import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import java.util.List;
 import javax.inject.Inject;
@@ -29,13 +28,13 @@ import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.presenters.AvengersListPresenter;
-import saulmm.avengers.mvp.views.AvengersView;
+import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
 import saulmm.avengers.views.views.RecyclerInsetsDecoration;
 
 
-public class AvengersListActivity extends AppCompatActivity
-    implements AvengersView {
+public class CharacterListListActivity extends AppCompatActivity
+    implements CharacterListView {
 
     public final static String EXTRA_CHARACTER_ID           = "character_id";
     public final static String EXTRA_CHARACTER_NAME         = "character_name";

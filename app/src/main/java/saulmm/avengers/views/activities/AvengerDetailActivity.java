@@ -43,10 +43,10 @@ import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
-import saulmm.avengers.mvp.views.AvengersDetailView;
+import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.views.utils.AnimUtils;
 
-public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
+public class AvengerDetailActivity extends AppCompatActivity implements CharacterDetailView {
 
     private static final String CHRT_NAME_EXTRA = "extra_character_name";
     @Bind(R.id.activity_avenger_detail_progress)      ProgressBar mProgress;
@@ -140,7 +140,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     private void initializeDependencyInjector() {
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
-        int avengerId = getIntent().getIntExtra(AvengersListActivity.EXTRA_CHARACTER_ID, -1);
+        int avengerId = getIntent().getIntExtra(CharacterListListActivity.EXTRA_CHARACTER_ID, -1);
 
         DaggerAvengerInformationComponent.builder()
             .activityModule(new ActivityModule(this))
@@ -151,10 +151,10 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     private void initTransitions() {
         final String sharedViewName = getIntent().getStringExtra(
-            AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME);
+            CharacterListListActivity.EXTRA_IMAGE_TRANSITION_NAME);
 
         String characterTitle = getIntent().getStringExtra(
-            AvengersListActivity.EXTRA_CHARACTER_NAME);
+            CharacterListListActivity.EXTRA_CHARACTER_NAME);
         mCharacterNameTextView.setTransitionName(sharedViewName);
         mCharacterNameTextView.setText(characterTitle);
 
