@@ -6,7 +6,6 @@
 package saulmm.avengers.views.activities;
 
 import android.app.ActivityOptions;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,12 +13,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import java.util.List;
 import javax.inject.Inject;
@@ -46,6 +45,7 @@ public class AvengersListActivity extends AppCompatActivity
     @Bind(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
     @Bind(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
     @Bind(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
+
     @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Bind(R.id.activity_avengers_error_view)      View mErrorView;
 
