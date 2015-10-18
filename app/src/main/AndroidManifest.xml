@@ -17,6 +17,7 @@
         <activity
             android:name=".views.activities.AvengersListActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -28,7 +29,7 @@
             android:name=".views.activities.AvengerDetailActivity"
             android:parentActivityName=".views.activities.AvengersListActivity"
             android:theme="@style/AvengerDetailActivityTheme"
+            android:screenOrientation="portrait"
             />
     </application>
-
 </manifest>
