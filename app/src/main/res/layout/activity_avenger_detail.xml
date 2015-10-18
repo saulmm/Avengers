@@ -107,6 +107,8 @@
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:orientation="horizontal"
+					android:clickable="true"
+					android:background="?attr/selectableItemBackgroundBorderless"
 					>
 
 					<LinearLayout
@@ -115,6 +117,8 @@
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
 						>
 
 						<TextView
@@ -140,6 +144,8 @@
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
 						>
 
 						<TextView
@@ -166,6 +172,8 @@
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
 						>
 
 						<TextView
@@ -191,6 +199,9 @@
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+
 						>
 
 						<TextView
