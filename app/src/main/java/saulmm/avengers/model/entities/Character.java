@@ -19,33 +19,31 @@ public class Character {
     private Thumbnail thumbnail;
     private String resourceURI;
     private ComicsCollection comics;
+    private ComicsCollection series;
+    private ComicsCollection stories;
+    private ComicsCollection events;
 
 
     public Character(String name, int thumb_resource, int id) {
-
         this.name = name;
         this.imageResource = thumb_resource;
         this.id = id;
     }
 
     public Character(String name, int imageResource) {
-
         this.name = name;
         this.imageResource = imageResource;
     }
 
     public int getId() {
-
         return id;
     }
 
     public String getName() {
-
         return name;
     }
 
     public String getDescription() {
-
         return description;
     }
 
@@ -54,7 +52,8 @@ public class Character {
     }
 
     public int getImageResource() {
-
         return imageResource;
     }
+
+
 }
