@@ -124,14 +124,41 @@
 							/>
 
 						<TextView
+							android:id="@+id/activity_avenger_detail_comics_textview"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text="90"
+							android:text="-"
 							/>
 
 					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Events"
+							/>
+
+						<TextView
+							android:id="@+id/activity_avenger_detail_events_textview"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text="-"
+							/>
+
+					</LinearLayout>
+
 
 					<LinearLayout
 						android:layout_width="0dp"
@@ -148,11 +175,12 @@
 							/>
 
 						<TextView
+							android:id="@+id/activity_avenger_detail_series_textview"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text="2"
+							android:text="-"
 							/>
 
 					</LinearLayout>
@@ -172,20 +200,16 @@
 							/>
 
 						<TextView
+							android:id="@+id/activity_avenger_detail_stories_textview"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text="43"
+							android:text="-"
 							/>
 
 					</LinearLayout>
-
 				</LinearLayout>
-
-
-
-
 			</FrameLayout>
 
 

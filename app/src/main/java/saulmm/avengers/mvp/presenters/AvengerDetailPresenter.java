@@ -125,6 +125,10 @@ public class AvengerDetailPresenter implements Presenter, AdapterView.OnItemSele
             (character.getDescription().equals("")) ? "No biography available"
                 : character.getDescription());
 
+        mCharacterDetailView.showComicsAmount(character.getComics().getAvailable());
+        mCharacterDetailView.showStoriesAmount(character.getStories().getAvailable());
+        mCharacterDetailView.showEventsAmount(character.getEvents().getAvailable());
+        mCharacterDetailView.showSeriesAmount(character.getSeries().getAvailable());
 
         if (character.getImageUrl() != null)
             mCharacterDetailView.showAvengerImage(character.getImageUrl());

@@ -48,4 +48,20 @@ public class Character {
     public int getImageResource() {
         return imageResource;
     }
+
+    public ComicsCollection getSeries() {
+        return series;
+    }
+
+    public ComicsCollection getStories() {
+        return stories;
+    }
+
+    public ComicsCollection getEvents() {
+        return events;
+    }
+
+    public ComicsCollection getComics() {
+        return comics;
+    }
 }
