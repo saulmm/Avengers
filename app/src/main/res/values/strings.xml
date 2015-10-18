@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">Avengers</string>
+    <string name="app_name">Amazing heroes of Marvel</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi imperdiet condimentum libero, sit amet tincidunt felis sollicitudin non. Suspendisse malesuada augue ut nibh pharetra finibus. Quisque ut metus id nulla tincidunt faucibus. Morbi eget nisi finibus, maximus est vel, malesuada lacus. Curabitur tincidunt, velit eget venenatis rhoncus, lectus sem commodo erat, et ultrices metus leo eget urna. Integer semper erat ac erat tempus, tincidunt posuere lacus placerat. Morbi lobortis odio tortor, eu euismod leo pretium et. Fusce tempor felis condimentum, elementum justo sed, commodo tellus. Vivamus et tellus tincidunt, placerat velit vitae, fringilla arcu. Nullam luctus varius iaculis.</string>
 
-
     <string name="error.default.characters">Something happened loading characters</string>
+    <string name="error.network.image_not_found">Image not found</string>
     <string name="error.network.uknownhost">Can\'t connect with marvel API</string>
-    <string name="errors.image_not_found">Image not found</string>
-    <string name="errors.marvel_server">Marvel API Server has failed</string>
+    <string name="error.network.marvel_server">Marvel API Server has failed</string>
     <string name="message.loading.more_characters">Loading more characters</string>
+    <string name="action.accept">Accept</string>
+    <string name="action.cancel">Cancel</string>
+    <string name="dialog.filter">Filter</string>
+    <string name="dialog.error">Error</string>
 </resources>

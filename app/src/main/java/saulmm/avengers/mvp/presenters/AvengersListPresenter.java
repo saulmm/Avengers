@@ -7,6 +7,7 @@ package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -126,7 +127,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
             mAvengersView.showErrorView(errorMessage);
 
         } else if (error instanceof ServerErrorException) {
-            String errorMessage = mContext.getString(R.string.errors_marvel_server);
+            String errorMessage = mContext.getString(R.string.error_network_marvel_server);
             mAvengersView.showErrorView(errorMessage);
         }
 
@@ -148,7 +149,8 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     }
 
     @Override
-    public void onElementClick(int position, android.view.View clickedView) {
+    public void onElementClick(int position, android.view.View clickedView,
+        ImageView avengerThumbImageView) {
         int characterId = mCharacters.get(position).getId();
         String characterName = mCharacters.get(position).getName();
         String sharedElementName = Utils.getListTransitionName(position);
@@ -157,6 +159,8 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
         i.putExtra(AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
         i.putExtra(AvengersListActivity.EXTRA_CHARACTER_NAME, characterName);
-        mContext.startActivity(i, mAvengersView.getActivityOptions(position, clickedView).toBundle());
+
+        mContext.startActivity(i, mAvengersView.getActivityOptions(
+            position, clickedView).toBundle());
     }
 }

@@ -37,7 +37,7 @@ public interface AvengersView extends View {
 
     void hideEmptyIndicator();
 
-    ActivityOptions getActivityOptions (int position, android.view.View clickedView);
-
     void updateCharacterList(int charactersLimit);
+
+    ActivityOptions getActivityOptions(int position, android.view.View clickedView);
 }

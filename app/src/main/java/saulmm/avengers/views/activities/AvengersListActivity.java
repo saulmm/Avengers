@@ -6,20 +6,19 @@
 package saulmm.avengers.views.activities;
 
 import android.app.ActivityOptions;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import java.util.List;
 import javax.inject.Inject;
@@ -38,20 +37,17 @@ import saulmm.avengers.views.views.RecyclerInsetsDecoration;
 public class AvengersListActivity extends AppCompatActivity
     implements AvengersView {
 
-    public static SparseArray<Bitmap> sPhotoCache           = new SparseArray<Bitmap>(1);
-
     public final static String EXTRA_CHARACTER_ID           = "character_id";
     public final static String EXTRA_CHARACTER_NAME         = "character_name";
     public final static String EXTRA_IMAGE_TRANSITION_NAME  = "transition_name";
     public final static int KEY_SHARED_BITMAP               = 41;
 
-
     @Bind(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
     @Bind(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
     @Bind(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
+
     @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Bind(R.id.activity_avengers_error_view)      View mErrorView;
-    @Bind(R.id.activity_avenger_title)            TextView mAvengersActivityTitle;
 
     @Inject AvengersListPresenter mAvengersListPresenter;
 
@@ -71,7 +67,6 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeToolbar() {
-        mAvengersActivityTitle.setTypeface(Utils.getBangersTypeface(this));
         setSupportActionBar(mAvengersToolbar);
     }
 
@@ -83,7 +78,7 @@ public class AvengersListActivity extends AppCompatActivity
 
     @Override
     protected void onPause() {
-        super.onStart();
+        super.onPause();
         mAvengersListPresenter.onPause();
     }
 
@@ -102,7 +97,7 @@ public class AvengersListActivity extends AppCompatActivity
     }
 
     private void initializeRecyclerView() {
-        mAvengersRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+        mAvengersRecycler.setLayoutManager(new LinearLayoutManager(this));
         mAvengersRecycler.addItemDecoration(new RecyclerInsetsDecoration(this));
         mAvengersRecycler.addOnScrollListener(mOnScrollListener);
     }
@@ -204,7 +199,7 @@ public class AvengersListActivity extends AppCompatActivity
     private OnScrollListener mOnScrollListener = new OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             int visibleItemsCount   = layoutManager.getChildCount();
             int totalItemsCount     = layoutManager.getItemCount();
             int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
@@ -218,11 +213,6 @@ public class AvengersListActivity extends AppCompatActivity
     @Override
     public ActivityOptions getActivityOptions(int position, View clickedView) {
         String sharedViewName = Utils.getListTransitionName(position);
-        clickedView.setTransitionName(sharedViewName);
-        clickedView.buildDrawingCache();
-        Bitmap characterThumb = clickedView.getDrawingCache();
-        sPhotoCache.put(KEY_SHARED_BITMAP, characterThumb);
-
         return ActivityOptions.makeSceneTransitionAnimation(
             this, clickedView, sharedViewName);
     }

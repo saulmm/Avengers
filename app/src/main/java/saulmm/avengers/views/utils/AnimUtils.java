@@ -7,17 +7,17 @@ import android.view.ViewAnimationUtils;
 
 public class AnimUtils {
 
-	public static final int REVEAL_DURATION = 350;
+	public static final int REVEAL_DURATION = 500;
 
 	public static void showRevealEffect(final View v, int centerX, int centerY,
 		@Nullable Animator.AnimatorListener lis) {
 
 		v.setVisibility(View.VISIBLE);
 
-		int height = v.getHeight();
+		int finalRadius = Math.max(v.getWidth(), v.getHeight());
 
 		Animator anim = ViewAnimationUtils.createCircularReveal(
-			v, centerX, centerY, 0, height);
+			v, centerX, centerY, 0, finalRadius);
 
 		anim.setDuration(REVEAL_DURATION);
 

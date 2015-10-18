@@ -1,32 +1,79 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/brand_primary</item>
-        <item name="colorPrimaryDark">@color/brand_primary_dark</item>
-        <item name="colorAccent">@color/brand_secondary</item>
-        <item name="actionMenuTextColor">@android:color/white</item>
 
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
-    </style>
-
-    <style name="AvengerDetailActivityTheme" parent="AppTheme">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
-    <style name="Avengers"/>
-
-    <style name="Avengers.ViewGroup" parent="Avengers">
+    <style name="ViewGroup">
         <item name="android:paddingLeft">@dimen/spacing_normal</item>
         <item name="android:paddingRight">@dimen/spacing_normal</item>
         <item name="android:paddingTop">@dimen/spacing_normal</item>
         <item name="android:paddingBottom">@dimen/spacing_normal</item>
     </style>
 
-    <style name="Avengers.ViewGroup.Small" parent="Avengers">
+    <style name="ViewGroup.Small">
         <item name="android:paddingLeft">@dimen/spacing_tiny</item>
         <item name="android:paddingRight">@dimen/spacing_tiny</item>
         <item name="android:paddingTop">@dimen/spacing_tiny</item>
         <item name="android:paddingBottom">@dimen/spacing_tiny</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:background">?colorPrimary</item>
+        <item name="android:elevation">@dimen/elevation.normal</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+
+    <style name="Text"/>
+
+    <style name="Text.High">
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="Text.Header">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Text.CollapsedExpanded">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="Text.Counters">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Text.Counters.Label">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Text.Counters.Number">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Text.ComicHeader">
+        <item name="android:minHeight">8dp</item>
+        <item name="android:textColor">@color/grey.medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="Text.ComicContent">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLength">75</item>
+        <item name="android:textColor">@color/grey.medium</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Text.StateMessage">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>
