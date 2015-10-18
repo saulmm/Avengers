@@ -8,9 +8,17 @@ package saulmm.avengers.mvp.views;
 import android.graphics.Bitmap;
 import saulmm.avengers.model.entities.Comic;
 
-public interface AvengersDetailView extends View {
+public interface CharacterDetailView extends View {
 
     void initActivityColors(Bitmap sourceBitmap);
+
+    void showSeriesAmount(int amount);
+
+    void showComicsAmount(int amount);
+
+    void showEventsAmount(int amount);
+
+    void showStoriesAmount(int amount);
 
     void hideRevealViewByAlpha();
 

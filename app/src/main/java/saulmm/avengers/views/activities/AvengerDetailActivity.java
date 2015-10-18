@@ -43,22 +43,26 @@ import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
-import saulmm.avengers.mvp.views.AvengersDetailView;
+import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.views.utils.AnimUtils;
 
-public class AvengerDetailActivity extends AppCompatActivity implements AvengersDetailView {
+public class AvengerDetailActivity extends AppCompatActivity implements CharacterDetailView {
 
     private static final String CHRT_NAME_EXTRA = "extra_character_name";
-    @Bind(R.id.activity_avenger_detail_progress)      ProgressBar mProgress;
-    @Bind(R.id.activity_avenger_comics_progress)      ProgressBar mComicsProgress;
-    @Bind(R.id.activity_avenger_comics_container)     LinearLayout mComicsContainer;
-    @Bind(R.id.activity_avenger_detail_biography)     TextView mBiographyTextView;
-    @Bind(R.id.activity_avenger_detail_name)          TextView mCharacterNameTextView;
-    @Bind(R.id.activity_avenger_detail_thumb)         ImageView mAvengerThumb;
-    @Bind(R.id.activity_avenger_detail_colltoolbar)   CollapsingToolbarLayout mCollapsingActionBar;
-    @Bind(R.id.activity_avenger_detail_appbar)        AppBarLayout mAppbar;
-    @Bind(R.id.activity_avenger_reveal_view)          View mRevealView;
-    @Bind(R.id.activity_avenger_detail_stats_view)    View mDetailStatsView;
+    @Bind(R.id.activity_avenger_detail_progress)        ProgressBar mProgress;
+    @Bind(R.id.activity_avenger_comics_progress)        ProgressBar mComicsProgress;
+    @Bind(R.id.activity_avenger_comics_container)       LinearLayout mComicsContainer;
+    @Bind(R.id.activity_avenger_detail_biography)       TextView mBiographyTextView;
+    @Bind(R.id.activity_avenger_detail_name)            TextView mCharacterNameTextView;
+    @Bind(R.id.activity_avenger_detail_events_textview) TextView mEventsAmountTextView;
+    @Bind(R.id.activity_avenger_detail_series_textview) TextView mSeriesAmountTextView;
+    @Bind(R.id.activity_avenger_detail_stories_textview) TextView mStoriesAmountTextView;
+    @Bind(R.id.activity_avenger_detail_comics_textview) TextView mComicsAmountTextView;
+    @Bind(R.id.activity_avenger_detail_thumb)           ImageView mAvengerThumb;
+    @Bind(R.id.activity_avenger_detail_colltoolbar)     CollapsingToolbarLayout mCollapsingActionBar;
+    @Bind(R.id.activity_avenger_detail_appbar)          AppBarLayout mAppbar;
+    @Bind(R.id.activity_avenger_reveal_view)            View mRevealView;
+    @Bind(R.id.activity_avenger_detail_stats_view)      View mDetailStatsView;
 
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
     @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
@@ -103,21 +107,39 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
                 colorAnimation.start();
 
                 mDetailStatsView.setBackgroundColor(darkVibrant);
-                mDetailStatsView.getViewTreeObserver().addOnGlobalLayoutListener(
-                    new ViewTreeObserver.OnGlobalLayoutListener() {
-                        @Override public void onGlobalLayout() {
-                            mDetailStatsView.getViewTreeObserver()
-                                .removeOnGlobalLayoutListener(this);
+                mDetailStatsView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override public void onGlobalLayout() {
+                                mDetailStatsView.getViewTreeObserver()
+                                    .removeOnGlobalLayoutListener(this);
 
-                            AnimUtils.showRevealEffect(mDetailStatsView,
-                                mDetailStatsView.getWidth() / 2, 0, null);
-                        }
-                    });
-
-
+                                AnimUtils.showRevealEffect(mDetailStatsView,
+                                    mDetailStatsView.getWidth() / 2, 0, null);
+                            }
+                        });
 
                 getWindow().setStatusBarColor(darkVibrant);
             });
+    }
+
+    @Override
+    public void showSeriesAmount(int seriesAmount) {
+        mSeriesAmountTextView.setText(String.format("%d", seriesAmount));
+    }
+
+    @Override
+    public void showComicsAmount(int comicsAmount) {
+        mComicsAmountTextView.setText(String.format("%d",comicsAmount));
+    }
+
+    @Override
+    public void showEventsAmount(int eventsAmount) {
+        mEventsAmountTextView.setText(String.format("%d",eventsAmount));
+    }
+
+    @Override
+    public void showStoriesAmount(int storiesAmount) {
+        mStoriesAmountTextView.setText(String.format("%d",storiesAmount));
     }
 
     private void initButterknife() {
@@ -140,7 +162,7 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
     private void initializeDependencyInjector() {
         AvengersApplication avengersApplication = (AvengersApplication) getApplication();
 
-        int avengerId = getIntent().getIntExtra(AvengersListActivity.EXTRA_CHARACTER_ID, -1);
+        int avengerId = getIntent().getIntExtra(CharacterListListActivity.EXTRA_CHARACTER_ID, -1);
 
         DaggerAvengerInformationComponent.builder()
             .activityModule(new ActivityModule(this))
@@ -151,10 +173,10 @@ public class AvengerDetailActivity extends AppCompatActivity implements Avengers
 
     private void initTransitions() {
         final String sharedViewName = getIntent().getStringExtra(
-            AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME);
+            CharacterListListActivity.EXTRA_IMAGE_TRANSITION_NAME);
 
         String characterTitle = getIntent().getStringExtra(
-            AvengersListActivity.EXTRA_CHARACTER_NAME);
+            CharacterListListActivity.EXTRA_CHARACTER_NAME);
         mCharacterNameTextView.setTransitionName(sharedViewName);
         mCharacterNameTextView.setText(characterTitle);
 

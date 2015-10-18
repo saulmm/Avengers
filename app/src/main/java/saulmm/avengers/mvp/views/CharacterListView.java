@@ -9,7 +9,7 @@ import android.app.ActivityOptions;
 import java.util.List;
 import saulmm.avengers.model.entities.Character;
 
-public interface AvengersView extends View {
+public interface CharacterListView extends View {
 
     void bindCharacterList(List<Character> avengers);
 

@@ -15,7 +15,7 @@
         >
 
         <activity
-            android:name=".views.activities.AvengersListActivity"
+            android:name=".views.activities.CharacterListListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             >
@@ -27,7 +27,7 @@
 
         <activity
             android:name=".views.activities.AvengerDetailActivity"
-            android:parentActivityName=".views.activities.AvengersListActivity"
+            android:parentActivityName=".views.activities.CharacterListListActivity"
             android:theme="@style/AvengerDetailActivityTheme"
             android:screenOrientation="portrait"
             />

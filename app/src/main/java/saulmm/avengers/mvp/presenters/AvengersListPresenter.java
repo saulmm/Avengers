@@ -18,11 +18,11 @@ import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 import saulmm.avengers.model.rest.exceptions.ServerErrorException;
-import saulmm.avengers.mvp.views.AvengersView;
+import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;
 import saulmm.avengers.views.activities.AvengerDetailActivity;
-import saulmm.avengers.views.activities.AvengersListActivity;
+import saulmm.avengers.views.activities.CharacterListListActivity;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class AvengersListPresenter implements Presenter, RecyclerClickListener {
@@ -34,7 +34,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     private Subscription mCharactersSubscription;
 
     private List<Character> mCharacters;
-    private AvengersView mAvengersView;
+    private CharacterListView mAvengersView;
     private Intent mIntent;
 
     @Inject
@@ -64,7 +64,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
 
     @Override
     public void attachView(View v) {
-        mAvengersView = (AvengersView) v;
+        mAvengersView = (CharacterListView) v;
     }
 
     @Override
@@ -156,9 +156,9 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         String sharedElementName = Utils.getListTransitionName(position);
 
         Intent i = new Intent (mContext, AvengerDetailActivity.class);
-        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_ID, characterId);
-        i.putExtra(AvengersListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
-        i.putExtra(AvengersListActivity.EXTRA_CHARACTER_NAME, characterName);
+        i.putExtra(CharacterListListActivity.EXTRA_CHARACTER_ID, characterId);
+        i.putExtra(CharacterListListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
+        i.putExtra(CharacterListListActivity.EXTRA_CHARACTER_NAME, characterName);
 
         mContext.startActivity(i, mAvengersView.getActivityOptions(
             position, clickedView).toBundle());
