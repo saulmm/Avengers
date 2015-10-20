@@ -21,7 +21,7 @@ import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;
-import saulmm.avengers.views.activities.AvengerDetailActivity;
+import saulmm.avengers.views.activities.CharacterDetailActivity;
 import saulmm.avengers.views.activities.CharacterListListActivity;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -155,7 +155,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         String characterName = mCharacters.get(position).getName();
         String sharedElementName = Utils.getListTransitionName(position);
 
-        Intent i = new Intent (mContext, AvengerDetailActivity.class);
+        Intent i = new Intent (mContext, CharacterDetailActivity.class);
         i.putExtra(CharacterListListActivity.EXTRA_CHARACTER_ID, characterId);
         i.putExtra(CharacterListListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
         i.putExtra(CharacterListListActivity.EXTRA_CHARACTER_NAME, characterName);

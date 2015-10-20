@@ -11,11 +11,14 @@ import rx.Observable;
 import saulmm.avengers.model.entities.*;
 import saulmm.avengers.model.entities.Character;
 
-public interface Repository {
+import static saulmm.avengers.model.entities.CollectionItem.*;
 
+public interface Repository {
     Observable<Character> getCharacter (final int characterId);
 
     Observable<List<Character>> getCharacters (int offset);
 
     Observable<List<Comic>> getCharacterComics (final int characterId);
+
+    Observable<List<CollectionItem>> getCollectionItems(CollectionType type);
 }

@@ -14,23 +14,18 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
-import android.text.Html;
 import android.transition.Transition;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -41,17 +36,14 @@ import saulmm.avengers.TransitionUtils;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
-import saulmm.avengers.model.entities.Comic;
-import saulmm.avengers.mvp.presenters.AvengerDetailPresenter;
+import saulmm.avengers.mvp.presenters.CharacterDetailPresenter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.views.utils.AnimUtils;
 
-public class AvengerDetailActivity extends AppCompatActivity implements CharacterDetailView {
+public class CharacterDetailActivity extends AppCompatActivity implements CharacterDetailView {
 
     private static final String CHRT_NAME_EXTRA = "extra_character_name";
     @Bind(R.id.activity_avenger_detail_progress)        ProgressBar mProgress;
-    @Bind(R.id.activity_avenger_comics_progress)        ProgressBar mComicsProgress;
-    @Bind(R.id.activity_avenger_comics_container)       LinearLayout mComicsContainer;
     @Bind(R.id.activity_avenger_detail_biography)       TextView mBiographyTextView;
     @Bind(R.id.activity_avenger_detail_name)            TextView mCharacterNameTextView;
     @Bind(R.id.activity_avenger_detail_events_textview) TextView mEventsAmountTextView;
@@ -65,22 +57,17 @@ public class AvengerDetailActivity extends AppCompatActivity implements Characte
     @Bind(R.id.activity_avenger_detail_stats_view)      View mDetailStatsView;
 
     @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
-    @Bind(R.id.activity_avenger_detail_comics_header)   TextView mComicsHeaderTextView;
-    @Bind(R.id.activity_avenger_detail_filter_button)   Button mFilterComicsButton;
 
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
     @BindColor(R.color.brand_primary_dark)              int mColorPrimaryDark;
 
-    @Inject AvengerDetailPresenter avengerDetailPresenter;
+    @Inject CharacterDetailPresenter avengerDetailPresenter;
 
-    private View comicView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         initButterknife();
         initializeDependencyInjector();
         initializePresenter();
@@ -243,42 +230,8 @@ public class AvengerDetailActivity extends AppCompatActivity implements Characte
     }
 
     @Override
-    public void addComic(Comic comic) {
-        View comicView = LayoutInflater.from(this).inflate(
-                R.layout.item_comic, null, true);
-
-        TextView comicTitleTextView = ButterKnife.findById(comicView, R.id.item_comic_title);
-        TextView comicDescTextView = ButterKnife.findById(comicView, R.id.item_comic_description);
-        ImageView comicCoverImageView = ButterKnife.findById(comicView, R.id.item_comic_cover);
-
-        comicTitleTextView.setText(comic.getTitle());
-
-        if (comic.getFirstImageUrl() != null)
-            Glide.with(this).load(comic.getFirstImageUrl()).into(comicCoverImageView);
-
-        if (comic.getFirstTextObject() != null)
-            comicDescTextView.setText(Html.fromHtml(comic.getFirstTextObject()));
-
-        mComicsContainer.addView(comicView);
-    }
-
-    @Override
-    public void stopLoadingComicsIfNeeded() {
-        if (mComicsProgress.getVisibility() == View.VISIBLE)
-            mComicsProgress.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void clearComicsView() {
-        if(mComicsContainer.getChildCount() > 0)
-            mComicsContainer.removeAllViews();
-    }
-
-    @Override
     public void showError(String errorMessage) {
-
         stopLoadingAvengersInformation();
-        stopLoadingComicsIfNeeded();
 
         new AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_error))
@@ -289,37 +242,8 @@ public class AvengerDetailActivity extends AppCompatActivity implements Characte
     }
 
     @Override
-    public void hideComics() {
-        mComicsContainer.setVisibility(View.GONE);
-        mComicsHeaderTextView.setVisibility(View.GONE);
-        mComicsProgress.setVisibility(View.GONE);
-        mFilterComicsButton.setVisibility(View.GONE);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         avengerDetailPresenter.onStop();
-    }
-
-    @OnClick(R.id.activity_avenger_detail_filter_button)
-    public void onButtonClicked () {
-        showFilterDialog();
-    }
-
-    public void showFilterDialog () {
-
-        View filterView = LayoutInflater.from(this)
-            .inflate(R.layout.view_filter_dialog, null);
-
-        Spinner yearSpinner = ButterKnife.findById(filterView, R.id.view_filter_dialog_year_spinner);
-        yearSpinner.setOnItemSelectedListener(avengerDetailPresenter);
-
-        new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.dialog_filter))
-            .setPositiveButton(getString(R.string.action_accept), (dialog, which) -> avengerDetailPresenter.onDialogButton(which))
-            .setNegativeButton(getString(R.string.action_cancel), (dialog1, which) -> avengerDetailPresenter.onDialogButton(which))
-            .setView(filterView)
-            .show();
     }
 }

@@ -17,6 +17,7 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
 import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.entities.CollectionItem;
 import saulmm.avengers.model.entities.Comic;
 import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.exceptions.ServerErrorException;
@@ -72,5 +73,10 @@ public class RestRepository implements Repository {
         return mMarvelApi.getCharacterComics(characterId)
             .retry((attemps, error) -> error instanceof SocketTimeoutException
                 && attemps < MAX_ATTEMPS);
+    }
+
+    @Override
+    public Observable<List<CollectionItem>> getCollectionItems(CollectionItem.CollectionType type) {
+        return null;
     }
 }
