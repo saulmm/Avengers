@@ -10,8 +10,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import javax.inject.Inject;
 import rx.Subscription;
-import saulmm.avengers.domain.GetCharacterComicsUsecase;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
+import saulmm.avengers.domain.GetCollectionUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
@@ -23,17 +23,17 @@ public class CharacterDetailPresenter implements Presenter {
     private CharacterDetailView mCharacterDetailView;
 
     private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
-    private final GetCharacterComicsUsecase mGetCharacterComicsUsecase;
+    private final GetCollectionUsecase mGetColletionUsecase;
     private Intent mIntent;
 
     private Subscription mCharacterSubscription;
 
     @Inject
     public CharacterDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
-        GetCharacterComicsUsecase getCharacterComicsUsecase, Context activityContext) {
+        GetCollectionUsecase getCollectionUsecase, Context activityContext) {
 
         mGetCharacterInformationUsecase = getCharacterInformationUsecase;
-        mGetCharacterComicsUsecase = getCharacterComicsUsecase;
+        mGetColletionUsecase = getCollectionUsecase;
         mActivityContext = activityContext;
     }
 
@@ -55,7 +55,7 @@ public class CharacterDetailPresenter implements Presenter {
 
     @Override
     public void onPause() {
-
+        // Unused
     }
 
     @Override

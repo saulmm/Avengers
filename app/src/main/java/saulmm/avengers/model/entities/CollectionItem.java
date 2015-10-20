@@ -1,26 +1,34 @@
 package saulmm.avengers.model.entities;
 
 public class CollectionItem {
-	public enum CollectionType {
-		COMIC, SERIE, EVENT, HISTORY
+	public final static String COMIC 		= "comics";
+	public final static String SERIES	  	= "series";
+	public final static String STORY 		= "stories";
+	public final static String EVENT 		= "events";
+
+	protected int id;
+	protected String title;
+	protected String decription;
+	protected String resourceURI;
+	protected Thumbnail thumbnail;
+
+	public int getId() {
+		return id;
 	}
-
-
-	private String title;
-
-	private String shortDescription;
-
-	private String imageUrl;
 
 	public String getTitle() {
 		return title;
 	}
 
-	public String getShortDescription() {
-		return shortDescription;
+	public String getResourceURI() {
+		return resourceURI;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public Thumbnail getThumbnail() {
+		return thumbnail;
+	}
+
+	public String getDescription() {
+		return decription;
 	}
 }

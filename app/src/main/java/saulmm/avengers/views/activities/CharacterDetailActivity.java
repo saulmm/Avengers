@@ -18,7 +18,6 @@ import android.transition.Transition;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -246,4 +245,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         super.onStop();
         avengerDetailPresenter.onStop();
     }
+
+
 }

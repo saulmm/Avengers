@@ -6,19 +6,14 @@
 package saulmm.avengers.model.repository;
 
 import java.util.List;
-
 import rx.Observable;
-import saulmm.avengers.model.entities.*;
 import saulmm.avengers.model.entities.Character;
-
-import static saulmm.avengers.model.entities.CollectionItem.*;
+import saulmm.avengers.model.entities.CollectionItem;
 
 public interface Repository {
     Observable<Character> getCharacter (final int characterId);
 
     Observable<List<Character>> getCharacters (int offset);
 
-    Observable<List<Comic>> getCharacterComics (final int characterId);
-
-    Observable<List<CollectionItem>> getCollectionItems(CollectionType type);
+    Observable<List<CollectionItem>> getCharacterCollection(int characterId, String type);
 }
