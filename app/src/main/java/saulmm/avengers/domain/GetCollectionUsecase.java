@@ -3,6 +3,8 @@ package saulmm.avengers.domain;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import saulmm.avengers.model.entities.CollectionItem;
 import saulmm.avengers.model.repository.Repository;
 
@@ -15,8 +17,7 @@ public class GetCollectionUsecase implements Usecase<List<CollectionItem>> {
 	private final Repository mRepository;
 	private final int mCharacterId;
 
-	@Inject
-	public GetCollectionUsecase(int characterId, Repository repository) {
+	@Inject public GetCollectionUsecase(int characterId, Repository repository) {
 		mRepository = repository;
 		mCharacterId = characterId;
 	}
@@ -30,6 +31,8 @@ public class GetCollectionUsecase implements Usecase<List<CollectionItem>> {
 		if (!type.equals(COMIC) && !type.equals(EVENT) && !type.equals(SERIES) && !type.equals(STORY))
 			throw new IllegalArgumentException("Collection type must be events|series|comics|stories");
 
-		return mRepository.getCharacterCollection(mCharacterId, type);
+		return mRepository.getCharacterCollection(mCharacterId, type)
+			.subscribeOn(Schedulers.newThread())
+			.observeOn(AndroidSchedulers.mainThread());
 	}
 }

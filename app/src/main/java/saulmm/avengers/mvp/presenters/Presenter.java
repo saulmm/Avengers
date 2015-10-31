@@ -5,8 +5,6 @@
  */
 package saulmm.avengers.mvp.presenters;
 
-import android.content.Intent;
-
 import saulmm.avengers.mvp.views.View;
 
 public interface Presenter {
@@ -18,8 +16,6 @@ public interface Presenter {
     void onPause();
 
     void attachView (View v);
-
-    void attachIncomingIntent (Intent intent);
 
     void onCreate();
 }

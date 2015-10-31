@@ -31,5 +31,7 @@
             android:theme="@style/AvengerDetailActivityTheme"
             android:screenOrientation="portrait"
             />
+
+        <activity android:name=".views.activities.CollectionActivity"/>
     </application>
 </manifest>

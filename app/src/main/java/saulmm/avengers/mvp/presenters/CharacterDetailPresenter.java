@@ -6,16 +6,15 @@
 package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
-import saulmm.avengers.domain.GetCollectionUsecase;
 import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.model.entities.CollectionItem;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
-import saulmm.avengers.views.activities.CharacterListListActivity;
+import saulmm.avengers.views.activities.CollectionActivity;
 
 public class CharacterDetailPresenter implements Presenter {
 
@@ -23,23 +22,31 @@ public class CharacterDetailPresenter implements Presenter {
     private CharacterDetailView mCharacterDetailView;
 
     private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
-    private final GetCollectionUsecase mGetColletionUsecase;
-    private Intent mIntent;
 
     private Subscription mCharacterSubscription;
+    private int mCharacterId;
+    private String mCharacterName;
 
     @Inject
     public CharacterDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
-        GetCollectionUsecase getCollectionUsecase, Context activityContext) {
+        Context activityContext) {
 
         mGetCharacterInformationUsecase = getCharacterInformationUsecase;
-        mGetColletionUsecase = getCollectionUsecase;
         mActivityContext = activityContext;
     }
 
     @Override
     public void onCreate() {
-        // Unused
+        if (mCharacterId == -1 || mCharacterName == null)
+            throw new IllegalStateException("initializePresenter was not well initialised");
+
+        mCharacterDetailView.startLoading();
+
+        mCharacterSubscription = mGetCharacterInformationUsecase.execute()
+            .subscribe(this::onCharacterReceived, this::manageCharacterError);
+
+        mCharacterDetailView.startLoading();
+        mCharacterDetailView.showAvengerName(mCharacterName);
     }
 
     @Override
@@ -60,28 +67,13 @@ public class CharacterDetailPresenter implements Presenter {
 
     @Override
     public void attachView(View v) {
-
         mCharacterDetailView = (CharacterDetailView) v;
     }
 
-    @Override
-    public void attachIncomingIntent(Intent intent) {
-
-        mIntent = intent;
-    }
-
     @SuppressWarnings("Convert2MethodRef")
-    public void initializePresenter() {
-        String characterName = mIntent.getExtras().getString(
-            CharacterListListActivity.EXTRA_CHARACTER_NAME);
-
-        mCharacterDetailView.startLoading();
-
-        mCharacterSubscription = mGetCharacterInformationUsecase.execute().subscribe(
-            this::onCharacterReceived, this::manageCharacterError);
-
-        mCharacterDetailView.startLoading();
-        mCharacterDetailView.showAvengerName(characterName);
+    public void initializePresenter(int characterId, String characterName) {
+        mCharacterId = characterId;
+        mCharacterName = characterName;
     }
 
     private void manageCharacterError(Throwable error) {
@@ -106,5 +98,25 @@ public class CharacterDetailPresenter implements Presenter {
     public void onCharacterBitmapReceived(Bitmap resource) {
         mCharacterDetailView.hideRevealViewByAlpha();
         mCharacterDetailView.initActivityColors(resource);
+    }
+
+    public void onComicsIndicatorPressed() {
+        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.COMIC );
+    }
+
+    public void onSeriesIndicatorPressed() {
+        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.SERIES);
+    }
+
+    public void onStoriesIndicatorPressed() {
+        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.STORY);
+    }
+
+    public void onEventIndicatorPressed() {
+        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.EVENT);
+    }
+
+    public void setCharacterId(int characterId) {
+        mCharacterId = characterId;
     }
 }
