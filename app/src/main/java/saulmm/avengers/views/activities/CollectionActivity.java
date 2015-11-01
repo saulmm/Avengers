@@ -123,7 +123,8 @@ public class CollectionActivity extends AppCompatActivity implements CollectionV
 			itemTitleTextView.setText(collectionItem.getTitle());
 			itemTextTextView.setText(collectionItem.getDescription());
 
-			Glide.with(CollectionActivity.this).load(collectionItem.getResourceURI())
+			Glide.with(CollectionActivity.this)
+				.load(collectionItem.getThumbnail().getImageUrl())
 				.error(R.drawable.error_placeholder)
 				.into(itemImageView);
 		}

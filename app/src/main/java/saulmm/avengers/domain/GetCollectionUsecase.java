@@ -33,6 +33,15 @@ public class GetCollectionUsecase implements Usecase<List<CollectionItem>> {
 
 		return mRepository.getCharacterCollection(mCharacterId, type)
 			.subscribeOn(Schedulers.newThread())
+			.flatMap(collectionItems -> {
+
+				for (CollectionItem  coolectionItem: collectionItems) {
+					System.out.println("[DEBUG]" + " GetCollectionUsecase execute - " +
+					    ""+coolectionItem);
+				}
+
+				return Observable.just(collectionItems);
+			})
 			.observeOn(AndroidSchedulers.mainThread());
 	}
 }

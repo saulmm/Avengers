@@ -8,7 +8,7 @@ public class CollectionItem {
 
 	protected int id;
 	protected String title;
-	protected String decription;
+	protected String description;
 	protected String resourceURI;
 	protected Thumbnail thumbnail;
 
@@ -29,6 +29,6 @@ public class CollectionItem {
 	}
 
 	public String getDescription() {
-		return decription;
+		return description;
 	}
 }
