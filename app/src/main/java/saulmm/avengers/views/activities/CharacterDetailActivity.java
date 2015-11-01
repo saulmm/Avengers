@@ -264,17 +264,17 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     @OnClick(R.id.details_indicator_events)
     protected void onEventsIndicator() {
-        mCharacterDetailPresenter.onComicsIndicatorPressed();
+        mCharacterDetailPresenter.onEventIndicatorPressed();
     }
 
     @OnClick(R.id.details_indicator_stories)
     protected void onStoriesIndicator() {
-        mCharacterDetailPresenter.onComicsIndicatorPressed();
+        mCharacterDetailPresenter.onStoriesIndicatorPressed();
     }
 
     @OnClick(R.id.details_indicator_series)
     protected void onSeriesIndicator() {
-        mCharacterDetailPresenter.onComicsIndicatorPressed();
+        mCharacterDetailPresenter.onSeriesIndicatorPressed();
     }
 
     public static void start(Context context, String characterName, int characterId) {

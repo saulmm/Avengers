@@ -101,7 +101,7 @@ public class CharacterDetailPresenter implements Presenter {
     }
 
     public void onComicsIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.COMIC );
+        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.COMIC);
     }
 
     public void onSeriesIndicatorPressed() {
