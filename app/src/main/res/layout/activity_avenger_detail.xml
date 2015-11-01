@@ -107,14 +107,19 @@
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:orientation="horizontal"
+					android:clickable="true"
+					android:background="?attr/selectableItemBackgroundBorderless"
 					>
 
 					<LinearLayout
+						android:id="@+id/details.indicator.comics"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
 						>
 
 						<TextView
@@ -135,11 +140,14 @@
 					</LinearLayout>
 
 					<LinearLayout
+						android:id="@+id/details.indicator.events"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
 						>
 
 						<TextView
@@ -161,11 +169,14 @@
 
 
 					<LinearLayout
+						android:id="@+id/details.indicator.series"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
 						>
 
 						<TextView
@@ -186,11 +197,15 @@
 					</LinearLayout>
 
 					<LinearLayout
+						android:id="@+id/details.indicator.stories"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+
 						>
 
 						<TextView
@@ -211,7 +226,6 @@
 					</LinearLayout>
 				</LinearLayout>
 			</FrameLayout>
-
 
 			<TextView
 				android:id="@+id/activity_avenger_detail_inf_header"
@@ -242,39 +256,6 @@
 				android:layout_height="48dp"
 				android:layout_gravity="center_horizontal"
 				android:visibility="visible"
-				/>
-
-			<TextView
-				android:id="@+id/activity_avenger_detail_comics_header"
-				style="@style/Text.Header"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_normal"
-				android:paddingLeft="@dimen/spacing_normal"
-				android:text="Comics"
-				/>
-
-			<ProgressBar
-				android:id="@+id/activity_avenger_comics_progress"
-				style="?android:attr/progressBarStyleLarge"
-				android:layout_width="48dp"
-				android:layout_height="48dp"
-				android:layout_gravity="center_horizontal"
-				android:visibility="visible"
-				/>
-
-			<LinearLayout
-				android:id="@+id/activity_avenger_comics_container"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				/>
-
-			<Button
-				android:id="@+id/activity_avenger_detail_filter_button"
-				android:layout_width="match_parent"
-				android:layout_height="48dp"
-				android:text="Filter"
 				/>
 		</LinearLayout>
 	</android.support.v4.widget.NestedScrollView>

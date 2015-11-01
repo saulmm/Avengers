@@ -26,10 +26,12 @@
         </activity>
 
         <activity
-            android:name=".views.activities.AvengerDetailActivity"
+            android:name=".views.activities.CharacterDetailActivity"
             android:parentActivityName=".views.activities.CharacterListListActivity"
             android:theme="@style/AvengerDetailActivityTheme"
             android:screenOrientation="portrait"
             />
+
+        <activity android:name=".views.activities.CollectionActivity"/>
     </application>
 </manifest>

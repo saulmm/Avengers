@@ -21,11 +21,10 @@ import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 import saulmm.avengers.views.RecyclerClickListener;
-import saulmm.avengers.views.activities.AvengerDetailActivity;
-import saulmm.avengers.views.activities.CharacterListListActivity;
+import saulmm.avengers.views.activities.CharacterDetailActivity;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
-public class AvengersListPresenter implements Presenter, RecyclerClickListener {
+public class CharacterListPresenter implements Presenter, RecyclerClickListener {
     private final GetCharactersUsecase mCharactersUsecase;
     private final Context mContext;
 
@@ -38,7 +37,7 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     private Intent mIntent;
 
     @Inject
-    public AvengersListPresenter (Context context, GetCharactersUsecase charactersUsecase) {
+    public CharacterListPresenter(Context context, GetCharactersUsecase charactersUsecase) {
         mContext = context;
         mCharactersUsecase = charactersUsecase;
         mCharacters = new ArrayList<>();
@@ -56,6 +55,11 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     }
 
     @Override
+    public void onStop() {
+        // Unused
+    }
+
+    @Override
     public void onPause() {
         mAvengersView.hideLoadingMoreCharactersIndicator();
         mCharactersSubscription.unsubscribe();
@@ -65,16 +69,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
     @Override
     public void attachView(View v) {
         mAvengersView = (CharacterListView) v;
-    }
-
-    @Override
-    public void attachIncomingIntent(Intent intent) {
-        mIntent = intent;
-    }
-
-    @Override
-    public void onStop() {
-        // Unused
     }
 
     public void onListEndReached() {
@@ -154,13 +148,6 @@ public class AvengersListPresenter implements Presenter, RecyclerClickListener {
         int characterId = mCharacters.get(position).getId();
         String characterName = mCharacters.get(position).getName();
         String sharedElementName = Utils.getListTransitionName(position);
-
-        Intent i = new Intent (mContext, AvengerDetailActivity.class);
-        i.putExtra(CharacterListListActivity.EXTRA_CHARACTER_ID, characterId);
-        i.putExtra(CharacterListListActivity.EXTRA_IMAGE_TRANSITION_NAME, sharedElementName);
-        i.putExtra(CharacterListListActivity.EXTRA_CHARACTER_NAME, characterName);
-
-        mContext.startActivity(i, mAvengersView.getActivityOptions(
-            position, clickedView).toBundle());
+        CharacterDetailActivity.start(mContext, characterName, characterId);
     }
 }

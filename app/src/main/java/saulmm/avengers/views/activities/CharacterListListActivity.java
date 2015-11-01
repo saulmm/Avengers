@@ -7,6 +7,7 @@ package saulmm.avengers.views.activities;
 
 import android.app.ActivityOptions;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +28,7 @@ import saulmm.avengers.Utils;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.model.entities.Character;
-import saulmm.avengers.mvp.presenters.AvengersListPresenter;
+import saulmm.avengers.mvp.presenters.CharacterListPresenter;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
 import saulmm.avengers.views.views.RecyclerInsetsDecoration;
@@ -44,11 +45,11 @@ public class CharacterListListActivity extends AppCompatActivity
     @Bind(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
     @Bind(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
     @Bind(R.id.activity_avengers_progress)        ProgressBar mAvengersProgress;
-
+    @Bind(R.id.activity_avengers_collapsing)      CollapsingToolbarLayout mCollapsingToolbar;
     @Bind(R.id.activity_avengers_empty_indicator) View mEmptyIndicator;
     @Bind(R.id.activity_avengers_error_view)      View mErrorView;
 
-    @Inject AvengersListPresenter mAvengersListPresenter;
+    @Inject CharacterListPresenter mAvengersListPresenter;
 
     private AvengersListAdapter mCharacterListAdapter;
     private Snackbar mLoadingMoreCharactersSnack;
@@ -66,7 +67,7 @@ public class CharacterListListActivity extends AppCompatActivity
     }
 
     private void initializeToolbar() {
-        setSupportActionBar(mAvengersToolbar);
+        mCollapsingToolbar.setTitle("");
     }
 
     @Override
