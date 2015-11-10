@@ -18,6 +18,12 @@ public class Character {
     private ComicsCollection stories;
     private ComicsCollection events;
 
+    private boolean b;
+
+    public boolean isB() {
+        return b;
+    }
+
     public Character(String name, int thumb_resource, int id) {
         this.name = name;
         this.imageResource = thumb_resource;

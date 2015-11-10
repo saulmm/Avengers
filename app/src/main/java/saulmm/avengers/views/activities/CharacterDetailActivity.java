@@ -8,6 +8,7 @@ package saulmm.avengers.views.activities;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -35,6 +36,7 @@ import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.TransitionUtils;
+import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -67,16 +69,22 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @BindColor(R.color.brand_primary_dark)              int mColorPrimaryDark;
 
     @Inject CharacterDetailPresenter mCharacterDetailPresenter;
-
+    private ActivityAvengerDetailBinding mBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeBinding();
         initButterknife();
         initializeDependencyInjector();
         initializePresenter();
         initToolbar();
         initTransitions();
+    }
+
+    private void initializeBinding() {
+        mBinding = DataBindingUtil.setContentView(
+            this, R.layout.activity_avenger_detail);
     }
 
     @Override public void initActivityColors(Bitmap sourceBitmap) {
@@ -113,28 +121,8 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
             });
     }
 
-    @Override
-    public void showSeriesAmount(int seriesAmount) {
-        mSeriesAmountTextView.setText(String.format("%d", seriesAmount));
-    }
-
-    @Override
-    public void showComicsAmount(int comicsAmount) {
-        mComicsAmountTextView.setText(String.format("%d", comicsAmount));
-    }
-
-    @Override
-    public void showEventsAmount(int eventsAmount) {
-        mEventsAmountTextView.setText(String.format("%d",eventsAmount));
-    }
-
-    @Override
-    public void showStoriesAmount(int storiesAmount) {
-        mStoriesAmountTextView.setText(String.format("%d",storiesAmount));
-    }
 
     private void initButterknife() {
-        setContentView(R.layout.activity_avenger_detail);
         ButterKnife.bind(this);
     }
 
@@ -204,22 +192,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     @Override
-    public void startLoading() {
-        mProgress.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void stopLoadingAvengersInformation() {
-        mProgress.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showAvengerBio(String text) {
-        mBiographyTextView.setVisibility(View.VISIBLE);
-        mBiographyTextView.setText(text);
-    }
-
-    @Override
     public void showAvengerImage(String url) {
         Glide.with(this).load(url)
             .asBitmap().into(new BitmapImageViewTarget(mAvengerThumb) {
@@ -241,8 +213,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     @Override
     public void showError(String errorMessage) {
-        stopLoadingAvengersInformation();
-
         new AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_error))
             .setPositiveButton(getString(R.string.action_accept), (dialog, which) -> finish())
@@ -252,27 +222,32 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     @Override
+    public void bindCharacter(saulmm.avengers.model.entities.Character character) {
+        mBinding.setCharacter(character);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         mCharacterDetailPresenter.onStop();
     }
 
-    @OnClick(R.id.details_indicator_comics)
+    @OnClick(R.id.character_comics_viewgroup)
     protected void onComicsIndicator() {
         mCharacterDetailPresenter.onComicsIndicatorPressed();
     }
 
-    @OnClick(R.id.details_indicator_events)
+    @OnClick(R.id.character_events_viewgroup)
     protected void onEventsIndicator() {
         mCharacterDetailPresenter.onEventIndicatorPressed();
     }
 
-    @OnClick(R.id.details_indicator_stories)
+    @OnClick(R.id.stories_series_viewgroup)
     protected void onStoriesIndicator() {
         mCharacterDetailPresenter.onStoriesIndicatorPressed();
     }
 
-    @OnClick(R.id.details_indicator_series)
+    @OnClick(R.id.character_series_viewgroup)
     protected void onSeriesIndicator() {
         mCharacterDetailPresenter.onSeriesIndicatorPressed();
     }

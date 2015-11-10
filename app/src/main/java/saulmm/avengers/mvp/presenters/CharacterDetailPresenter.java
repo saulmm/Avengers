@@ -40,12 +40,9 @@ public class CharacterDetailPresenter implements Presenter {
         if (mCharacterId == -1 || mCharacterName == null)
             throw new IllegalStateException("initializePresenter was not well initialised");
 
-        mCharacterDetailView.startLoading();
-
         mCharacterSubscription = mGetCharacterInformationUsecase.execute()
             .subscribe(this::onCharacterReceived, this::manageCharacterError);
 
-        mCharacterDetailView.startLoading();
         mCharacterDetailView.showAvengerName(mCharacterName);
     }
 
@@ -81,15 +78,7 @@ public class CharacterDetailPresenter implements Presenter {
     }
 
     private void onCharacterReceived(Character character) {
-        mCharacterDetailView.stopLoadingAvengersInformation();
-        mCharacterDetailView.showAvengerBio(
-            (character.getDescription().equals("")) ? "No biography available"
-                : character.getDescription());
-
-        mCharacterDetailView.showComicsAmount(character.getComics().getAvailable());
-        mCharacterDetailView.showStoriesAmount(character.getStories().getAvailable());
-        mCharacterDetailView.showEventsAmount(character.getEvents().getAvailable());
-        mCharacterDetailView.showSeriesAmount(character.getSeries().getAvailable());
+        mCharacterDetailView.bindCharacter(character);
 
         if (character.getImageUrl() != null)
             mCharacterDetailView.showAvengerImage(character.getImageUrl());

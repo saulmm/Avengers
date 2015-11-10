@@ -7,6 +7,7 @@
     <string name="error.network.uknownhost">Can\'t connect with marvel API</string>
     <string name="error.network.marvel_server">Marvel API Server has failed</string>
     <string name="message.loading.more_characters">Loading more characters</string>
+    <string name="messages_empty_description">No information available</string>
     <string name="action.accept">Accept</string>
     <string name="action.cancel">Cancel</string>
     <string name="dialog.filter">Filter</string>
