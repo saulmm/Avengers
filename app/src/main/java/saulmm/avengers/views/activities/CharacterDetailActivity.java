@@ -87,7 +87,8 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
             this, R.layout.activity_avenger_detail);
     }
 
-    @Override public void initActivityColors(Bitmap sourceBitmap) {
+
+    private void initActivityColors(Bitmap sourceBitmap) {
         Palette.from(sourceBitmap)
             .generate(palette -> {
 
@@ -199,7 +200,9 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
                 GlideAnimation<? super Bitmap> glideAnimation) {
                 super.onResourceReady(resource, glideAnimation);
                 mAvengerThumb.setImageBitmap(resource);
-                mCharacterDetailPresenter.onCharacterBitmapReceived(resource);
+
+                hideRevealViewByAlpha();
+                initActivityColors(resource);
             }
         });;
     }

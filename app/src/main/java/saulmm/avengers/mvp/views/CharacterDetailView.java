@@ -9,8 +9,6 @@ import android.graphics.Bitmap;
 import saulmm.avengers.model.entities.Character;
 
 public interface CharacterDetailView extends View {
-    void initActivityColors(Bitmap sourceBitmap);
-
     void hideRevealViewByAlpha();
 
     void showAvengerImage (String url);
