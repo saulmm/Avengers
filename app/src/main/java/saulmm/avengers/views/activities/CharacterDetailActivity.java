@@ -49,7 +49,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     public static final String EXTRA_CHARACTER_ID       = "character.id";
 
     @Bind(R.id.character_collapsing)                    CollapsingToolbarLayout mCollapsingActionBar;
-    @Bind(R.id.activity_avenger_detail_appbar)          AppBarLayout mAppbar;
+    @Bind(R.id.character_appbar)                        AppBarLayout mAppbar;
     @Bind(R.id.character_image_reveal)                  View mRevealView;
     @Bind(R.id.character_stats)                         View mDetailStatsView;
 
@@ -88,15 +88,19 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
                 mBinding.setDarkVibrantColor(darkVibrant);
 
                 mRevealView.setBackgroundColor(darkVibrant);
+                mDetailStatsView.setBackgroundColor(darkVibrant);
 
-                ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
+                ValueAnimator colorAnimation = ValueAnimator
+                    .ofArgb(mColorPrimaryDark, darkVibrant);
+
                 colorAnimation.addUpdateListener(animator -> {
                     mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
                 });
+
                 colorAnimation.start();
 
-                mDetailStatsView.getViewTreeObserver()
-                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                mDetailStatsView.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
                         @Override public void onGlobalLayout() {
                             mDetailStatsView.getViewTreeObserver()
                                 .removeOnGlobalLayoutListener(this);
@@ -224,7 +228,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         mCharacterDetailPresenter.onEventIndicatorPressed();
     }
 
-    @OnClick(R.id.character_stories_container)
     protected void onStoriesIndicator() {
         mCharacterDetailPresenter.onStoriesIndicatorPressed();
     }

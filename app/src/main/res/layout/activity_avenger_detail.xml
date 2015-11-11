@@ -21,7 +21,7 @@
  		>
 
 		<android.support.design.widget.AppBarLayout
-			android:id="@+id/activity_avenger_detail_appbar"
+			android:id="@+id/character_appbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
