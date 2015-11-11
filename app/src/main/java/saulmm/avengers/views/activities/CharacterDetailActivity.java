@@ -52,18 +52,17 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     @Bind(R.id.activity_avenger_detail_progress)        ProgressBar mProgress;
     @Bind(R.id.activity_avenger_detail_biography)       TextView mBiographyTextView;
-    @Bind(R.id.activity_avenger_detail_name)            TextView mCharacterNameTextView;
-    @Bind(R.id.activity_avenger_detail_events_textview) TextView mEventsAmountTextView;
-    @Bind(R.id.activity_avenger_detail_series_textview) TextView mSeriesAmountTextView;
-    @Bind(R.id.activity_avenger_detail_stories_textview) TextView mStoriesAmountTextView;
-    @Bind(R.id.activity_avenger_detail_comics_textview) TextView mComicsAmountTextView;
-    @Bind(R.id.activity_avenger_detail_thumb)           ImageView mAvengerThumb;
-    @Bind(R.id.activity_avenger_detail_colltoolbar)     CollapsingToolbarLayout mCollapsingActionBar;
+    @Bind(R.id.character_events) TextView mEventsAmountTextView;
+    @Bind(R.id.character_series) TextView mSeriesAmountTextView;
+    @Bind(R.id.character_stories) TextView mStoriesAmountTextView;
+    @Bind(R.id.character_comics) TextView mComicsAmountTextView;
+    @Bind(R.id.character_image)           ImageView mAvengerThumb;
+    @Bind(R.id.character_collapsing)     CollapsingToolbarLayout mCollapsingActionBar;
     @Bind(R.id.activity_avenger_detail_appbar)          AppBarLayout mAppbar;
-    @Bind(R.id.activity_avenger_reveal_view)            View mRevealView;
-    @Bind(R.id.activity_avenger_detail_stats_view)      View mDetailStatsView;
+    @Bind(R.id.character_image_reveal)            View mRevealView;
+    @Bind(R.id.character_stats)      View mDetailStatsView;
 
-    @Bind(R.id.activity_detail_comics_scroll)           NestedScrollView mComicsNestedScroll;
+    @Bind(R.id.character_nestedscroll)           NestedScrollView mComicsNestedScroll;
 
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
@@ -95,10 +94,8 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
                 int accentColor = getResources().getColor(R.color.brand_accent);
                 int darkVibrant = palette.getDarkVibrantColor(accentColor);
+                mBinding.setDarkVibrantColor(darkVibrant);
 
-                mCollapsingActionBar.setBackgroundColor(darkVibrant);
-                mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);
-                mCollapsingActionBar.setContentScrimColor(darkVibrant);
                 mRevealView.setBackgroundColor(darkVibrant);
 
                 ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
@@ -107,7 +104,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
                 });
                 colorAnimation.start();
 
-                mDetailStatsView.setBackgroundColor(darkVibrant);
                 mDetailStatsView.getViewTreeObserver()
                     .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                         @Override public void onGlobalLayout() {
@@ -164,9 +160,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         String characterTitle = getIntent().getStringExtra(
             CharacterListListActivity.EXTRA_CHARACTER_NAME);
 
-        mCharacterNameTextView.setTransitionName(sharedViewName);
-        mCharacterNameTextView.setText(characterTitle);
-
         Transition enterTransition = TransitionUtils.buildSlideTransition(Gravity.BOTTOM);
         enterTransition.setDuration(mAnimMediumDuration);
 
@@ -193,13 +186,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     private void initToolbar() {
         mCollapsingActionBar.setExpandedTitleTextAppearance(R.style.Text_CollapsedExpanded);
-    }
-
-    @Override
-    public void showAvengerName(String name) {
-        mCollapsingActionBar.setTitle(name);
-        mCharacterNameTextView.setText(name);
-        mCharacterNameTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -237,22 +223,22 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         mCharacterDetailPresenter.onStop();
     }
 
-    @OnClick(R.id.character_comics_viewgroup)
+    @OnClick(R.id.character_comics_container)
     protected void onComicsIndicator() {
         mCharacterDetailPresenter.onComicsIndicatorPressed();
     }
 
-    @OnClick(R.id.character_events_viewgroup)
+    @OnClick(R.id.character_events_container)
     protected void onEventsIndicator() {
         mCharacterDetailPresenter.onEventIndicatorPressed();
     }
 
-    @OnClick(R.id.stories_series_viewgroup)
+    @OnClick(R.id.character_stories_container)
     protected void onStoriesIndicator() {
         mCharacterDetailPresenter.onStoriesIndicatorPressed();
     }
 
-    @OnClick(R.id.character_series_viewgroup)
+    @OnClick(R.id.character_series_container)
     protected void onSeriesIndicator() {
         mCharacterDetailPresenter.onSeriesIndicatorPressed();
     }

@@ -11,8 +11,6 @@ import saulmm.avengers.model.entities.Character;
 public interface CharacterDetailView extends View {
     void hideRevealViewByAlpha();
 
-    void showAvengerName (String name);
-
     void showError(String s);
 
     void bindCharacter(Character character);

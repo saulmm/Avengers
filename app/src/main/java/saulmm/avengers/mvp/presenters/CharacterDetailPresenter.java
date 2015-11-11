@@ -42,8 +42,6 @@ public class CharacterDetailPresenter implements Presenter {
 
         mCharacterSubscription = mGetCharacterInformationUsecase.execute()
             .subscribe(this::onCharacterReceived, this::manageCharacterError);
-
-        mCharacterDetailView.showAvengerName(mCharacterName);
     }
 
     @Override

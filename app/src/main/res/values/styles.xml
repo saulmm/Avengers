@@ -16,8 +16,12 @@
 
     <style name="Toolbar">
         <item name="android:background">?colorPrimary</item>
-        <item name="android:elevation">@dimen/elevation.normal</item>
+        <item name="android:elevation">@dimen/elevation_normal</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+
+    <style name="Toolbar.WithNavigationBack">
+        <item name="navigationIcon">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
     </style>
 
     <style name="Text"/>

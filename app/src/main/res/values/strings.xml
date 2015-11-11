@@ -12,4 +12,6 @@
     <string name="action.cancel">Cancel</string>
     <string name="dialog.filter">Filter</string>
     <string name="dialog.error">Error</string>
+    <string name="label_character_comics">Comics</string>
+    <string name="label_character_events">Events</string>
 </resources>

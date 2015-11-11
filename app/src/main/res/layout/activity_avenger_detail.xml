@@ -11,234 +11,245 @@
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
 		<variable name="character" type="saulmm.avengers.model.entities.Character"/>
+		<variable name="darkVibrantColor" type="int"/>
 	</data>
 
 	<android.support.design.widget.CoordinatorLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		>
+		android:fitsSystemWindows="true"
+ 		>
 
 		<android.support.design.widget.AppBarLayout
 			android:id="@+id/activity_avenger_detail_appbar"
 			android:layout_width="match_parent"
-			android:layout_height="350dp"
+			android:layout_height="wrap_content"
 			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			>
+			android:fitsSystemWindows="true"
+ 			>
 
 			<android.support.design.widget.CollapsingToolbarLayout
-				android:id="@+id/activity_avenger_detail_colltoolbar"
+				android:id="@+id/character_collapsing"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				app:expandedTitleMarginEnd="64dp"
-				app:expandedTitleMarginStart="48dp"
-				app:layout_scrollFlags="scroll|exitUntilCollapsed"
+				android:layout_height="350dp"
+				android:background="@{darkVibrantColor}"
+				app:layout_scrollFlags="scroll|snap"
+				app:statusBarScrim="@{darkVibrantColor}"
+				app:contentScrim="@{darkVibrantColor}"
 				>
+
+				<!--mCollapsingActionBar.setBackgroundColor(darkVibrant);-->
+				<!--mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);-->
+				<!--mCollapsingActionBar.setContentScrimColor(darkVibrant);-->
 
 				<FrameLayout
 					android:layout_width="match_parent"
-					android:layout_height="350dp"
-					android:orientation="vertical"
+					android:layout_height="match_parent"
+					app:layout_collapseMode="parallax"
+					android:fitsSystemWindows="true"
 					>
 
 					<ImageView
-						android:id="@+id/activity_avenger_detail_thumb"
+						android:id="@+id/character_image"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
 						android:layout_gravity="center"
 						android:scaleType="centerCrop"
+						android:fitsSystemWindows="true"
 						app:presenter="@{presenter}"
 						app:characterImage="@{character.imageUrl}"
 						/>
 
 					<View
-						android:id="@+id/activity_avenger_reveal_view"
+						android:id="@+id/character_image_reveal"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:background="?colorPrimaryDark"
+						tools:background="#dc6767"
 						/>
-
-					<saulmm.avengers.views.views.CustomTextView
-						android:id="@+id/activity_avenger_detail_name"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:textColor="@color/white"
-						android:textAllCaps="true"
-						android:textSize="18sp"
-						android:ellipsize="none"
-						android:singleLine="true"
-						android:gravity="center_vertical"
-						android:layout_gravity="bottom|right"
-						android:layout_marginBottom="@dimen/spacing_huge"
-						android:layout_marginRight="@dimen/spacing_huge"
-						tools:text="Amazing"
-						app:typeface="Abel.ttf"
-						/>
-
 				</FrameLayout>
 
-				<android.support.v7.widget.Toolbar
-					android:id="@+id/activity_avenger_detail_toolbar"
+					/>
+			</android.support.design.widget.CollapsingToolbarLayout>
+
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/toolbar_x3"
+				android:elevation="@dimen/elevation_small"
+				android:background="?colorPrimaryDark"
+				android:orientation="vertical"
+				tools:background="#dc6767"
+				>
+
+				<View
+					android:id="@+id/character_stats"
 					android:layout_width="match_parent"
-					android:layout_height="?attr/actionBarSize"
-					app:layout_collapseMode="pin"
+					android:layout_height="match_parent"
+					android:background="@{darkVibrantColor}"
+					android:visibility="invisible"
 					/>
 
-			</android.support.design.widget.CollapsingToolbarLayout>
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="vertical"
+					>
+
+					<android.support.v7.widget.Toolbar
+						android:id="@+id/character_toolbar"
+						android:layout_width="match_parent"
+						android:layout_height="?attr/actionBarSize"
+						android:elevation="@dimen/elevation_small"
+						app:title="@{character.name}"
+						style="@style/Toolbar.WithNavigationBack"
+						android:background="@null"
+						/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/toolbar_x2"
+					android:orientation="horizontal"
+					android:clickable="true"
+					android:background="?attr/selectableItemBackgroundBorderless"
+					>
+
+					<LinearLayout
+						android:id="@+id/character_comics_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/label_character_comics"
+							/>
+
+						<TextView
+							android:id="@+id/character_comics"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.comics.available}'
+							tools:text="1"
+							/>
+
+					</LinearLayout>
+
+					<LinearLayout
+						android:id="@+id/character_events_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/label_character_events"
+							/>
+
+						<TextView
+							android:id="@+id/character_events"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.events.available}'
+							tools:text="0"
+							/>
+					</LinearLayout>
+
+
+					<LinearLayout
+						android:id="@+id/character_series_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Series"
+							/>
+
+						<TextView
+							android:id="@+id/character_series"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.series.available}'
+							tools:text="50"
+							/>
+
+					</LinearLayout>
+
+					<LinearLayout
+						android:id="@+id/character_stories_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Stories"
+							/>
+
+						<TextView
+							android:id="@+id/character_stories"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.stories.available}'
+							tools:text="20"
+							/>
+
+					</LinearLayout>
+				</LinearLayout>
+				</LinearLayout>
+			</FrameLayout>
+
 		</android.support.design.widget.AppBarLayout>
 
 		<android.support.v4.widget.NestedScrollView
-			android:id="@+id/activity_detail_comics_scroll"
+			android:id="@+id/character_nestedscroll"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior"
 			>
 
 			<LinearLayout
-				android:id="@+id/activity_avenger_detail_container"
+				android:id="@+id/character_info_container"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical"
 				>
 
-				<FrameLayout
-					android:layout_width="match_parent"
-					android:layout_height="100dp"
-					android:elevation="@dimen/elevation.normal"
-					android:background="?colorPrimaryDark"
-					android:orientation="vertical"
-					>
-
-					<View
-						android:id="@+id/activity_avenger_detail_stats_view"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:visibility="invisible"
-						/>
-
-
-					<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:orientation="horizontal"
-						android:clickable="true"
-						android:background="?attr/selectableItemBackgroundBorderless"
-						>
-
-						<LinearLayout
-							android:id="@+id/character_comics_viewgroup"
-							android:layout_width="0dp"
-							android:layout_height="match_parent"
-							android:layout_weight="1"
-							android:orientation="vertical"
-							android:gravity="center"
-							android:clickable="true"
-							android:background="?attr/selectableItemBackgroundBorderless"
-							>
-
-							<TextView
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:text="Comics"
-								/>
-
-							<TextView
-								android:id="@+id/activity_avenger_detail_comics_textview"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:textSize="20sp"
-								android:layout_marginTop="@dimen/spacing_small"
-								android:text='@{"" + character.comics.available}'
-								/>
-
-						</LinearLayout>
-
-						<LinearLayout
-							android:id="@+id/character_events_viewgroup"
-							android:layout_width="0dp"
-							android:layout_height="match_parent"
-							android:layout_weight="1"
-							android:orientation="vertical"
-							android:gravity="center"
-							android:clickable="true"
-							android:background="?attr/selectableItemBackgroundBorderless"
-							>
-
-							<TextView
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:text="Events"
-								/>
-
-							<TextView
-								android:id="@+id/activity_avenger_detail_events_textview"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:textSize="20sp"
-								android:layout_marginTop="@dimen/spacing_small"
-								android:text='@{"" + character.events.available}'
-								/>
-
-						</LinearLayout>
-
-
-						<LinearLayout
-							android:id="@+id/character_series_viewgroup"
-							android:layout_width="0dp"
-							android:layout_height="match_parent"
-							android:layout_weight="1"
-							android:orientation="vertical"
-							android:gravity="center"
-							android:clickable="true"
-							android:background="?attr/selectableItemBackgroundBorderless"
-							>
-
-							<TextView
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:text="Series"
-								/>
-
-							<TextView
-								android:id="@+id/activity_avenger_detail_series_textview"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:textSize="20sp"
-								android:layout_marginTop="@dimen/spacing_small"
-								android:text='@{"" + character.series.available}'
-								/>
-
-						</LinearLayout>
-
-						<LinearLayout
-							android:id="@+id/stories_series_viewgroup"
-							android:layout_width="0dp"
-							android:layout_height="match_parent"
-							android:layout_weight="1"
-							android:orientation="vertical"
-							android:gravity="center"
-							android:clickable="true"
-							android:background="?attr/selectableItemBackgroundBorderless"
-
-							>
-
-							<TextView
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:text="Stories"
-								/>
-
-							<TextView
-								android:id="@+id/activity_avenger_detail_stories_textview"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:textSize="20sp"
-								android:layout_marginTop="@dimen/spacing_small"
-								android:text='@{"" + character.stories.available}'
-								/>
-
-						</LinearLayout>
-					</LinearLayout>
-				</FrameLayout>
 
 				<TextView
 					android:id="@+id/activity_avenger_detail_inf_header"
