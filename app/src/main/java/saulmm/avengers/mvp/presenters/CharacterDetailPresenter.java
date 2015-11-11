@@ -6,6 +6,7 @@
 package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.domain.GetCharacterInformationUsecase;
@@ -78,9 +79,6 @@ public class CharacterDetailPresenter implements Presenter {
 
     private void onCharacterReceived(Character character) {
         mCharacterDetailView.bindCharacter(character);
-
-        if (character.getImageUrl() != null)
-            mCharacterDetailView.showAvengerImage(character.getImageUrl());
     }
 
     public void onComicsIndicatorPressed() {
@@ -101,5 +99,10 @@ public class CharacterDetailPresenter implements Presenter {
 
     public void setCharacterId(int characterId) {
         mCharacterId = characterId;
+    }
+
+    public void onImageReceived(Bitmap resource) {
+        mCharacterDetailView.hideRevealViewByAlpha();
+        mCharacterDetailView.initActivityColors(resource);
     }
 }

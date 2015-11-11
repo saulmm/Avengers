@@ -9,6 +9,7 @@
 		<import type="android.text.TextUtils"/>
 		<import type="saulmm.avengers.model.entities.ComicsCollection"/>
 
+		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
 		<variable name="character" type="saulmm.avengers.model.entities.Character"/>
 	</data>
 
@@ -45,6 +46,8 @@
 						android:layout_height="match_parent"
 						android:layout_gravity="center"
 						android:scaleType="centerCrop"
+						app:presenter="@{presenter}"
+						app:characterImage="@{character.imageUrl}"
 						/>
 
 					<View

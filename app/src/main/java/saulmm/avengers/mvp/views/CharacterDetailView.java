@@ -11,12 +11,11 @@ import saulmm.avengers.model.entities.Character;
 public interface CharacterDetailView extends View {
     void hideRevealViewByAlpha();
 
-    void showAvengerImage (String url);
-
     void showAvengerName (String name);
 
     void showError(String s);
 
     void bindCharacter(Character character);
 
+    void initActivityColors(Bitmap resource);
 }

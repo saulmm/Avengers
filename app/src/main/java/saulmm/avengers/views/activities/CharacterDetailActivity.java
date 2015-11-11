@@ -8,6 +8,7 @@ package saulmm.avengers.views.activities;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -88,7 +89,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
 
-    private void initActivityColors(Bitmap sourceBitmap) {
+    public void initActivityColors(Bitmap sourceBitmap) {
         Palette.from(sourceBitmap)
             .generate(palette -> {
 
@@ -141,6 +142,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         mCharacterDetailPresenter.setCharacterId(characterId);
         mCharacterDetailPresenter.initializePresenter(characterId, characterName);
         mCharacterDetailPresenter.onCreate();
+        mBinding.setPresenter(mCharacterDetailPresenter);
     }
 
     private void initializeDependencyInjector() {
@@ -188,23 +190,9 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         mRevealView.animate().alpha(0f).setDuration(mAnimHugeDuration).start();
     }
 
+
     private void initToolbar() {
         mCollapsingActionBar.setExpandedTitleTextAppearance(R.style.Text_CollapsedExpanded);
-    }
-
-    @Override
-    public void showAvengerImage(String url) {
-        Glide.with(this).load(url)
-            .asBitmap().into(new BitmapImageViewTarget(mAvengerThumb) {
-            @Override public void onResourceReady(Bitmap resource,
-                GlideAnimation<? super Bitmap> glideAnimation) {
-                super.onResourceReady(resource, glideAnimation);
-                mAvengerThumb.setImageBitmap(resource);
-
-                hideRevealViewByAlpha();
-                initActivityColors(resource);
-            }
-        });;
     }
 
     @Override
@@ -227,6 +215,20 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @Override
     public void bindCharacter(saulmm.avengers.model.entities.Character character) {
         mBinding.setCharacter(character);
+    }
+
+
+    @BindingAdapter({"bind:characterImage", "bind:presenter"})
+    public static void setImageSource(ImageView v, String url, CharacterDetailPresenter detailPresenter) {
+        Glide.with(v.getContext()).load(url).asBitmap().into(new BitmapImageViewTarget(v) {
+            @Override public void onResourceReady(Bitmap resource,
+                GlideAnimation<? super Bitmap> glideAnimation) {
+                super.onResourceReady(resource, glideAnimation);
+                v.setImageBitmap(resource);
+
+                detailPresenter.onImageReceived(resource);
+            }
+        });
     }
 
     @Override
