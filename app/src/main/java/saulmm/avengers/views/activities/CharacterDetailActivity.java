@@ -23,8 +23,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindInt;
@@ -50,19 +48,12 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     private static final String EXTRA_CHARACTER_NAME    = "character.name";
     public static final String EXTRA_CHARACTER_ID       = "character.id";
 
-    @Bind(R.id.activity_avenger_detail_progress)        ProgressBar mProgress;
-    @Bind(R.id.activity_avenger_detail_biography)       TextView mBiographyTextView;
-    @Bind(R.id.character_events) TextView mEventsAmountTextView;
-    @Bind(R.id.character_series) TextView mSeriesAmountTextView;
-    @Bind(R.id.character_stories) TextView mStoriesAmountTextView;
-    @Bind(R.id.character_comics) TextView mComicsAmountTextView;
-    @Bind(R.id.character_image)           ImageView mAvengerThumb;
-    @Bind(R.id.character_collapsing)     CollapsingToolbarLayout mCollapsingActionBar;
+    @Bind(R.id.character_collapsing)                    CollapsingToolbarLayout mCollapsingActionBar;
     @Bind(R.id.activity_avenger_detail_appbar)          AppBarLayout mAppbar;
-    @Bind(R.id.character_image_reveal)            View mRevealView;
-    @Bind(R.id.character_stats)      View mDetailStatsView;
+    @Bind(R.id.character_image_reveal)                  View mRevealView;
+    @Bind(R.id.character_stats)                         View mDetailStatsView;
 
-    @Bind(R.id.character_nestedscroll)           NestedScrollView mComicsNestedScroll;
+    @Bind(R.id.character_nestedscroll)                  NestedScrollView mComicsNestedScroll;
 
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
