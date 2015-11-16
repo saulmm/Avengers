@@ -68,13 +68,23 @@
 						/>
 				</FrameLayout>
 
+				<android.support.v7.widget.Toolbar
+					android:id="@+id/character_toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="?attr/actionBarSize"
+					android:elevation="@dimen/elevation_small"
+					app:title="@{character.name}"
+					style="@style/Toolbar.WithNavigationBack"
+					app:layout_collapseMode="pin"
+					android:background="@null"
 					/>
+
 			</android.support.design.widget.CollapsingToolbarLayout>
 
 
 			<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/toolbar_x3"
+				android:layout_height="@dimen/toolbar_x2"
 				android:elevation="@dimen/elevation_small"
 				android:background="?colorPrimaryDark"
 				android:orientation="vertical"
@@ -89,21 +99,6 @@
 					android:visibility="invisible"
 					/>
 
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:orientation="vertical"
-					>
-
-					<android.support.v7.widget.Toolbar
-						android:id="@+id/character_toolbar"
-						android:layout_width="match_parent"
-						android:layout_height="?attr/actionBarSize"
-						android:elevation="@dimen/elevation_small"
-						app:title="@{character.name}"
-						style="@style/Toolbar.WithNavigationBack"
-						android:background="@null"
-						/>
 
 				<LinearLayout
 					android:layout_width="match_parent"
@@ -111,6 +106,7 @@
 					android:orientation="horizontal"
 					android:clickable="true"
 					android:background="?attr/selectableItemBackgroundBorderless"
+					android:baselineAligned="false"
 					>
 
 					<LinearLayout
@@ -230,7 +226,6 @@
 							/>
 
 					</LinearLayout>
-				</LinearLayout>
 				</LinearLayout>
 			</FrameLayout>
 

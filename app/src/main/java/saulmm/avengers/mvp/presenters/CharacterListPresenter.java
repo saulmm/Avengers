@@ -77,16 +77,22 @@ public class CharacterListPresenter implements Presenter, RecyclerClickListener 
 
     @SuppressWarnings("Convert2MethodRef")
     private void askForCharacters() {
-        mIsTheCharacterRequestRunning = true;
-        showLoadingUI();
+      mIsTheCharacterRequestRunning = true;
+        mAvengersView.hideErrorView();
+        mAvengersView.showLoadingView();
 
-        mCharactersSubscription = mCharactersUsecase.execute().subscribe(characters -> {
-                mCharacters.addAll(characters);
-                mAvengersView.bindCharacterList(mCharacters);
-                mAvengersView.showCharacterList();
-                mAvengersView.hideEmptyIndicator();
-                mIsTheCharacterRequestRunning = false;
-            }, error -> showErrorView(error));
+        mCharactersSubscription =
+            mCharactersUsecase.execute()
+                .subscribe(characters -> {
+                    mCharacters.addAll(characters);
+                    mAvengersView.bindCharacterList(mCharacters);
+                    mAvengersView.showCharacterList();
+                    mAvengersView.hideEmptyIndicator();
+                    mIsTheCharacterRequestRunning = false;
+                }, error -> {
+                    showErrorView(error);
+                });
+
     }
 
     private void askForNewCharacters() {
@@ -98,7 +104,9 @@ public class CharacterListPresenter implements Presenter, RecyclerClickListener 
 
             newCharacters -> {
                 mCharacters.addAll(newCharacters);
-                mAvengersView.updateCharacterList (GetCharactersUsecase.CHARACTERS_LIMIT);
+                mAvengersView.updateCharacterList (
+                    GetCharactersUsecase.CHARACTERS_LIMIT);
+
                 mAvengersView.hideLoadingIndicator();
                 mIsTheCharacterRequestRunning = false;
             },

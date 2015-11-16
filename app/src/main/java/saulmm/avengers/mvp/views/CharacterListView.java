@@ -9,6 +9,7 @@ import android.app.ActivityOptions;
 import java.util.List;
 import saulmm.avengers.model.entities.Character;
 
+@SuppressWarnings("unused")
 public interface CharacterListView extends View {
 
     void bindCharacterList(List<Character> avengers);

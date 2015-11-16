@@ -90,8 +90,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
                 mRevealView.setBackgroundColor(darkVibrant);
                 mDetailStatsView.setBackgroundColor(darkVibrant);
 
-                ValueAnimator colorAnimation = ValueAnimator
-                    .ofArgb(mColorPrimaryDark, darkVibrant);
+                ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
 
                 colorAnimation.addUpdateListener(animator -> {
                     mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
@@ -99,16 +98,23 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
                 colorAnimation.start();
 
-                mDetailStatsView.getViewTreeObserver().addOnGlobalLayoutListener(
-                    new ViewTreeObserver.OnGlobalLayoutListener() {
-                        @Override public void onGlobalLayout() {
-                            mDetailStatsView.getViewTreeObserver()
-                                .removeOnGlobalLayoutListener(this);
+                mRevealView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override public void onGlobalLayout() {
+                        System.out.println("[DEBUG]" + " CharacterDetailActivity onGlobalLayout - " +
+                            "");
+                    }
+                });
+                    
+                mDetailStatsView.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override public void onGlobalLayout() {
+                                mDetailStatsView.getViewTreeObserver()
+                                    .removeOnGlobalLayoutListener(this);
 
-                            AnimUtils.showRevealEffect(mDetailStatsView,
-                                mDetailStatsView.getWidth() / 2, 0, null);
-                        }
-                    });
+                                AnimUtils.showRevealEffect(mDetailStatsView,
+                                    mDetailStatsView.getWidth() / 2, 0, null);
+                            }
+                        });
 
                 getWindow().setStatusBarColor(darkVibrant);
             });
@@ -189,8 +195,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
             .setTitle(getString(R.string.dialog_error))
             .setPositiveButton(getString(R.string.action_accept), (dialog, which) -> finish())
             .setMessage(errorMessage)
-            .setCancelable(false)
-            .show();
+            .setCancelable(false).show();
     }
 
     @Override
