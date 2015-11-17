@@ -51,7 +51,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @Bind(R.id.character_collapsing)                    CollapsingToolbarLayout mCollapsingActionBar;
     @Bind(R.id.character_appbar)                        AppBarLayout mAppbar;
     @Bind(R.id.character_image_reveal)                  View mRevealView;
-    @Bind(R.id.character_stats)                         View mDetailStatsView;
+    @Bind(R.id.character_stats_reveal)                         View mDetailStatsView;
 
     @Bind(R.id.character_nestedscroll)                  NestedScrollView mComicsNestedScroll;
 
@@ -204,8 +204,11 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
 
-    @BindingAdapter({"bind:characterImage", "bind:presenter"})
+    @BindingAdapter({"source", "presenter"})
     public static void setImageSource(ImageView v, String url, CharacterDetailPresenter detailPresenter) {
+        Glide.with(v.getContext()).load(url).into(v);
+
+
         Glide.with(v.getContext()).load(url).asBitmap().into(new BitmapImageViewTarget(v) {
             @Override public void onResourceReady(Bitmap resource,
                 GlideAnimation<? super Bitmap> glideAnimation) {

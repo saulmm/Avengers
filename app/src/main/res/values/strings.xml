@@ -14,4 +14,7 @@
     <string name="dialog.error">Error</string>
     <string name="label_character_comics">Comics</string>
     <string name="label_character_events">Events</string>
+    <string name="label_character_series">Series</string>
+    <string name="label_character_stories">Stories</string>
+    <string name="character_label_info">Avenger information</string>
 </resources>

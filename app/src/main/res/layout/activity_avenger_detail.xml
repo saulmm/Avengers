@@ -38,10 +38,6 @@
 				app:contentScrim="@{darkVibrantColor}"
 				>
 
-				<!--mCollapsingActionBar.setBackgroundColor(darkVibrant);-->
-				<!--mCollapsingActionBar.setStatusBarScrimColor(darkVibrant);-->
-				<!--mCollapsingActionBar.setContentScrimColor(darkVibrant);-->
-
 				<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
@@ -56,8 +52,8 @@
 						android:layout_gravity="center"
 						android:scaleType="centerCrop"
 						android:fitsSystemWindows="true"
-						app:presenter="@{presenter}"
-						app:characterImage="@{character.imageUrl}"
+						presenter="@{presenter}"
+						source="@{character.imageUrl}"
 						/>
 
 					<View
@@ -92,13 +88,12 @@
 				>
 
 				<View
-					android:id="@+id/character_stats"
+					android:id="@+id/character_stats_reveal"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:background="@{darkVibrantColor}"
 					android:visibility="invisible"
 					/>
-
 
 				<LinearLayout
 					android:layout_width="match_parent"
@@ -130,12 +125,11 @@
 							android:id="@+id/character_comics"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
+							android:textSize="20sp"
 							android:text='@{"" + character.comics.available}'
 							tools:text="1"
 							/>
-
 					</LinearLayout>
 
 					<LinearLayout
@@ -147,7 +141,6 @@
 						android:gravity="center"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
-
 						>
 
 						<TextView
@@ -166,8 +159,6 @@
 							tools:text="0"
 							/>
 					</LinearLayout>
-
-
 					<LinearLayout
 						android:id="@+id/character_series_container"
 						android:layout_width="0dp"
@@ -182,7 +173,7 @@
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="Series"
+							android:text="@string/label_character_series"
 							/>
 
 						<TextView
@@ -194,7 +185,6 @@
 							android:text='@{"" + character.series.available}'
 							tools:text="50"
 							/>
-
 					</LinearLayout>
 
 					<LinearLayout
@@ -206,13 +196,12 @@
 						android:gravity="center"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
-
 						>
 
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="Stories"
+							android:text="@string/label_character_stories"
 							/>
 
 						<TextView
@@ -224,11 +213,9 @@
 							android:text='@{"" + character.stories.available}'
 							tools:text="20"
 							/>
-
 					</LinearLayout>
 				</LinearLayout>
 			</FrameLayout>
-
 		</android.support.design.widget.AppBarLayout>
 
 		<android.support.v4.widget.NestedScrollView
@@ -245,18 +232,17 @@
 				android:orientation="vertical"
 				>
 
-
 				<TextView
-					android:id="@+id/activity_avenger_detail_inf_header"
+					android:id="@+id/character_label_info"
 					style="@style/Text.Header"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:paddingLeft="@dimen/spacing_normal"
-					android:text="Avenger information"
+					android:text="@string/character_label_info"
 					/>
 
 				<TextView
-					android:id="@+id/activity_avenger_detail_biography"
+					android:id="@+id/character_biography"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:lineSpacingExtra="8dp"
