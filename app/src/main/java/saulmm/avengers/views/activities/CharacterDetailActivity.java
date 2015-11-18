@@ -39,7 +39,6 @@ import saulmm.avengers.utils.TransitionUtils;
 import saulmm.avengers.views.utils.AnimUtils;
 
 public class CharacterDetailActivity extends AppCompatActivity implements CharacterDetailView {
-
     private static final String EXTRA_CHARACTER_NAME    = "character.name";
     public static final String EXTRA_CHARACTER_ID       = "character.id";
 
