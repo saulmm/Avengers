@@ -13,7 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.R;
-import saulmm.avengers.Utils;
+import saulmm.avengers.utils.Utils;
 import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;

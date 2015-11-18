@@ -113,6 +113,7 @@
 						android:gravity="center"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onComicsIndicatorPressed}"
 						>
 
 						<TextView
@@ -141,6 +142,7 @@
 						android:gravity="center"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onEventIndicatorPressed}"
 						>
 
 						<TextView
@@ -168,6 +170,7 @@
 						android:gravity="center"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onSeriesIndicatorPressed}"
 						>
 
 						<TextView
@@ -196,6 +199,7 @@
 						android:gravity="center"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onStoriesIndicatorPressed}"
 						>
 
 						<TextView

@@ -12,9 +12,6 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -23,37 +20,28 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
-import saulmm.avengers.TransitionUtils;
 import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.mvp.presenters.CharacterDetailPresenter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
+import saulmm.avengers.utils.TransitionUtils;
 import saulmm.avengers.views.utils.AnimUtils;
 
 public class CharacterDetailActivity extends AppCompatActivity implements CharacterDetailView {
 
     private static final String EXTRA_CHARACTER_NAME    = "character.name";
     public static final String EXTRA_CHARACTER_ID       = "character.id";
-
-    @Bind(R.id.character_collapsing)                    CollapsingToolbarLayout mCollapsingActionBar;
-    @Bind(R.id.character_appbar)                        AppBarLayout mAppbar;
-    @Bind(R.id.character_image_reveal)                  View mRevealView;
-    @Bind(R.id.character_stats_reveal)                         View mDetailStatsView;
-
-    @Bind(R.id.character_nestedscroll)                  NestedScrollView mComicsNestedScroll;
 
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
@@ -82,39 +70,33 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     public void initActivityColors(Bitmap sourceBitmap) {
         Palette.from(sourceBitmap)
             .generate(palette -> {
+                View statsRevealView = mBinding.characterStatsReveal;
+                View imageRevealView = mBinding.characterImageReveal;
 
                 int accentColor = getResources().getColor(R.color.brand_accent);
                 int darkVibrant = palette.getDarkVibrantColor(accentColor);
                 mBinding.setDarkVibrantColor(darkVibrant);
 
-                mRevealView.setBackgroundColor(darkVibrant);
-                mDetailStatsView.setBackgroundColor(darkVibrant);
+                imageRevealView.setBackgroundColor(darkVibrant);
+                statsRevealView.setBackgroundColor(darkVibrant);
 
                 ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
-
                 colorAnimation.addUpdateListener(animator -> {
-                    mRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
+                    imageRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
                 });
 
                 colorAnimation.start();
 
-                mRevealView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override public void onGlobalLayout() {
-                        System.out.println("[DEBUG]" + " CharacterDetailActivity onGlobalLayout - " +
-                            "");
-                    }
-                });
-                    
-                mDetailStatsView.getViewTreeObserver()
-                    .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override public void onGlobalLayout() {
-                                mDetailStatsView.getViewTreeObserver()
-                                    .removeOnGlobalLayoutListener(this);
+                statsRevealView.getViewTreeObserver().addOnGlobalLayoutListener(
+                    new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override public void onGlobalLayout() {
+                            statsRevealView.getViewTreeObserver()
+                                .removeOnGlobalLayoutListener(this);
 
-                                AnimUtils.showRevealEffect(mDetailStatsView,
-                                    mDetailStatsView.getWidth() / 2, 0, null);
-                            }
-                        });
+                            AnimUtils.showRevealEffect(statsRevealView,
+                                statsRevealView.getWidth() / 2, 0, null);
+                        }
+                    });
 
                 getWindow().setStatusBarColor(darkVibrant);
             });
@@ -167,26 +149,29 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         getWindow().setEnterTransition(enterTransition);
         getWindow().setReturnTransition(TransitionUtils.buildSlideTransition(Gravity.BOTTOM));
 
-        mCollapsingActionBar.getViewTreeObserver().addOnGlobalLayoutListener(
+        View collapsingToolbar = mBinding.characterCollapsing;
+        View imageReveal = mBinding.characterImageReveal;
+        collapsingToolbar.getViewTreeObserver().addOnGlobalLayoutListener(
             new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override public void onGlobalLayout() {
-                    mCollapsingActionBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    int width = mRevealView.getWidth();
-                    int height = mRevealView.getHeight();
+                    collapsingToolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int width = imageReveal.getWidth();
+                    int height = imageReveal.getHeight();
 
-                    AnimUtils.showRevealEffect(mRevealView, width / 2, height / 2, null);
+                    AnimUtils.showRevealEffect(imageReveal, width / 2, height / 2, null);
                 }
             });
     }
 
     @Override
     public void hideRevealViewByAlpha() {
-        mRevealView.animate().alpha(0f).setDuration(mAnimHugeDuration).start();
+        mBinding.characterImageReveal.animate().alpha(0f).setDuration(
+            mAnimHugeDuration).start();
     }
 
-
     private void initToolbar() {
-        mCollapsingActionBar.setExpandedTitleTextAppearance(R.style.Text_CollapsedExpanded);
+        mBinding.characterCollapsing.setExpandedTitleTextAppearance(
+            R.style.Text_CollapsedExpanded);
     }
 
     @Override
@@ -203,18 +188,13 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         mBinding.setCharacter(character);
     }
 
-
     @BindingAdapter({"source", "presenter"})
     public static void setImageSource(ImageView v, String url, CharacterDetailPresenter detailPresenter) {
-        Glide.with(v.getContext()).load(url).into(v);
-
-
         Glide.with(v.getContext()).load(url).asBitmap().into(new BitmapImageViewTarget(v) {
             @Override public void onResourceReady(Bitmap resource,
                 GlideAnimation<? super Bitmap> glideAnimation) {
                 super.onResourceReady(resource, glideAnimation);
                 v.setImageBitmap(resource);
-
                 detailPresenter.onImageReceived(resource);
             }
         });
@@ -224,25 +204,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     protected void onStop() {
         super.onStop();
         mCharacterDetailPresenter.onStop();
-    }
-
-    @OnClick(R.id.character_comics_container)
-    protected void onComicsIndicator() {
-        mCharacterDetailPresenter.onComicsIndicatorPressed();
-    }
-
-    @OnClick(R.id.character_events_container)
-    protected void onEventsIndicator() {
-        mCharacterDetailPresenter.onEventIndicatorPressed();
-    }
-
-    protected void onStoriesIndicator() {
-        mCharacterDetailPresenter.onStoriesIndicatorPressed();
-    }
-
-    @OnClick(R.id.character_series_container)
-    protected void onSeriesIndicator() {
-        mCharacterDetailPresenter.onSeriesIndicatorPressed();
     }
 
     public static void start(Context context, String characterName, int characterId) {
