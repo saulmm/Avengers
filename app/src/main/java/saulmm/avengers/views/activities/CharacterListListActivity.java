@@ -24,7 +24,7 @@ import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
-import saulmm.avengers.Utils;
+import saulmm.avengers.utils.Utils;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.model.entities.Character;

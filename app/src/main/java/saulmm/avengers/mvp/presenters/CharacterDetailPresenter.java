@@ -40,13 +40,8 @@ public class CharacterDetailPresenter implements Presenter {
         if (mCharacterId == -1 || mCharacterName == null)
             throw new IllegalStateException("initializePresenter was not well initialised");
 
-        mCharacterDetailView.startLoading();
-
         mCharacterSubscription = mGetCharacterInformationUsecase.execute()
             .subscribe(this::onCharacterReceived, this::manageCharacterError);
-
-        mCharacterDetailView.startLoading();
-        mCharacterDetailView.showAvengerName(mCharacterName);
     }
 
     @Override
@@ -81,23 +76,7 @@ public class CharacterDetailPresenter implements Presenter {
     }
 
     private void onCharacterReceived(Character character) {
-        mCharacterDetailView.stopLoadingAvengersInformation();
-        mCharacterDetailView.showAvengerBio(
-            (character.getDescription().equals("")) ? "No biography available"
-                : character.getDescription());
-
-        mCharacterDetailView.showComicsAmount(character.getComics().getAvailable());
-        mCharacterDetailView.showStoriesAmount(character.getStories().getAvailable());
-        mCharacterDetailView.showEventsAmount(character.getEvents().getAvailable());
-        mCharacterDetailView.showSeriesAmount(character.getSeries().getAvailable());
-
-        if (character.getImageUrl() != null)
-            mCharacterDetailView.showAvengerImage(character.getImageUrl());
-    }
-
-    public void onCharacterBitmapReceived(Bitmap resource) {
-        mCharacterDetailView.hideRevealViewByAlpha();
-        mCharacterDetailView.initActivityColors(resource);
+        mCharacterDetailView.bindCharacter(character);
     }
 
     public void onComicsIndicatorPressed() {
@@ -118,5 +97,10 @@ public class CharacterDetailPresenter implements Presenter {
 
     public void setCharacterId(int characterId) {
         mCharacterId = characterId;
+    }
+
+    public void onImageReceived(Bitmap resource) {
+        mCharacterDetailView.hideRevealViewByAlpha();
+        mCharacterDetailView.initActivityColors(resource);
     }
 }
