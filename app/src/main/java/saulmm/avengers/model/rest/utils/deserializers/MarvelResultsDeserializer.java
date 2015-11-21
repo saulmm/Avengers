@@ -8,7 +8,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class MarvelResultsCharacterDeserialiser<T> implements JsonDeserializer<List<T>> {
+public class MarvelResultsDeserializer<T> implements JsonDeserializer<List<T>> {
 
     @Override
     public List<T> deserialize(JsonElement je, Type typeOfT,

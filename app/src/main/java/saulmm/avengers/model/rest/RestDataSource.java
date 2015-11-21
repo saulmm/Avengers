@@ -21,7 +21,7 @@ import saulmm.avengers.model.entities.CollectionItem;
 import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.model.rest.exceptions.UknownErrorException;
-import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsCharacterDeserialiser;
+import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsDeserializer;
 import saulmm.avengers.model.rest.utils.interceptors.HttpLoggingInterceptor;
 import saulmm.avengers.model.rest.utils.interceptors.MarvelSigningIterceptor;
 
@@ -50,10 +50,11 @@ public class RestDataSource implements Repository {
 
         Gson customGsonInstance = new GsonBuilder()
             .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(),
-                new MarvelResultsCharacterDeserialiser<Character>())
+                new MarvelResultsDeserializer<Character>())
 
             .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(),
-                new MarvelResultsCharacterDeserialiser<CollectionItem>())
+                new MarvelResultsDeserializer<CollectionItem>())
+
             .create();
 
         Retrofit marvelApiAdapter = new Retrofit.Builder()
