@@ -20,8 +20,9 @@ import saulmm.avengers.model.entities.CollectionItem;
 import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.model.rest.exceptions.UknownErrorException;
-import saulmm.avengers.model.rest.utils.MarvelSigningIterceptor;
 import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsCharacterDeserialiser;
+import saulmm.avengers.model.rest.utils.interceptors.HttpLoggingInterceptor;
+import saulmm.avengers.model.rest.utils.interceptors.MarvelSigningIterceptor;
 
 import static saulmm.avengers.model.entities.CollectionItem.COMIC;
 import static saulmm.avengers.model.entities.CollectionItem.EVENT;
@@ -38,7 +39,11 @@ public class RestRepository implements Repository {
 
     @Inject public RestRepository() {
         OkHttpClient client = new OkHttpClient();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
         client.interceptors().add(new MarvelSigningIterceptor(publicKey, privateKey));
+        client.interceptors().add(loggingInterceptor);
 
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(), new MarvelResultsCharacterDeserialiser<Character>())
