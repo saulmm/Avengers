@@ -48,14 +48,17 @@ public class RestRepository implements Repository {
         client.interceptors().add(signingIterceptor);
         client.interceptors().add(loggingInterceptor);
 
-        Gson gson = new GsonBuilder()
-            .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(), new MarvelResultsCharacterDeserialiser<Character>())
-            .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(), new MarvelResultsCharacterDeserialiser<CollectionItem>())
+        Gson customGsonInstance = new GsonBuilder()
+            .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(),
+                new MarvelResultsCharacterDeserialiser<Character>())
+
+            .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(),
+                new MarvelResultsCharacterDeserialiser<CollectionItem>())
             .create();
 
         Retrofit marvelApiAdapter = new Retrofit.Builder()
             .baseUrl(MarvelApi.END_POINT)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(client)
             .build();
