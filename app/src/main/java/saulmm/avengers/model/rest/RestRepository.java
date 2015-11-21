@@ -15,6 +15,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
+import saulmm.avengers.BuildConfig;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.CollectionItem;
 import saulmm.avengers.model.repository.Repository;
@@ -34,15 +35,17 @@ public class RestRepository implements Repository {
     private final MarvelApi mMarvelApi;
     public final static int MAX_ATTEMPS = 3;
 
-    String publicKey    = "74129ef99c9fd5f7692608f17abb88f9";
-    String privateKey   = "281eb4f077e191f7863a11620fa1865f2940ebeb";
-
-    @Inject public RestRepository() {
+    @Inject
+    public RestRepository() {
         OkHttpClient client = new OkHttpClient();
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
-        client.interceptors().add(new MarvelSigningIterceptor(publicKey, privateKey));
+        MarvelSigningIterceptor signingIterceptor = new MarvelSigningIterceptor(
+            BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
+
+        client.interceptors().add(signingIterceptor);
         client.interceptors().add(loggingInterceptor);
 
         Gson gson = new GsonBuilder()
@@ -78,7 +81,7 @@ public class RestRepository implements Repository {
     @Override
     public Observable<List<CollectionItem>> getCharacterCollection(int characterId, String type) {
         if (!type.equals(COMIC) && !type.equals(EVENT) && !type.equals(SERIES) && !type.equals(STORY))
-            throw new IllegalArgumentException("Collection type must be events|series|comics|stories");
+            throw new IllegalArgumentException("Collection type must be: events|series|comics|stories");
 
         return mMarvelApi.getCharacterCollection(characterId, type);
     }
