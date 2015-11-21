@@ -15,13 +15,15 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
+import saulmm.avengers.BuildConfig;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.entities.CollectionItem;
 import saulmm.avengers.model.repository.Repository;
 import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.model.rest.exceptions.UknownErrorException;
-import saulmm.avengers.model.rest.utils.MarvelSigningIterceptor;
 import saulmm.avengers.model.rest.utils.deserializers.MarvelResultsCharacterDeserialiser;
+import saulmm.avengers.model.rest.utils.interceptors.HttpLoggingInterceptor;
+import saulmm.avengers.model.rest.utils.interceptors.MarvelSigningIterceptor;
 
 import static saulmm.avengers.model.entities.CollectionItem.COMIC;
 import static saulmm.avengers.model.entities.CollectionItem.EVENT;
@@ -33,21 +35,30 @@ public class RestRepository implements Repository {
     private final MarvelApi mMarvelApi;
     public final static int MAX_ATTEMPS = 3;
 
-    String publicKey    = "74129ef99c9fd5f7692608f17abb88f9";
-    String privateKey   = "281eb4f077e191f7863a11620fa1865f2940ebeb";
-
-    @Inject public RestRepository() {
+    @Inject
+    public RestRepository() {
         OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new MarvelSigningIterceptor(publicKey, privateKey));
 
-        Gson gson = new GsonBuilder()
-            .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(), new MarvelResultsCharacterDeserialiser<Character>())
-            .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(), new MarvelResultsCharacterDeserialiser<CollectionItem>())
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+
+        MarvelSigningIterceptor signingIterceptor = new MarvelSigningIterceptor(
+            BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
+
+        client.interceptors().add(signingIterceptor);
+        client.interceptors().add(loggingInterceptor);
+
+        Gson customGsonInstance = new GsonBuilder()
+            .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(),
+                new MarvelResultsCharacterDeserialiser<Character>())
+
+            .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(),
+                new MarvelResultsCharacterDeserialiser<CollectionItem>())
             .create();
 
         Retrofit marvelApiAdapter = new Retrofit.Builder()
             .baseUrl(MarvelApi.END_POINT)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(client)
             .build();
@@ -73,7 +84,7 @@ public class RestRepository implements Repository {
     @Override
     public Observable<List<CollectionItem>> getCharacterCollection(int characterId, String type) {
         if (!type.equals(COMIC) && !type.equals(EVENT) && !type.equals(SERIES) && !type.equals(STORY))
-            throw new IllegalArgumentException("Collection type must be events|series|comics|stories");
+            throw new IllegalArgumentException("Collection type must be: events|series|comics|stories");
 
         return mMarvelApi.getCharacterCollection(characterId, type);
     }

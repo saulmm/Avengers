@@ -1,4 +1,4 @@
-package saulmm.avengers.model.rest.utils;
+package saulmm.avengers.model.rest.utils.interceptors;
 
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.Interceptor;
@@ -6,6 +6,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
 import saulmm.avengers.model.rest.MarvelApi;
+import saulmm.avengers.model.rest.utils.MarvelApiUtils;
 
 public class MarvelSigningIterceptor implements Interceptor {
 	private final String mApiKey;
@@ -32,9 +33,6 @@ public class MarvelSigningIterceptor implements Interceptor {
 			.method(oldRequest.method(), oldRequest.body())
 			.url(authorizedUrlBuilder.build())
 			.build();
-
-		System.out.println("[DEBUG]" + " Retrofit -->" +
-		    ""+authorizedUrlBuilder.build().url().toString());
 
 		return chain.proceed(newRequest);
 	}

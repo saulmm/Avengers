@@ -15,6 +15,9 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${marvel_public_key}\""
+        buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${marvel_private_key}\""
     }
 
     compileOptions {
