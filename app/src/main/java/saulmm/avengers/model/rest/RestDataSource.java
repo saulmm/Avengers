@@ -30,13 +30,13 @@ import static saulmm.avengers.model.entities.CollectionItem.EVENT;
 import static saulmm.avengers.model.entities.CollectionItem.SERIES;
 import static saulmm.avengers.model.entities.CollectionItem.STORY;
 
-public class RestRepository implements Repository {
+public class RestDataSource implements Repository {
 
     private final MarvelApi mMarvelApi;
     public final static int MAX_ATTEMPS = 3;
 
     @Inject
-    public RestRepository() {
+    public RestDataSource() {
         OkHttpClient client = new OkHttpClient();
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
