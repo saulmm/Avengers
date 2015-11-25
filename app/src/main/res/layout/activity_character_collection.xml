@@ -10,12 +10,14 @@
 
 	<android.support.v7.widget.RecyclerView
 	    android:id="@+id/collection.list"
-	    android:scrollbars="vertical"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		android:layout_marginTop="@dimen/spacing_small"
 		android:orientation="vertical"
 		app:layoutManager="android.support.v7.widget.LinearLayoutManager"
 		tools:listitem="@layout/item_comic"
+		android:fitsSystemWindows="true"
 		/>
 
 	<ProgressBar

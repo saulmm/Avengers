@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidUnknownAttribute -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -11,10 +12,12 @@
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
 		<variable name="character" type="saulmm.avengers.model.entities.Character"/>
-		<variable name="darkVibrantColor" type="int"/>
+		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
+
 	</data>
 
 	<android.support.design.widget.CoordinatorLayout
+		android:id="@+id/parent"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:fitsSystemWindows="true"
@@ -32,10 +35,9 @@
 				android:id="@+id/character_collapsing"
 				android:layout_width="match_parent"
 				android:layout_height="350dp"
-				android:background="@{darkVibrantColor}"
-				app:layout_scrollFlags="scroll|snap"
-				app:statusBarScrim="@{darkVibrantColor}"
-				app:contentScrim="@{darkVibrantColor}"
+				app:layout_scrollFlags="scroll|exitUntilCollapsed"
+				app:statusBarScrim="@{darkSwatch.rgb}"
+				app:contentScrim="@{darkSwatch.rgb}"
 				>
 
 				<FrameLayout
@@ -91,7 +93,7 @@
 					android:id="@+id/character_stats_reveal"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:background="@{darkVibrantColor}"
+					android:background="@{darkSwatch.rgb}"
 					android:visibility="invisible"
 					/>
 
@@ -120,6 +122,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="@string/label_character_comics"
+							style="@style/Text.Header.Min"
 							/>
 
 						<TextView
@@ -149,6 +152,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="@string/label_character_events"
+							style="@style/Text.Header.Min"
 							/>
 
 						<TextView
@@ -177,6 +181,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="@string/label_character_series"
+							style="@style/Text.Header.Min"
 							/>
 
 						<TextView
@@ -206,6 +211,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="@string/label_character_stories"
+							style="@style/Text.Header.Min"
 							/>
 
 						<TextView
@@ -243,6 +249,7 @@
 					android:layout_height="wrap_content"
 					android:paddingLeft="@dimen/spacing_normal"
 					android:text="@string/character_label_info"
+					android:textColor="@color/grey.light"
 					/>
 
 				<TextView
@@ -252,7 +259,6 @@
 					android:lineSpacingExtra="8dp"
 					android:paddingLeft="@dimen/spacing_normal"
 					android:paddingRight="@dimen/spacing_normal"
-					android:textColor="@color/grey.medium"
 					android:text="@{TextUtils.isEmpty(character.description) ? @string/messages_empty_description : character.description}"
 					android:visibility="@{character != null ? View.VISIBLE : View.GONE}"
 					android:textSize="20sp"
