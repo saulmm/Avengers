@@ -1,257 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<!--suppress AndroidUnknownAttribute -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
 	>
 
-	<android.support.design.widget.AppBarLayout
-		android:id="@+id/activity_avenger_detail_appbar"
-		android:layout_width="match_parent"
-		android:layout_height="350dp"
-		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-		>
+	<data>
+		<import type="android.view.View"/>
+		<import type="android.text.TextUtils"/>
+		<import type="saulmm.avengers.model.entities.ComicsCollection"/>
 
-		<android.support.design.widget.CollapsingToolbarLayout
-			android:id="@+id/activity_avenger_detail_colltoolbar"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			app:expandedTitleMarginEnd="64dp"
-			app:expandedTitleMarginStart="48dp"
-			app:layout_scrollFlags="scroll|exitUntilCollapsed"
-			>
+		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
+		<variable name="character" type="saulmm.avengers.model.entities.Character"/>
+		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
 
-			<FrameLayout
-				android:layout_width="match_parent"
-				android:layout_height="350dp"
-				android:orientation="vertical"
-				>
+	</data>
 
-				<ImageView
-					android:id="@+id/activity_avenger_detail_thumb"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_gravity="center"
-					android:scaleType="centerCrop"
-					/>
-
-				<View
-					android:id="@+id/activity_avenger_reveal_view"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:background="?colorPrimaryDark"
-					/>
-
-				<saulmm.avengers.views.views.CustomTextView
-					android:id="@+id/activity_avenger_detail_name"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textColor="@color/white"
-					android:textAllCaps="true"
-					android:textSize="18sp"
-					android:ellipsize="none"
-					android:singleLine="true"
-					android:gravity="center_vertical"
-					android:layout_gravity="bottom|right"
-					android:layout_marginBottom="@dimen/spacing_huge"
-					android:layout_marginRight="@dimen/spacing_huge"
-					tools:text="Amazing"
-					app:typeface="Abel.ttf"
-					/>
-
-			</FrameLayout>
-
-			<android.support.v7.widget.Toolbar
-				android:id="@+id/activity_avenger_detail_toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="?attr/actionBarSize"
-				app:layout_collapseMode="pin"
-				/>
-
-		</android.support.design.widget.CollapsingToolbarLayout>
-	</android.support.design.widget.AppBarLayout>
-
-	<android.support.v4.widget.NestedScrollView
-		android:id="@+id/activity_detail_comics_scroll"
+	<android.support.design.widget.CoordinatorLayout
+		android:id="@+id/parent"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"
-		>
+		android:fitsSystemWindows="true"
+ 		>
 
-		<LinearLayout
-			android:id="@+id/activity_avenger_detail_container"
+		<android.support.design.widget.AppBarLayout
+			android:id="@+id/character_appbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			>
+			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			android:fitsSystemWindows="true"
+ 			>
+
+			<android.support.design.widget.CollapsingToolbarLayout
+				android:id="@+id/character_collapsing"
+				android:layout_width="match_parent"
+				android:layout_height="350dp"
+				app:layout_scrollFlags="scroll|exitUntilCollapsed"
+				app:statusBarScrim="@{darkSwatch.rgb}"
+				app:contentScrim="@{darkSwatch.rgb}"
+				>
+
+				<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					app:layout_collapseMode="parallax"
+					android:fitsSystemWindows="true"
+					>
+
+					<ImageView
+						android:id="@+id/character_image"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="center"
+						android:scaleType="centerCrop"
+						android:fitsSystemWindows="true"
+						presenter="@{presenter}"
+						source="@{character.imageUrl}"
+						/>
+
+					<View
+						android:id="@+id/character_image_reveal"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						tools:background="#dc6767"
+						/>
+				</FrameLayout>
+
+				<android.support.v7.widget.Toolbar
+					android:id="@+id/character_toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="?attr/actionBarSize"
+					android:elevation="@dimen/elevation_small"
+					app:title="@{character.name}"
+					style="@style/Toolbar.WithNavigationBack"
+					app:layout_collapseMode="pin"
+					android:background="@null"
+					/>
+
+			</android.support.design.widget.CollapsingToolbarLayout>
+
 
 			<FrameLayout
 				android:layout_width="match_parent"
-				android:layout_height="100dp"
-				android:elevation="@dimen/elevation.normal"
+				android:layout_height="@dimen/toolbar_x2"
+				android:elevation="@dimen/elevation_small"
 				android:background="?colorPrimaryDark"
 				android:orientation="vertical"
+				tools:background="#dc6767"
 				>
 
 				<View
-					android:id="@+id/activity_avenger_detail_stats_view"
+					android:id="@+id/character_stats_reveal"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
+					android:background="@{darkSwatch.rgb}"
 					android:visibility="invisible"
 					/>
 
-
 				<LinearLayout
 					android:layout_width="match_parent"
-					android:layout_height="match_parent"
+					android:layout_height="@dimen/toolbar_x2"
 					android:orientation="horizontal"
+					android:clickable="true"
+					android:background="?attr/selectableItemBackgroundBorderless"
+					android:baselineAligned="false"
 					>
 
 					<LinearLayout
+						android:id="@+id/character_comics_container"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onComicsIndicatorPressed}"
 						>
 
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="Comics"
+							android:text="@string/label_character_comics"
+							style="@style/Text.Header.Min"
 							/>
 
 						<TextView
+							android:id="@+id/character_comics"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text="90"
+							android:textSize="20sp"
+							android:text='@{"" + character.comics.available}'
+							tools:text="1"
 							/>
-
 					</LinearLayout>
 
 					<LinearLayout
+						android:id="@+id/character_events_container"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onEventIndicatorPressed}"
 						>
 
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="Series"
+							android:text="@string/label_character_events"
+							style="@style/Text.Header.Min"
 							/>
 
 						<TextView
+							android:id="@+id/character_events"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text="2"
+							android:text='@{"" + character.events.available}'
+							tools:text="0"
+							/>
+					</LinearLayout>
+					<LinearLayout
+						android:id="@+id/character_series_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onSeriesIndicatorPressed}"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/label_character_series"
+							style="@style/Text.Header.Min"
 							/>
 
+						<TextView
+							android:id="@+id/character_series"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.series.available}'
+							tools:text="50"
+							/>
 					</LinearLayout>
 
 					<LinearLayout
+						android:id="@+id/character_stories_container"
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onStoriesIndicatorPressed}"
 						>
 
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="Stories"
+							android:text="@string/label_character_stories"
+							style="@style/Text.Header.Min"
 							/>
 
 						<TextView
+							android:id="@+id/character_stories"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text="43"
+							android:text='@{"" + character.stories.available}'
+							tools:text="20"
 							/>
-
 					</LinearLayout>
-
 				</LinearLayout>
-
-
-
-
 			</FrameLayout>
+		</android.support.design.widget.AppBarLayout>
 
-
-			<TextView
-				android:id="@+id/activity_avenger_detail_inf_header"
-				style="@style/Text.Header"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:paddingLeft="@dimen/spacing_normal"
-				android:text="Avenger information"
-				/>
-
-			<TextView
-				android:id="@+id/activity_avenger_detail_biography"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:lineSpacingExtra="8dp"
-				android:paddingLeft="@dimen/spacing_normal"
-				android:paddingRight="@dimen/spacing_normal"
-				android:textColor="@color/grey.medium"
-				android:textSize="20sp"
-				android:visibility="gone"
-				tools:visibility="gone"
-				/>
-
-			<ProgressBar
-				android:id="@+id/activity_avenger_detail_progress"
-				style="?android:attr/progressBarStyleLarge"
-				android:layout_width="48dp"
-				android:layout_height="48dp"
-				android:layout_gravity="center_horizontal"
-				android:visibility="visible"
-				/>
-
-			<TextView
-				android:id="@+id/activity_avenger_detail_comics_header"
-				style="@style/Text.Header"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_normal"
-				android:paddingLeft="@dimen/spacing_normal"
-				android:text="Comics"
-				/>
-
-			<ProgressBar
-				android:id="@+id/activity_avenger_comics_progress"
-				style="?android:attr/progressBarStyleLarge"
-				android:layout_width="48dp"
-				android:layout_height="48dp"
-				android:layout_gravity="center_horizontal"
-				android:visibility="visible"
-				/>
+		<android.support.v4.widget.NestedScrollView
+			android:id="@+id/character_nestedscroll"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior"
+			>
 
 			<LinearLayout
-				android:id="@+id/activity_avenger_comics_container"
+				android:id="@+id/character_info_container"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical"
-				/>
+				>
 
-			<Button
-				android:id="@+id/activity_avenger_detail_filter_button"
-				android:layout_width="match_parent"
-				android:layout_height="48dp"
-				android:text="Filter"
-				/>
-		</LinearLayout>
-	</android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+				<TextView
+					android:id="@+id/character_label_info"
+					style="@style/Text.Header"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingLeft="@dimen/spacing_normal"
+					android:text="@string/character_label_info"
+					android:textColor="@color/grey.light"
+					/>
+
+				<TextView
+					android:id="@+id/character_biography"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:lineSpacingExtra="8dp"
+					android:paddingLeft="@dimen/spacing_normal"
+					android:paddingRight="@dimen/spacing_normal"
+					android:text="@{TextUtils.isEmpty(character.description) ? @string/messages_empty_description : character.description}"
+					android:visibility="@{character != null ? View.VISIBLE : View.GONE}"
+					android:textSize="20sp"
+					tools:visibility="gone"
+					/>
+
+				<ProgressBar
+					android:id="@+id/activity_avenger_detail_progress"
+					style="?android:attr/progressBarStyleLarge"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
+					android:layout_gravity="center_horizontal"
+					android:visibility="@{character == null ? View.VISIBLE : View.GONE}"
+					/>
+			</LinearLayout>
+		</android.support.v4.widget.NestedScrollView>
+	</android.support.design.widget.CoordinatorLayout>
+</layout>

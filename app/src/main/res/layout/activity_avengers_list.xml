@@ -4,11 +4,13 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	>
 
-	<include
+	<ProgressBar
 		android:id="@+id/activity_avengers_empty_indicator"
-		layout="@layout/view_loading_characters"
+		android:layout_width="55dp"
+		android:layout_height="55dp"
+		android:layout_marginBottom="@dimen/spacing_normal"
 		android:layout_gravity="center"
-		tools:ignore="IncludeLayoutParam"
+		style="?android:attr/progressBarStyleLarge"
 		/>
 
 	<include
@@ -31,6 +33,7 @@
 			>
 
 			<android.support.design.widget.CollapsingToolbarLayout
+				android:id="@+id/activity_avengers_collapsing"
 				android:layout_width="match_parent"
 				android:layout_height="150dp"
 				app:layout_scrollFlags="scroll|exitUntilCollapsed"

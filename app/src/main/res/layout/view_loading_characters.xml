@@ -6,19 +6,6 @@
     android:gravity="center"
     style="@style/ViewGroup">
 
-    <ProgressBar
-        android:id="@+id/activity_login_progress"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="@dimen/spacing_normal"
-        android:layout_gravity="center"
-        style="?android:attr/progressBarStyleLarge"
-        />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Loading characters\nplease wait"
-        style="@style/Text.StateMessage"
-        />
+
 </LinearLayout>

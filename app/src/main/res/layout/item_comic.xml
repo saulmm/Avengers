@@ -13,10 +13,11 @@
     >
 
     <ImageView
-        android:id="@+id/item_comic_cover"
+        android:id="@+id/item.image"
         android:layout_width="100dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
+        tools:src="@drawable/error_placeholder"
         />
 
     <LinearLayout
@@ -28,7 +29,7 @@
         >
 
         <TextView
-            android:id="@+id/item_comic_title"
+            android:id="@+id/item.title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Text.ComicHeader"
@@ -36,7 +37,7 @@
             />
 
         <TextView
-            android:id="@+id/item_comic_description"
+            android:id="@+id/item.text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Text.ComicContent"

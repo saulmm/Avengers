@@ -6,7 +6,7 @@
 		<item name="colorAccent">@color/brand_secondary</item>
 		<item name="actionMenuTextColor">@android:color/white</item>
 		<item name="android:windowBackground">@color/brand_primary</item>
-
+		<item name="android:textColor">@android:color/white</item>
 		<item name="android:windowContentTransitions">true</item>
 		<item name="android:windowAllowEnterTransitionOverlap">false</item>
 		<item name="android:windowAllowReturnTransitionOverlap">false</item>

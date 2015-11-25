@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="brand_primary">#333F49</color>
+    <color name="brand_primary">#28292C</color>
     <color name="brand_primary_dark">#28292C</color>
     <color name="brand_secondary">#ff2900</color>
     <color name="brand_accent">#ff441a</color>
