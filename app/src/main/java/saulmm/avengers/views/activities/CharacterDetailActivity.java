@@ -169,6 +169,8 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     private void initToolbar() {
         mBinding.characterCollapsing.setExpandedTitleTextAppearance(
             R.style.Text_CollapsedExpanded);
+
+        mBinding.characterToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     @Override
