@@ -6,35 +6,30 @@
 package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
-import saulmm.avengers.R;
-import saulmm.avengers.utils.Utils;
 import saulmm.avengers.domain.GetCharactersUsecase;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
+import saulmm.avengers.utils.Utils;
 import saulmm.avengers.views.RecyclerClickListener;
 import saulmm.avengers.views.activities.CharacterDetailActivity;
 
-@SuppressWarnings({"FieldCanBeLocal", "unused"})
-public class CharacterListPresenter implements Presenter, RecyclerClickListener {
+ public class CharacterListPresenter implements Presenter, RecyclerClickListener {
     private final GetCharactersUsecase mCharactersUsecase;
     private final Context mContext;
 
     private boolean mIsTheCharacterRequestRunning;
-
     private Subscription mCharactersSubscription;
 
     private List<Character> mCharacters;
     private CharacterListView mAvengersView;
-    private Intent mIntent;
 
     @Inject
     public CharacterListPresenter(Context context, GetCharactersUsecase charactersUsecase) {
@@ -81,17 +76,17 @@ public class CharacterListPresenter implements Presenter, RecyclerClickListener 
         mAvengersView.hideErrorView();
         mAvengersView.showLoadingView();
 
-        mCharactersSubscription =
-            mCharactersUsecase.execute()
-                .subscribe(characters -> {
-                    mCharacters.addAll(characters);
-                    mAvengersView.bindCharacterList(mCharacters);
-                    mAvengersView.showCharacterList();
-                    mAvengersView.hideEmptyIndicator();
-                    mIsTheCharacterRequestRunning = false;
-                }, error -> {
-                    showErrorView(error);
-                });
+        mCharactersSubscription = mCharactersUsecase.execute()
+            .subscribe(characters -> {
+                mCharacters.addAll(characters);
+                mAvengersView.bindCharacterList(mCharacters);
+                mAvengersView.showCharacterList();
+                mAvengersView.hideEmptyIndicator();
+                mIsTheCharacterRequestRunning = false;
+
+            }, error -> {
+                showErrorView(error);
+            });
 
     }
 
@@ -118,24 +113,20 @@ public class CharacterListPresenter implements Presenter, RecyclerClickListener 
         );
     }
 
-    private void showLoadingUI() {
-        mAvengersView.hideErrorView();
-        mAvengersView.showLoadingView();
-    }
-
     private void showErrorView(Throwable error) {
         if (error instanceof NetworkUknownHostException) {
-            String errorMessage = mContext.getString(R.string.error_network_uknownhost);
-            mAvengersView.showErrorView(errorMessage);
+            mAvengersView.showConnectionErrorMessage();
 
         } else if (error instanceof ServerErrorException) {
-            String errorMessage = mContext.getString(R.string.error_network_marvel_server);
-            mAvengersView.showErrorView(errorMessage);
+            mAvengersView.showServerErrorMessage();
+
+        } else {
+            mAvengersView.showUknownErrorMessage();
         }
 
         mAvengersView.hideLoadingMoreCharactersIndicator();
         mAvengersView.hideEmptyIndicator();
-        mAvengersView.hideAvengersList();
+        mAvengersView.hideCharactersList();
     }
 
     private void showGenericError() {
