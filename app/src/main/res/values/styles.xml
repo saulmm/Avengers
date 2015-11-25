@@ -16,8 +16,12 @@
 
     <style name="Toolbar">
         <item name="android:background">?colorPrimary</item>
-        <item name="android:elevation">@dimen/elevation.normal</item>
+        <item name="android:elevation">@dimen/elevation_normal</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+
+    <style name="Toolbar.WithNavigationBack">
+        <item name="navigationIcon">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
     </style>
 
     <style name="Text"/>
@@ -32,6 +36,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Text.Header.Min">
+        <item name="android:minHeight">0dp</item>
     </style>
 
     <style name="Text.CollapsedExpanded">
@@ -56,7 +64,6 @@
 
     <style name="Text.ComicHeader">
         <item name="android:minHeight">8dp</item>
-        <item name="android:textColor">@color/grey.medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">17sp</item>
         <item name="android:singleLine">true</item>
@@ -65,7 +72,6 @@
     <style name="Text.ComicContent">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLength">75</item>
-        <item name="android:textColor">@color/grey.medium</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:lineSpacingExtra">4dp</item>
         <item name="android:textSize">15sp</item>

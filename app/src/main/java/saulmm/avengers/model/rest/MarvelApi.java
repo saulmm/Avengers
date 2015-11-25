@@ -11,10 +11,9 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
 import saulmm.avengers.model.entities.Character;
-import saulmm.avengers.model.entities.Comic;
+import saulmm.avengers.model.entities.CollectionItem;
 
 public interface MarvelApi {
-
     String END_POINT       = "http://gateway.marvel.com/";
     String PARAM_API_KEY   = "apikey";
     String PARAM_HASH      = "hash";
@@ -26,6 +25,8 @@ public interface MarvelApi {
     @GET("/v1/public/characters")
     Observable<List<Character>> getCharacterById(@Query("id") int id);
 
-    @GET("/v1/public/characters/{characterId}/comics")
-    Observable<List<Comic>> getCharacterComics(@Path("characterId") int id);
+    @GET("/v1/public/characters/{characterId}/{collectionType}")
+    Observable<List<CollectionItem>> getCharacterCollection(
+        @Path("characterId") int id,
+        @Path("collectionType") String collectionType);
 }
