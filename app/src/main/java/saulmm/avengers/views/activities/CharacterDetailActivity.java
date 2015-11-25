@@ -70,18 +70,15 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         Palette.from(sourceBitmap)
             .generate(palette -> {
                 View statsRevealView = mBinding.characterStatsReveal;
-                View imageRevealView = mBinding.characterImageReveal;
+                View imageCover = mBinding.characterImageReveal;
+                int darkVibrant = palette.getDarkVibrantColor(mColorPrimaryDark);
 
-                int accentColor = getResources().getColor(R.color.brand_accent);
-                int darkVibrant = palette.getDarkVibrantColor(accentColor);
-                mBinding.setDarkVibrantColor(darkVibrant);
-
-                imageRevealView.setBackgroundColor(darkVibrant);
-                statsRevealView.setBackgroundColor(darkVibrant);
+                mBinding.setDarkSwatch(palette.getDarkVibrantSwatch());
 
                 ValueAnimator colorAnimation = ValueAnimator.ofArgb(mColorPrimaryDark, darkVibrant);
+                colorAnimation.setDuration(mAnimHugeDuration);
                 colorAnimation.addUpdateListener(animator -> {
-                    imageRevealView.setBackgroundColor((Integer) animator.getAnimatedValue());
+                    imageCover.setBackgroundColor((Integer) animator.getAnimatedValue());
                 });
 
                 colorAnimation.start();
@@ -94,6 +91,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
                             AnimUtils.showRevealEffect(statsRevealView,
                                 statsRevealView.getWidth() / 2, 0, null);
+
                         }
                     });
 
