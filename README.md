@@ -16,7 +16,6 @@ This part focuses on the understanding of what are the Reactive Extensions, its 
 #### Screenshots
 
 ![](https://raw.githubusercontent.com/saulmm/Avengers/master/art/screen_detail.gif)
-![](https://raw.githubusercontent.com/saulmm/Avengers/master/art/screen_main.png)
 
 ### License 
 
