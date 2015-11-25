@@ -16,7 +16,7 @@ public interface CharacterListView extends View {
 
     void showCharacterList();
 
-    void hideAvengersList();
+    void hideCharactersList();
 
     void showLoadingMoreCharactersIndicator();
 
@@ -30,8 +30,6 @@ public interface CharacterListView extends View {
 
     void showLightError();
 
-    void showErrorView(String errorMessage);
-
     void hideErrorView();
 
     void showEmptyIndicator();
@@ -41,4 +39,12 @@ public interface CharacterListView extends View {
     void updateCharacterList(int charactersLimit);
 
     ActivityOptions getActivityOptions(int position, android.view.View clickedView);
+
+    void showConnectionErrorMessage();
+
+    void showServerErrorMessage();
+
+    void showUknownErrorMessage();
+
+    void showDetailScreen(String characterName, int characterId);
 }

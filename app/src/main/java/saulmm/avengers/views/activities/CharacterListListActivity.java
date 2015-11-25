@@ -15,21 +15,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
-import saulmm.avengers.utils.Utils;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.model.entities.Character;
 import saulmm.avengers.mvp.presenters.CharacterListPresenter;
 import saulmm.avengers.mvp.views.CharacterListView;
+import saulmm.avengers.utils.Utils;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
 import saulmm.avengers.views.views.RecyclerInsetsDecoration;
 
@@ -57,17 +57,25 @@ public class CharacterListListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_avengers_list);
-        ButterKnife.bind(this);
-
+        initUi();
         initializeToolbar();
         initializeRecyclerView();
         initializeDependencyInjector();
         initializePresenter();
     }
 
+    private void initUi() {
+        setContentView(R.layout.activity_avengers_list);
+        ButterKnife.bind(this);
+    }
+
     private void initializeToolbar() {
         mCollapsingToolbar.setTitle("");
+    }
+
+    @OnClick(R.id.view_error_retry_button)
+    public void onRetryButtonClicked(View v) {
+        mAvengersListPresenter.onErrorRetryRequest();
     }
 
     @Override
@@ -104,8 +112,10 @@ public class CharacterListListActivity extends AppCompatActivity
 
     @Override
     public void bindCharacterList(List<Character> avengers) {
-        mCharacterListAdapter = new AvengersListAdapter(avengers,
-            this, mAvengersListPresenter);
+        mCharacterListAdapter = new AvengersListAdapter(avengers, this,
+            (position, sharedView, characterImageView) -> {
+                mAvengersListPresenter.onElementClick(position);
+            });
 
         mAvengersRecycler.setAdapter(mCharacterListAdapter);
     }
@@ -125,7 +135,7 @@ public class CharacterListListActivity extends AppCompatActivity
     }
 
     @Override
-    public void hideAvengersList() {
+    public void hideCharactersList() {
         mAvengersRecycler.setVisibility(View.GONE);
     }
 
@@ -162,17 +172,6 @@ public class CharacterListListActivity extends AppCompatActivity
         Snackbar.make(mAvengersRecycler, getString(R.string.error_loading_characters), Snackbar.LENGTH_LONG)
             .setAction(R.string.try_again, v -> mAvengersListPresenter.onErrorRetryRequest())
             .show();
-    }
-
-    @Override
-    public void showErrorView(String errorMessage) {
-        TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
-        errorTextView.setText(errorMessage);
-
-        Button errorRetryButton = ButterKnife.findById(mErrorView, R.id.view_error_retry_button);
-        errorRetryButton.setOnClickListener(v -> mAvengersListPresenter.onErrorRetryRequest());
-
-        mErrorView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -215,5 +214,31 @@ public class CharacterListListActivity extends AppCompatActivity
         String sharedViewName = Utils.getListTransitionName(position);
         return ActivityOptions.makeSceneTransitionAnimation(
             this, clickedView, sharedViewName);
+    }
+
+    @Override
+    public void showConnectionErrorMessage() {
+        TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
+        errorTextView.setText(R.string.error_network_uknownhost);
+        mErrorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showServerErrorMessage() {
+        TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
+        errorTextView.setText(R.string.error_network_marvel_server);
+        mErrorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showUknownErrorMessage() {
+        TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
+        errorTextView.setText("Uknown error");
+        mErrorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showDetailScreen(String characterName, int characterId) {
+        CharacterDetailActivity.start(this, characterName, characterId);
     }
 }
