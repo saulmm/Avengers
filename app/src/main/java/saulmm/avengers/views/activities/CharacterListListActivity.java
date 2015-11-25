@@ -112,8 +112,10 @@ public class CharacterListListActivity extends AppCompatActivity
 
     @Override
     public void bindCharacterList(List<Character> avengers) {
-        mCharacterListAdapter = new AvengersListAdapter(avengers,
-            this, mAvengersListPresenter);
+        mCharacterListAdapter = new AvengersListAdapter(avengers, this,
+            (position, sharedView, characterImageView) -> {
+                mAvengersListPresenter.onElementClick(position);
+            });
 
         mAvengersRecycler.setAdapter(mCharacterListAdapter);
     }
@@ -233,5 +235,10 @@ public class CharacterListListActivity extends AppCompatActivity
         TextView errorTextView = ButterKnife.findById(mErrorView, R.id.view_error_message);
         errorTextView.setText("Uknown error");
         mErrorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showDetailScreen(String characterName, int characterId) {
+        CharacterDetailActivity.start(this, characterName, characterId);
     }
 }

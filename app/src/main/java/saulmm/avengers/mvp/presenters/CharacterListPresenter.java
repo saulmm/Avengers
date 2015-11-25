@@ -5,8 +5,6 @@
  */
 package saulmm.avengers.mvp.presenters;
 
-import android.content.Context;
-import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -17,14 +15,9 @@ import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
 import saulmm.avengers.model.rest.exceptions.ServerErrorException;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
-import saulmm.avengers.utils.Utils;
-import saulmm.avengers.views.RecyclerClickListener;
-import saulmm.avengers.views.activities.CharacterDetailActivity;
 
- public class CharacterListPresenter implements Presenter, RecyclerClickListener {
+ public class CharacterListPresenter implements Presenter {
     private final GetCharactersUsecase mCharactersUsecase;
-    private final Context mContext;
-
     private boolean mIsTheCharacterRequestRunning;
     private Subscription mCharactersSubscription;
 
@@ -32,8 +25,7 @@ import saulmm.avengers.views.activities.CharacterDetailActivity;
     private CharacterListView mAvengersView;
 
     @Inject
-    public CharacterListPresenter(Context context, GetCharactersUsecase charactersUsecase) {
-        mContext = context;
+    public CharacterListPresenter(GetCharactersUsecase charactersUsecase) {
         mCharactersUsecase = charactersUsecase;
         mCharacters = new ArrayList<>();
     }
@@ -141,12 +133,9 @@ import saulmm.avengers.views.activities.CharacterDetailActivity;
             askForNewCharacters();
     }
 
-    @Override
-    public void onElementClick(int position, android.view.View clickedView,
-        ImageView avengerThumbImageView) {
+    public void onElementClick(int position) {
         int characterId = mCharacters.get(position).getId();
         String characterName = mCharacters.get(position).getName();
-        String sharedElementName = Utils.getListTransitionName(position);
-        CharacterDetailActivity.start(mContext, characterName, characterId);
+        mAvengersView.showDetailScreen(characterName, characterId);
     }
 }

@@ -45,4 +45,6 @@ public interface CharacterListView extends View {
     void showServerErrorMessage();
 
     void showUknownErrorMessage();
+
+    void showDetailScreen(String characterName, int characterId);
 }
