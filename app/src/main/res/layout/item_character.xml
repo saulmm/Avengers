@@ -47,7 +47,7 @@
 		android:textAllCaps="true"
 		android:textSize="18sp"
 		android:gravity="center_vertical"
-		android:background="#55000000"
+		android:background="#33000000"
 		tools:text="An amazing avenger"
 		app:typeface="Abel.ttf"
 		/>

@@ -11,9 +11,11 @@ In this first part it explains how Dagger 2 can help the decoupling of the layer
 
 This part focuses on the understanding of what are the Reactive Extensions, its Java implementation, and use RxJava operators, all it integrated with a clean architecture
 
+*NOTE*: The source shown in articles refers to [this release].
+
 #### Screenshots
 
-![](https://raw.githubusercontent.com/saulmm/Avengers/master/art/cap.png)
+![](https://raw.githubusercontent.com/saulmm/Avengers/master/art/screen_detail.gif)
 
 ### License 
 
