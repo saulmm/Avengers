@@ -1,5 +1,11 @@
 apply plugin: 'java'
 
+def libs = rootProject.ext.libraries;
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  // ReactiveX
+  compile "io.reactivex:rxjava:${libs.rxjava}"
+  compile "io.reactivex:rxandroid:${libs.rxandroid}"
 }

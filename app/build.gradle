@@ -39,10 +39,6 @@ dependencies {
     compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
     compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
 
-    // ReactiveX
-    compile "io.reactivex:rxjava:${libs.rxjava}"
-    compile "io.reactivex:rxandroid:${libs.rxandroid}"
-
     // Others
     compile "com.github.bumptech.glide:glide:${libs.glide}"
     compile "jp.wasabeef:recyclerview-animators:${libs.recycler_animators}"
