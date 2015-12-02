@@ -14,7 +14,7 @@ dependencies {
   compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
 
   compile "com.google.dagger:dagger:${libs.dagger}"
-
+  compile "com.squareup.okhttp:logging-interceptor:${libs.loggin_interceptor}"
   compile "org.glassfish:javax.annotation:${libs.javax_annotation}"
 
 }

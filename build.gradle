@@ -19,7 +19,8 @@ ext {
         recycler_animators  : "2.0.0",
         javax_annotation    : "10.0-b28",
         glide               : "3.6.0",
-        circleimageview     : "1.3.0"
+        circleimageview     : "1.3.0",
+        loggin_interceptor  : "2.6.0"
     ]
 
     testingLibraries = [

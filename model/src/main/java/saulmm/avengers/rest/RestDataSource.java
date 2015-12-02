@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit.GsonConverterFactory;
@@ -24,8 +25,10 @@ import saulmm.avengers.rest.exceptions.UknownErrorException;
 import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
 import saulmm.avengers.rest.utils.interceptors.MarvelSigningIterceptor;
 
-import static saulmm.avengers.entities.CollectionItem.*;
+import static com.squareup.okhttp.logging.HttpLoggingInterceptor.*;
 import static saulmm.avengers.entities.CollectionItem.COMIC;
+import static saulmm.avengers.entities.CollectionItem.EVENT;
+import static saulmm.avengers.entities.CollectionItem.SERIES;
 import static saulmm.avengers.entities.CollectionItem.STORY;
 
 public class RestDataSource implements Repository {
@@ -40,7 +43,11 @@ public class RestDataSource implements Repository {
         MarvelSigningIterceptor signingIterceptor =
             new MarvelSigningIterceptor("74129ef99c9fd5f7692608f17abb88f9", "281eb4f077e191f7863a11620fa1865f2940ebeb");
 
+        HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
+        logginInterceptor.setLevel(Level.BODY);
+
         client.interceptors().add(signingIterceptor);
+        client.interceptors().add(logginInterceptor);
 
         Gson customGsonInstance = new GsonBuilder()
             .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(),
