@@ -30,6 +30,7 @@ import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
+import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -135,10 +136,10 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     private void initTransitions() {
         final String sharedViewName = getIntent().getStringExtra(
-            CharacterListListActivity.EXTRA_IMAGE_TRANSITION_NAME);
+            CharacterListActivity.EXTRA_IMAGE_TRANSITION_NAME);
 
         String characterTitle = getIntent().getStringExtra(
-            CharacterListListActivity.EXTRA_CHARACTER_NAME);
+            CharacterListActivity.EXTRA_CHARACTER_NAME);
 
         Transition enterTransition = TransitionUtils.buildSlideTransition(Gravity.BOTTOM);
         enterTransition.setDuration(mAnimMediumDuration);
@@ -183,7 +184,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     @Override
-    public void bindCharacter(saulmm.avengers.model.entities.Character character) {
+    public void bindCharacter(MarvelCharacter character) {
         mBinding.setCharacter(character);
     }
 

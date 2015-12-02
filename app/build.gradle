@@ -34,10 +34,6 @@ android {
 dependencies {
     compile project(':domain')
 
-    // Square
-    compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
-    compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
-    compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
 
     // Others
     compile "com.github.bumptech.glide:glide:${libs.glide}"
@@ -46,10 +42,16 @@ dependencies {
     compile "com.jakewharton:butterknife:${libs.butterknife}"
     compile "de.hdodenhof:circleimageview:${libs.circleimageview}"
 
+    compile "io.reactivex:rxandroid:${libs.rxandroid}"
+
+
+    // Square
+    compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
+    compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
+    compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
+
     // Google
-    compile "com.google.dagger:dagger:${libs.dagger}"
     apt "com.google.dagger:dagger-compiler:${libs.dagger}"
-    compile "org.glassfish:javax.annotation:${libs.javax_annotation}"
 
     // Android
     compile "com.android.support:design:${libs.supportVersion}"

@@ -15,7 +15,7 @@
         >
 
         <activity
-            android:name=".views.activities.CharacterListListActivity"
+            android:name=".views.activities.CharacterListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             >
@@ -27,7 +27,7 @@
 
         <activity
             android:name=".views.activities.CharacterDetailActivity"
-            android:parentActivityName=".views.activities.CharacterListListActivity"
+            android:parentActivityName=".views.activities.CharacterListActivity"
             android:theme="@style/AvengerDetailActivityTheme"
             android:screenOrientation="portrait"
             />

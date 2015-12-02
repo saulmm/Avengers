@@ -9,8 +9,8 @@ import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.model.repository.Repository;
-import saulmm.avengers.model.rest.RestDataSource;
+import saulmm.avengers.repository.Repository;
+import saulmm.avengers.rest.RestDataSource;
 
 @Module
 public class AppModule {

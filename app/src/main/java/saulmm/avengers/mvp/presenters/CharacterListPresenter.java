@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
-import saulmm.avengers.domain.GetCharactersUsecase;
-import saulmm.avengers.model.entities.Character;
-import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
-import saulmm.avengers.model.rest.exceptions.ServerErrorException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import saulmm.avengers.GetCharactersUsecase;
+import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 
@@ -21,7 +21,7 @@ import saulmm.avengers.mvp.views.View;
     private boolean mIsTheCharacterRequestRunning;
     private Subscription mCharactersSubscription;
 
-    private List<Character> mCharacters;
+    private List<MarvelCharacter> mCharacters;
     private CharacterListView mAvengersView;
 
     @Inject
@@ -69,13 +69,14 @@ import saulmm.avengers.mvp.views.View;
         mAvengersView.showLoadingView();
 
         mCharactersSubscription = mCharactersUsecase.execute()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(characters -> {
                 mCharacters.addAll(characters);
                 mAvengersView.bindCharacterList(mCharacters);
                 mAvengersView.showCharacterList();
                 mAvengersView.hideEmptyIndicator();
                 mIsTheCharacterRequestRunning = false;
-
             }, error -> {
                 showErrorView(error);
             });
@@ -87,35 +88,26 @@ import saulmm.avengers.mvp.views.View;
         mIsTheCharacterRequestRunning = true;
 
         mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
 
-            newCharacters -> {
-                mCharacters.addAll(newCharacters);
-                mAvengersView.updateCharacterList (
-                    GetCharactersUsecase.CHARACTERS_LIMIT);
+                newCharacters -> {
+                    mCharacters.addAll(newCharacters);
+                    mAvengersView.updateCharacterList(GetCharactersUsecase.CHARACTERS_LIMIT);
 
-                mAvengersView.hideLoadingIndicator();
-                mIsTheCharacterRequestRunning = false;
-            },
+                    mAvengersView.hideLoadingIndicator();
+                    mIsTheCharacterRequestRunning = false;
+                },
 
-            error -> {
-                showGenericError();
-                mIsTheCharacterRequestRunning = false;
-            }
-        );
+                error -> {
+                    showGenericError();
+                    mIsTheCharacterRequestRunning = false;
+                });
     }
 
     private void showErrorView(Throwable error) {
-        if (error instanceof NetworkUknownHostException) {
-            mAvengersView.showConnectionErrorMessage();
-
-        } else if (error instanceof ServerErrorException) {
-            mAvengersView.showServerErrorMessage();
-
-        } else {
-            mAvengersView.showUknownErrorMessage();
-        }
-
+        mAvengersView.showUknownErrorMessage();
         mAvengersView.hideLoadingMoreCharactersIndicator();
         mAvengersView.hideEmptyIndicator();
         mAvengersView.hideCharactersList();
