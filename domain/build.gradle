@@ -1,0 +1,8 @@
+apply plugin: 'java'
+
+def libs = rootProject.ext.libraries;
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile project(':model')
+}

@@ -7,10 +7,10 @@ package saulmm.avengers.injector.modules;
 
 import dagger.Module;
 import dagger.Provides;
-import saulmm.avengers.domain.GetCharacterInformationUsecase;
-import saulmm.avengers.domain.GetCollectionUsecase;
+import saulmm.avengers.GetCharacterInformationUsecase;
+import saulmm.avengers.GetCollectionUsecase;
 import saulmm.avengers.injector.Activity;
-import saulmm.avengers.model.repository.Repository;
+import saulmm.avengers.repository.Repository;
 
 @Module
 public class AvengerInformationModule {

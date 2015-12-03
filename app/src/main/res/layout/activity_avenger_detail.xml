@@ -7,10 +7,10 @@
 	<data>
 		<import type="android.view.View"/>
 		<import type="android.text.TextUtils"/>
-		<import type="saulmm.avengers.model.entities.ComicsCollection"/>
+		<import type="saulmm.avengers.entities.ComicsCollection"/>
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
-		<variable name="character" type="saulmm.avengers.model.entities.Character"/>
+		<variable name="character" type="saulmm.avengers.entities.MarvelCharacter"/>
 		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
 
 	</data>

@@ -6,14 +6,14 @@
 package saulmm.avengers.mvp.views;
 
 import android.graphics.Bitmap;
-import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.entities.MarvelCharacter;
 
 public interface CharacterDetailView extends View {
     void hideRevealViewByAlpha();
 
     void showError(String s);
 
-    void bindCharacter(Character character);
+    void bindCharacter(MarvelCharacter character);
 
     void initActivityColors(Bitmap resource);
 }
