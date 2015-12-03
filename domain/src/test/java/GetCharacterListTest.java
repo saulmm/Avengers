@@ -13,6 +13,7 @@ import saulmm.avengers.repository.CharacterRepository;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.when;
 
 public class GetCharacterListTest {
 	@Mock CharacterRepository mockRepository;
@@ -33,6 +34,16 @@ public class GetCharacterListTest {
 		charactersUsecase.execute();
 
 		Mockito.verify(mockRepository, only()).getCharacters(0);
+	}
+
+	@Test public void testThatCharactersUsecaseWithOffsetIsCalledOnce() throws Exception {
+		GetCharactersUsecase charactersUsecase = givenACharactersUsecase();
+		int fakeCurrentOffset = 20;
+
+		when(mockRepository.getCharacters(fakeCurrentOffset)).thenReturn(getFakeObservableCharacterList());
+		charactersUsecase.executeIncreasingOffset();
+		
+		Mockito.verify(mockRepository, only()).getCharacters(fakeCurrentOffset);
 	}
 
 	private GetCharactersUsecase givenACharactersUsecase() {
