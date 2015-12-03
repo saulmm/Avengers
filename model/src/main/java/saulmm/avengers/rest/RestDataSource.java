@@ -41,7 +41,9 @@ public class RestDataSource implements Repository {
         OkHttpClient client = new OkHttpClient();
 
         MarvelSigningIterceptor signingIterceptor =
-            new MarvelSigningIterceptor("74129ef99c9fd5f7692608f17abb88f9", "281eb4f077e191f7863a11620fa1865f2940ebeb");
+            new MarvelSigningIterceptor(
+                "74129ef99c9fd5f7692608f17abb88f9",
+                "281eb4f077e191f7863a11620fa1865f2940ebeb");
 
         HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
         logginInterceptor.setLevel(Level.BODY);
@@ -50,7 +52,7 @@ public class RestDataSource implements Repository {
         client.interceptors().add(logginInterceptor);
 
         Gson customGsonInstance = new GsonBuilder()
-            .registerTypeAdapter(new TypeToken<List<Character>>() {}.getType(),
+            .registerTypeAdapter(new TypeToken<List<MarvelCharacter>>() {}.getType(),
                 new MarvelResultsDeserializer<Character>())
 
             .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(),
