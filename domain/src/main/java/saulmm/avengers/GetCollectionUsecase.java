@@ -4,13 +4,13 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
 import saulmm.avengers.entities.CollectionItem;
-import saulmm.avengers.repository.Repository;
+import saulmm.avengers.repository.CharacterRepository;
 
 public class GetCollectionUsecase implements Usecase<List<CollectionItem>> {
-	private final Repository mRepository;
+	private final CharacterRepository mRepository;
 	private final int mCharacterId;
 
-	@Inject public GetCollectionUsecase(int characterId, Repository repository) {
+	@Inject public GetCollectionUsecase(int characterId, CharacterRepository repository) {
 		mRepository = repository;
 		mCharacterId = characterId;
 	}

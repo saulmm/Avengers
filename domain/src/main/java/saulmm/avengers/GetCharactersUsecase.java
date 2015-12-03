@@ -5,15 +5,15 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.functions.Action1;
 import saulmm.avengers.entities.MarvelCharacter;
-import saulmm.avengers.repository.Repository;
+import saulmm.avengers.repository.CharacterRepository;
 
 public class GetCharactersUsecase implements Usecase<List<MarvelCharacter>> {
     public final static int CHARACTERS_LIMIT = 20;
 
-    private final Repository mRepository;
+    private final CharacterRepository mRepository;
     private int currentOffset;
 
-    @Inject public GetCharactersUsecase(Repository repository) {
+    @Inject public GetCharactersUsecase(CharacterRepository repository) {
         mRepository = repository;
     }
 

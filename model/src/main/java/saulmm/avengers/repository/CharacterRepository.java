@@ -10,7 +10,7 @@ import rx.Observable;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
 
-public interface Repository {
+public interface CharacterRepository {
     Observable<MarvelCharacter> getCharacter (final int characterId);
 
     Observable<List<MarvelCharacter>> getCharacters (int offset);

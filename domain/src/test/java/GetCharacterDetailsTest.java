@@ -3,9 +3,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import saulmm.avengers.GetCharacterInformationUsecase;
+import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.Usecase;
-import saulmm.avengers.repository.Repository;
+import saulmm.avengers.repository.CharacterRepository;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,13 +14,13 @@ import static org.mockito.internal.verification.VerificationModeFactory.only;
 public class GetCharacterDetailsTest {
 	private final static int FAKE_CHARACTER_ID = 69;
 
-	GetCharacterInformationUsecase mGetCharacterDetailUsecase;
-	@Mock Repository mRepository;
+	CharacterDetailsUsecase mGetCharacterDetailUsecase;
+	@Mock CharacterRepository mRepository;
 
 
 	@Before public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		mGetCharacterDetailUsecase = new GetCharacterInformationUsecase(
+		mGetCharacterDetailUsecase = new CharacterDetailsUsecase(
 			FAKE_CHARACTER_ID, mRepository);
 	}
 

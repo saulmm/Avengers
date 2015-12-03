@@ -8,14 +8,14 @@ package saulmm.avengers;
 import javax.inject.Inject;
 import rx.Observable;
 import saulmm.avengers.entities.MarvelCharacter;
-import saulmm.avengers.repository.Repository;
+import saulmm.avengers.repository.CharacterRepository;
 
-public class GetCharacterInformationUsecase implements Usecase<MarvelCharacter> {
+public class CharacterDetailsUsecase implements Usecase<MarvelCharacter> {
 
-    private final Repository mRepository;
+    private final CharacterRepository mRepository;
     private int mCharacterId;
 
-    @Inject public GetCharacterInformationUsecase(int characterId, Repository repository) {
+    @Inject public CharacterDetailsUsecase(int characterId, CharacterRepository repository) {
         mCharacterId = characterId;
         mRepository = repository;
     }

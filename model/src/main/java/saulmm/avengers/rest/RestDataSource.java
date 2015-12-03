@@ -19,7 +19,7 @@ import rx.Observable;
 import rx.functions.Func1;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
-import saulmm.avengers.repository.Repository;
+import saulmm.avengers.repository.CharacterRepository;
 import saulmm.avengers.rest.exceptions.ServerErrorException;
 import saulmm.avengers.rest.exceptions.UknownErrorException;
 import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
@@ -31,7 +31,7 @@ import static saulmm.avengers.entities.CollectionItem.EVENT;
 import static saulmm.avengers.entities.CollectionItem.SERIES;
 import static saulmm.avengers.entities.CollectionItem.STORY;
 
-public class RestDataSource implements Repository {
+public class RestDataSource implements CharacterRepository {
 
     private final MarvelApi mMarvelApi;
     public final static int MAX_ATTEMPS = 3;

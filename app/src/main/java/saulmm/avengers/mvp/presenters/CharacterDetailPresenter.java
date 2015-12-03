@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import saulmm.avengers.GetCharacterInformationUsecase;
+import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
@@ -23,14 +23,14 @@ public class CharacterDetailPresenter implements Presenter {
     private final Context mActivityContext;
     private CharacterDetailView mCharacterDetailView;
 
-    private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
+    private final CharacterDetailsUsecase mGetCharacterInformationUsecase;
 
     private Subscription mCharacterSubscription;
     private int mCharacterId;
     private String mCharacterName;
 
     @Inject
-    public CharacterDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
+    public CharacterDetailPresenter(CharacterDetailsUsecase getCharacterInformationUsecase,
         Context activityContext) {
 
         mGetCharacterInformationUsecase = getCharacterInformationUsecase;

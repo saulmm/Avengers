@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.repository.Repository;
+import saulmm.avengers.repository.CharacterRepository;
 import saulmm.avengers.rest.RestDataSource;
 
 @Module
@@ -24,5 +24,5 @@ public class AppModule {
 
     @Provides @Singleton AvengersApplication provideAvengersApplicationContext () { return mAvengersApplication; }
 
-    @Provides @Singleton Repository provideDataRepository (RestDataSource restDataSource) { return restDataSource; }
+    @Provides @Singleton CharacterRepository provideDataRepository (RestDataSource restDataSource) { return restDataSource; }
 }
