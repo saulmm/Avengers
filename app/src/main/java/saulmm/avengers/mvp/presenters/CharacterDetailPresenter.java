@@ -9,6 +9,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import javax.inject.Inject;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import saulmm.avengers.GetCharacterInformationUsecase;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
@@ -41,6 +43,8 @@ public class CharacterDetailPresenter implements Presenter {
             throw new IllegalStateException("initializePresenter was not well initialised");
 
         mCharacterSubscription = mGetCharacterInformationUsecase.execute()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::onCharacterReceived, this::manageCharacterError);
     }
 
