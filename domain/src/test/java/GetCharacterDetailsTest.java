@@ -4,8 +4,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import saulmm.avengers.GetCharacterInformationUsecase;
+import saulmm.avengers.Usecase;
 import saulmm.avengers.repository.Repository;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.internal.verification.VerificationModeFactory.only;
 
 public class GetCharacterDetailsTest {
@@ -24,6 +27,10 @@ public class GetCharacterDetailsTest {
 	@Test public void testThatDetailUsecaseIsCalledOnce() {
 		mGetCharacterDetailUsecase.execute();
 
-		Mockito.verify(mRepository, only());
+		Mockito.verify(mRepository, only()).getCharacter(FAKE_CHARACTER_ID);
+	}
+
+	@Test public void testThatAConcreteUsecaseImplementsAnUsecase() {
+		assertThat(mGetCharacterDetailUsecase, instanceOf(Usecase.class));
 	}
 }
