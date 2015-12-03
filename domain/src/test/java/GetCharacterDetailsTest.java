@@ -24,13 +24,13 @@ public class GetCharacterDetailsTest {
 			FAKE_CHARACTER_ID, mRepository);
 	}
 
-	@Test public void testThatDetailUsecaseIsCalledOnce() {
+	@Test public void testThatDetailUsecaseIsCalledOnce() throws Exception {
 		mGetCharacterDetailUsecase.execute();
 
 		Mockito.verify(mRepository, only()).getCharacter(FAKE_CHARACTER_ID);
 	}
 
-	@Test public void testThatAConcreteUsecaseImplementsAnUsecase() {
+	@Test public void testThatAConcreteUsecaseImplementsAnUsecase() throws Exception {
 		assertThat(mGetCharacterDetailUsecase, instanceOf(Usecase.class));
 	}
 }
