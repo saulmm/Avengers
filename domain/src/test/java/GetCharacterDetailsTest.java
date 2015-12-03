@@ -13,24 +13,28 @@ import static org.mockito.internal.verification.VerificationModeFactory.only;
 
 public class GetCharacterDetailsTest {
 	private final static int FAKE_CHARACTER_ID = 69;
-
-	CharacterDetailsUsecase mGetCharacterDetailUsecase;
 	@Mock CharacterRepository mRepository;
-
 
 	@Before public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		mGetCharacterDetailUsecase = new CharacterDetailsUsecase(
-			FAKE_CHARACTER_ID, mRepository);
 	}
 
 	@Test public void testThatDetailUsecaseIsCalledOnce() throws Exception {
-		mGetCharacterDetailUsecase.execute();
+		CharacterDetailsUsecase detailsUsecase = givenACharacterUsecase();
+
+		detailsUsecase.execute();
 
 		Mockito.verify(mRepository, only()).getCharacter(FAKE_CHARACTER_ID);
 	}
 
 	@Test public void testThatAConcreteUsecaseImplementsAnUsecase() throws Exception {
-		assertThat(mGetCharacterDetailUsecase, instanceOf(Usecase.class));
+		CharacterDetailsUsecase detailsUsecase = givenACharacterUsecase();
+		
+		assertThat(detailsUsecase, instanceOf(Usecase.class));
+	}
+
+	private CharacterDetailsUsecase givenACharacterUsecase() {
+		return new CharacterDetailsUsecase(
+			FAKE_CHARACTER_ID, mRepository);
 	}
 }
