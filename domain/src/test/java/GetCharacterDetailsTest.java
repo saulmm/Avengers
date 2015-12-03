@@ -13,12 +13,10 @@ import static org.mockito.internal.verification.VerificationModeFactory.only;
 
 public class GetCharacterDetailsTest {
 	private final static int FAKE_CHARACTER_ID = 69;
-
 	@Mock CharacterRepository mRepository;
 
 	@Before public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		givenACharacterUsecase();
 	}
 
 	@Test public void testThatDetailUsecaseIsCalledOnce() throws Exception {
