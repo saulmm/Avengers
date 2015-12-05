@@ -10,6 +10,10 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Named;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import saulmm.avengers.injector.Activity;
 
 @Module
@@ -21,6 +25,17 @@ public class ActivityModule {
 
         this.mContext = mContext;
     }
+
+    @Provides @Activity @Named("executor_thread")
+    Scheduler provideExecutorThread() {
+        return Schedulers.newThread();
+    }
+
+    @Provides @Activity @Named("ui_thread")
+    Scheduler provideUiThread() {
+        return AndroidSchedulers.mainThread();
+    }
+
 
     @Provides @Activity
     Context provideActivityContext() {
