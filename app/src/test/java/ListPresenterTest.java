@@ -1,10 +1,8 @@
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import rx.observers.TestSubscriber;
 import saulmm.avengers.GetCharactersUsecase;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.presenters.CharacterListPresenter;
@@ -32,13 +30,13 @@ public class ListPresenterTest {
 			.bindCharacterList(fakeCharacterList);
 	}
 
-	@Test public void testThatPresenterRequestCharacters() throws Exception {
-		CharacterListPresenter listPresenter = givenAListPresenter();
-
-		listPresenter.askForCharacters();
-
-		verify(mockGetCharacterUsecase, times(1)).execute();
-	}
+	//@Test public void testThatPresenterRequestCharacters() throws Exception {
+	//	CharacterListPresenter listPresenter = givenAListPresenter();
+	//
+	//	listPresenter.askForCharacters();
+	//
+	//	verify(mockGetCharacterUsecase, times(1)).execute();
+	//}
 
 	private ArrayList<MarvelCharacter> givenAFakeCharacterList() {
 		ArrayList<MarvelCharacter> marvelCharacters = new ArrayList<>();
