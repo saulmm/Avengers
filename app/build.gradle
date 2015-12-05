@@ -62,4 +62,5 @@ dependencies {
 
     // Test
     testCompile "org.mockito:mockito-core:${test.mockito}"
+    testCompile 'junit:junit:4.11'
 }
