@@ -47,7 +47,8 @@ public class GetCharacterListTest {
 	}
 
 	private GetCharactersUsecase givenACharactersUsecase() {
-		return new GetCharactersUsecase(mockRepository);
+		GetCharactersUsecase charactersUsecase = new GetCharactersUsecase(mockRepository);
+		return charactersUsecase;
 	}
 
 	private Observable<List<MarvelCharacter>> getFakeObservableCharacterList() {
