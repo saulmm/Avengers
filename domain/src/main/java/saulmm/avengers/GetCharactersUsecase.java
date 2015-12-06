@@ -30,18 +30,21 @@ public class GetCharactersUsecase implements Usecase<List<MarvelCharacter>> {
     @Override
     public Observable<List<MarvelCharacter>> execute() {
         return mRepository.getCharacters(currentOffset)
-            .observeOn(mExecutorThread).subscribeOn(mResultsThread);
+            .observeOn(mResultsThread)
+                .subscribeOn(mExecutorThread);
     }
 
     public Observable<List<MarvelCharacter>> executeIncreasingOffset() {
         currentOffset += CHARACTERS_LIMIT;
 
-        return mRepository.getCharacters(currentOffset).observeOn(mExecutorThread)
-            .subscribeOn(mResultsThread)
-            .doOnError(new Action1<Throwable>() {
-                @Override public void call(Throwable throwable) {
-                    currentOffset -= CHARACTERS_LIMIT;
-                }
-            });
+        return mRepository.getCharacters(currentOffset)
+                .observeOn(mResultsThread)
+                .subscribeOn(mExecutorThread)
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        currentOffset -= CHARACTERS_LIMIT;
+                    }
+                });
     }
 }

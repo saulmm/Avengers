@@ -53,7 +53,7 @@ public class RestDataSource implements CharacterRepository {
 
         Gson customGsonInstance = new GsonBuilder()
             .registerTypeAdapter(new TypeToken<List<MarvelCharacter>>() {}.getType(),
-                new MarvelResultsDeserializer<Character>())
+                new MarvelResultsDeserializer<MarvelCharacter>())
 
             .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(),
                 new MarvelResultsDeserializer<CollectionItem>())
