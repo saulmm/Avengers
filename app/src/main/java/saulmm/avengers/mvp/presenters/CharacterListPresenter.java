@@ -83,11 +83,7 @@ import saulmm.avengers.mvp.views.View;
         mIsTheCharacterRequestRunning = true;
 
         mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::onNewCharactersReceived,
-                this::onNewCharactersError);
+            .subscribe(this::onNewCharactersReceived, this::onNewCharactersError);
     }
 
      private void onNewCharactersError(Throwable error) {
