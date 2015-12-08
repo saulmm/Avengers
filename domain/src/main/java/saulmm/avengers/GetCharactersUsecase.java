@@ -31,7 +31,7 @@ public class GetCharactersUsecase implements Usecase<List<MarvelCharacter>> {
     public Observable<List<MarvelCharacter>> execute() {
         return mRepository.getCharacters(currentOffset)
             .observeOn(mResultsThread)
-                .subscribeOn(mExecutorThread);
+            .subscribeOn(mExecutorThread);
     }
 
     public Observable<List<MarvelCharacter>> executeIncreasingOffset() {

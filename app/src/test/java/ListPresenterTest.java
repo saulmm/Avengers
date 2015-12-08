@@ -45,6 +45,15 @@ public class ListPresenterTest {
 		verify(mockGetCharacterUsecase, times(1)).execute();
 	}
 
+	@Test public void testThatPresenterShowsErrorWhenLoadingCharacters() throws Exception {
+		CharacterListPresenter listPresenter = givenAListPresenter();
+
+		when(mockGetCharacterUsecase.execute()).thenReturn(Observable.error(new Exception()));
+		listPresenter.askForCharacters();
+
+		verify(mockCharacterListView, times(1)).showUknownErrorMessage();
+	}
+
 	@Test public void testThatPresenterRequestMoreCharacters() throws Exception {
 		CharacterListPresenter listPresenter = givenAListPresenter();
 
