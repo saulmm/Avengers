@@ -38,8 +38,6 @@ public interface CharacterListView extends View {
 
     void updateCharacterList(int charactersLimit);
 
-    ActivityOptions getActivityOptions(int position, android.view.View clickedView);
-
     void showConnectionErrorMessage();
 
     void showServerErrorMessage();

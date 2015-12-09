@@ -11,9 +11,16 @@ import saulmm.avengers.entities.MarvelCharacter;
 public interface CharacterDetailView extends View {
     void hideRevealViewByAlpha();
 
-    void showError(String s);
-
     void bindCharacter(MarvelCharacter character);
 
-    void initActivityColors(Bitmap resource);
+    void goToCharacterComicsView(int characterId);
+
+    void goToCharacterSeriesView(int characterId);
+
+    void goToCharacterEventsView(int characterId);
+
+    void goToCharacterStoriesView(int characterId);
+
+    void showError(String s);
+
 }

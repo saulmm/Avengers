@@ -11,6 +11,7 @@
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
 		<variable name="character" type="saulmm.avengers.entities.MarvelCharacter"/>
+		<variable name="imageCallback" type="saulmm.avengers.utils.OnCharacterImageCallback"/>
 		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
 
 	</data>
@@ -54,6 +55,7 @@
 						android:scaleType="centerCrop"
 						android:fitsSystemWindows="true"
 						presenter="@{presenter}"
+						callback="@{imageCallback}"
 						source="@{character.imageUrl}"
 						/>
 

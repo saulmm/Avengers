@@ -38,10 +38,8 @@ import saulmm.avengers.views.views.RecyclerInsetsDecoration;
 public class CharacterListActivity extends AppCompatActivity
     implements CharacterListView {
 
-    public final static String EXTRA_CHARACTER_ID           = "character_id";
     public final static String EXTRA_CHARACTER_NAME         = "character_name";
     public final static String EXTRA_IMAGE_TRANSITION_NAME  = "transition_name";
-    public final static int KEY_SHARED_BITMAP               = 41;
 
     @Bind(R.id.activity_avengers_recycler)        RecyclerView mAvengersRecycler;
     @Bind(R.id.activity_avengers_toolbar)         Toolbar mAvengersToolbar;
@@ -132,7 +130,7 @@ public class CharacterListActivity extends AppCompatActivity
     @Override
     public void updateCharacterList(int charactersAdded) {
         mCharacterListAdapter.notifyItemRangeInserted(
-            mCharacterListAdapter.getItemCount() + charactersAdded, charactersAdded);
+                mCharacterListAdapter.getItemCount() + charactersAdded, charactersAdded);
     }
 
     @Override
@@ -209,13 +207,6 @@ public class CharacterListActivity extends AppCompatActivity
             }
         }
     };
-
-    @Override
-    public ActivityOptions getActivityOptions(int position, View clickedView) {
-        String sharedViewName = Utils.getListTransitionName(position);
-        return ActivityOptions.makeSceneTransitionAnimation(
-            this, clickedView, sharedViewName);
-    }
 
     @Override
     public void showConnectionErrorMessage() {

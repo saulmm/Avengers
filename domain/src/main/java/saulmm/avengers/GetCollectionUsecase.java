@@ -21,8 +21,8 @@ public class GetCollectionUsecase implements Usecase<List<CollectionItem>> {
 	}
 
 	public Observable<List<CollectionItem>> execute(String type) {
-		if (!type.equals(CollectionItem.COMIC) && !type.equals(CollectionItem.EVENT) && !type.equals(
-			CollectionItem.SERIES) && !type.equals(CollectionItem.STORY))
+		if (!type.equals(CollectionItem.COMICS) && !type.equals(CollectionItem.EVENTS) && !type.equals(
+			CollectionItem.SERIES) && !type.equals(CollectionItem.STORIES))
 			throw new IllegalArgumentException("Collection type must be events|series|comics|stories");
 
 		return mRepository.getCharacterCollection(mCharacterId, type);

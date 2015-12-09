@@ -1,10 +1,10 @@
 package saulmm.avengers.entities;
 
 public class CollectionItem {
-	public final static String COMIC 		= "comics";
+	public final static String COMICS = "comics";
 	public final static String SERIES	  	= "series";
-	public final static String STORY 		= "stories";
-	public final static String EVENT 		= "events";
+	public final static String STORIES = "stories";
+	public final static String EVENTS = "events";
 
 	protected int id;
 	protected String title;
