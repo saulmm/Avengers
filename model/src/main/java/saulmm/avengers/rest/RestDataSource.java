@@ -26,10 +26,10 @@ import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
 import saulmm.avengers.rest.utils.interceptors.MarvelSigningIterceptor;
 
 import static com.squareup.okhttp.logging.HttpLoggingInterceptor.*;
-import static saulmm.avengers.entities.CollectionItem.COMIC;
-import static saulmm.avengers.entities.CollectionItem.EVENT;
+import static saulmm.avengers.entities.CollectionItem.COMICS;
+import static saulmm.avengers.entities.CollectionItem.EVENTS;
 import static saulmm.avengers.entities.CollectionItem.SERIES;
-import static saulmm.avengers.entities.CollectionItem.STORY;
+import static saulmm.avengers.entities.CollectionItem.STORIES;
 
 public class RestDataSource implements CharacterRepository {
 
@@ -96,7 +96,7 @@ public class RestDataSource implements CharacterRepository {
 
     @Override
     public Observable<List<CollectionItem>> getCharacterCollection(int characterId, String type) {
-        if (!type.equals(COMIC) && !type.equals(EVENT) && !type.equals(SERIES) && !type.equals(STORY))
+        if (!type.equals(COMICS) && !type.equals(EVENTS) && !type.equals(SERIES) && !type.equals(STORIES))
             throw new IllegalArgumentException("Collection type must be: events|series|comics|stories");
 
         return mMarvelApi.getCharacterCollection(characterId, type);

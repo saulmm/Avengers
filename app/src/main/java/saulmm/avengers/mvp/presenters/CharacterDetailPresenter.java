@@ -6,21 +6,16 @@
 package saulmm.avengers.mvp.presenters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import javax.inject.Inject;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import saulmm.avengers.CharacterDetailsUsecase;
-import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
-import saulmm.avengers.views.activities.CollectionActivity;
 
 public class CharacterDetailPresenter implements Presenter {
-
-    private final Context mActivityContext;
     private CharacterDetailView mCharacterDetailView;
 
     private final CharacterDetailsUsecase mGetCharacterInformationUsecase;
@@ -30,11 +25,8 @@ public class CharacterDetailPresenter implements Presenter {
     private String mCharacterName;
 
     @Inject
-    public CharacterDetailPresenter(CharacterDetailsUsecase getCharacterInformationUsecase,
-        Context activityContext) {
-
+    public CharacterDetailPresenter(CharacterDetailsUsecase getCharacterInformationUsecase) {
         mGetCharacterInformationUsecase = getCharacterInformationUsecase;
-        mActivityContext = activityContext;
     }
 
     @Override
@@ -84,27 +76,26 @@ public class CharacterDetailPresenter implements Presenter {
     }
 
     public void onComicsIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.COMIC);
+        mCharacterDetailView.goToCharacterComicsView(mCharacterId);
     }
 
     public void onSeriesIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.SERIES);
+        mCharacterDetailView.goToCharacterSeriesView(mCharacterId);
     }
 
     public void onStoriesIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.STORY);
+        mCharacterDetailView.goToCharacterStoriesView(mCharacterId);
     }
 
     public void onEventIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.EVENT);
+        mCharacterDetailView.goToCharacterEventsView(mCharacterId);
     }
 
     public void setCharacterId(int characterId) {
         mCharacterId = characterId;
     }
 
-    public void onImageReceived(Bitmap resource) {
+    public void onImageReceived() {
         mCharacterDetailView.hideRevealViewByAlpha();
-        mCharacterDetailView.initActivityColors(resource);
     }
 }
