@@ -57,7 +57,5 @@ public class GetCharacterListTest {
 	private Observable<List<MarvelCharacter>> getFakeObservableCharacterList() {
 		List<MarvelCharacter> test = new ArrayList<MarvelCharacter>();
 		return Observable.just(test);
-
-
 	}
 }
