@@ -18,11 +18,9 @@ import saulmm.avengers.injector.Activity;
 
 @Module
 public class ActivityModule {
-
     private final Context mContext;
 
     public ActivityModule(Context mContext) {
-
         this.mContext = mContext;
     }
 
@@ -35,7 +33,6 @@ public class ActivityModule {
     Scheduler provideUiThread() {
         return AndroidSchedulers.mainThread();
     }
-
 
     @Provides @Activity
     Context provideActivityContext() {
