@@ -34,9 +34,11 @@ public class CharacterDetailPresenter implements Presenter {
         if (mCharacterId == -1 || mCharacterName == null)
             throw new IllegalStateException("initializePresenter was not well initialised");
 
+        askForCharacterDetails();
+    }
+
+    public void askForCharacterDetails() {
         mCharacterSubscription = mGetCharacterInformationUsecase.execute()
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(this::onCharacterReceived, this::manageCharacterError);
     }
 

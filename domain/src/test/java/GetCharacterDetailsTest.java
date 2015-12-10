@@ -3,8 +3,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+
+import rx.Observable;
+import rx.Scheduler;
 import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.Usecase;
+import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -14,6 +19,7 @@ import static org.mockito.internal.verification.VerificationModeFactory.only;
 public class GetCharacterDetailsTest {
 	private final static int FAKE_CHARACTER_ID = 69;
 	@Mock CharacterRepository mRepository;
+	@Mock Scheduler mockScheduler;
 
 	@Before public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -22,6 +28,7 @@ public class GetCharacterDetailsTest {
 	@Test public void testThatDetailUsecaseIsCalledOnce() throws Exception {
 		CharacterDetailsUsecase detailsUsecase = givenACharacterUsecase();
 
+		Mockito.when(mRepository.getCharacter(FAKE_CHARACTER_ID)).thenReturn(getFakeCharacterObservable());
 		detailsUsecase.execute();
 
 		Mockito.verify(mRepository, only()).getCharacter(FAKE_CHARACTER_ID);
@@ -34,7 +41,10 @@ public class GetCharacterDetailsTest {
 	}
 
 	private CharacterDetailsUsecase givenACharacterUsecase() {
-		return new CharacterDetailsUsecase(
-			FAKE_CHARACTER_ID, mRepository);
+		return new CharacterDetailsUsecase(FAKE_CHARACTER_ID, mRepository, mockScheduler, mockScheduler);
+	}
+
+	private Observable<MarvelCharacter> getFakeCharacterObservable() {
+		return Observable.just(new MarvelCharacter("", -1));
 	}
 }
