@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 
@@ -16,6 +15,7 @@ import static org.mockito.Mockito.*;
 public class DetailPresenterTest {
     @Mock CharacterDetailView mockDetailView;
     @Mock CharacterDetailsUsecase mockDetailsUsecase;
+    final int FAKE_CHARACTER_ID = 0;
 
     @Before public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -30,8 +30,42 @@ public class DetailPresenterTest {
         verify(mockDetailsUsecase, times(1)).execute();
     }
 
+    @Test public void testThatPresentersOpensComicsView() throws Exception {
+        CharacterDetailPresenter characterDetailPresenter = givenACharacterDetailPresenter();
+
+        characterDetailPresenter.onComicsIndicatorPressed();
+
+        verify(mockDetailView, times(1)).goToCharacterComicsView(FAKE_CHARACTER_ID);
+    }
+
+    @Test public void testThatPresentersOpensSeriesView() throws Exception {
+        CharacterDetailPresenter characterDetailPresenter = givenACharacterDetailPresenter();
+
+        characterDetailPresenter.onSeriesIndicatorPressed();
+
+        verify(mockDetailView, times(1)).goToCharacterSeriesView(FAKE_CHARACTER_ID);
+    }
+
+    @Test public void testThatPresentersOpensStoriesView() throws Exception {
+        CharacterDetailPresenter characterDetailPresenter = givenACharacterDetailPresenter();
+
+        characterDetailPresenter.onStoriesIndicatorPressed();
+
+        verify(mockDetailView, times(1)).goToCharacterStoriesView(FAKE_CHARACTER_ID);
+    }
+
+    @Test public void testThatPresentersOpensEventsView() throws Exception {
+        CharacterDetailPresenter characterDetailPresenter = givenACharacterDetailPresenter();
+
+        characterDetailPresenter.onEventIndicatorPressed();
+
+        verify(mockDetailView, times(1)).goToCharacterEventsView(FAKE_CHARACTER_ID);
+    }
+
     private CharacterDetailPresenter givenACharacterDetailPresenter(){
-        return new CharacterDetailPresenter(mockDetailsUsecase);
+        CharacterDetailPresenter characterDetailPresenter = new CharacterDetailPresenter(mockDetailsUsecase);
+        characterDetailPresenter.attachView(mockDetailView);
+        return characterDetailPresenter;
     }
 
     private Observable<MarvelCharacter> getFakeObservableCharacter() {
