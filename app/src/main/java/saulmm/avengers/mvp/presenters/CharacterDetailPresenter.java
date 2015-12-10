@@ -5,11 +5,8 @@
  */
 package saulmm.avengers.mvp.presenters;
 
-import android.content.Context;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
