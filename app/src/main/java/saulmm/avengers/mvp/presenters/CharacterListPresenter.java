@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import saulmm.avengers.GetCharactersUsecase;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterListView;
@@ -93,7 +91,7 @@ import saulmm.avengers.mvp.views.View;
 
      private void onNewCharactersReceived(List<MarvelCharacter> newCharacters) {
          mCharacters.addAll(newCharacters);
-         mAvengersView.updateCharacterList(GetCharactersUsecase.CHARACTERS_LIMIT);
+         mAvengersView.updateCharacterList(GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT);
 
          mAvengersView.hideLoadingIndicator();
          mIsTheCharacterRequestRunning = false;

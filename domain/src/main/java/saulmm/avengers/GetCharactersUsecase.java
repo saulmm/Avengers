@@ -10,13 +10,14 @@ import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 public class GetCharactersUsecase implements Usecase<List<MarvelCharacter>> {
-    public final static int CHARACTERS_LIMIT = 20;
+    public final static int DEFAULT_CHARACTERS_LIMIT = 20;
 
-    Scheduler mResultsThread;
-    Scheduler mExecutorThread;
+    private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
+    private final Scheduler mResultsThread;
+    private final Scheduler mExecutorThread;
 
     private final CharacterRepository mRepository;
-    private int currentOffset;
+    private int mCurrentOffset;
 
     @Inject public GetCharactersUsecase(CharacterRepository repository,
         @Named("ui_thread") Scheduler uiThread,
@@ -29,22 +30,34 @@ public class GetCharactersUsecase implements Usecase<List<MarvelCharacter>> {
 
     @Override
     public Observable<List<MarvelCharacter>> execute() {
-        return mRepository.getCharacters(currentOffset)
+        return mRepository.getCharacters(mCurrentOffset)
             .observeOn(mResultsThread)
             .subscribeOn(mExecutorThread);
     }
 
     public Observable<List<MarvelCharacter>> executeIncreasingOffset() {
-        currentOffset += CHARACTERS_LIMIT;
+        mCurrentOffset += mCharactersLimit;
 
-        return mRepository.getCharacters(currentOffset)
+        return mRepository.getCharacters(mCurrentOffset)
                 .observeOn(mResultsThread)
                 .subscribeOn(mExecutorThread)
                 .doOnError(new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        currentOffset -= CHARACTERS_LIMIT;
+                        mCurrentOffset -= mCharactersLimit;
                     }
                 });
+    }
+
+    public void setCharactersLimit(int charactersLimit) {
+        mCharactersLimit = charactersLimit;
+    }
+
+    public void setCurrentOffset(int currentOffset) {
+        mCurrentOffset = currentOffset;
+    }
+
+    public int getCurrentOffset() {
+        return mCurrentOffset;
     }
 }
