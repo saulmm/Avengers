@@ -57,8 +57,7 @@ public class ListPresenterTest {
 	@Test public void testThatPresenterShowsALightErrorLoadingMoreCharacters() throws Exception {
 		CharacterListPresenter listPresenter = givenAListPresenter();
 
-		when(mockGetCharacterUsecase.executeIncreasingOffset()).thenReturn(
-				Observable.error(new Exception()));
+		when(mockGetCharacterUsecase.executeIncreasingOffset()).thenReturn(Observable.error(new Exception()));
 		listPresenter.askForNewCharacters();
 
 		verify(mockCharacterListView, times(1)).showLightError();

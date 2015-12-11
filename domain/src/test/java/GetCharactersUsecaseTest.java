@@ -13,11 +13,15 @@ import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.when;
+import static saulmm.avengers.GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT;
 
-public class GetCharacterListTest {
+public class GetCharactersUsecaseTest {
 	@Mock CharacterRepository mockRepository;
 
 	@Before public void setUp() throws Exception {
@@ -30,13 +34,14 @@ public class GetCharacterListTest {
 		assertThat(charactersUsecase, instanceOf(GetCharactersUsecase.class));
 	}
 
-//	@Test public void testThatCharactersUsecaseIsCalledOnce() throws Exception {
-//		GetCharactersUsecase charactersUsecase = givenACharactersUsecase();
-//
-//		charactersUsecase.execute();
-//
-//		Mockito.verify(mockRepository, only()).getCharacters(0);
-//	}
+	@Test public void testThatCharactersUsecaseIncrementsOffset() throws Exception {
+		GetCharactersUsecase charactersUsecase = givenACharactersUsecase();
+
+		when(mockRepository.getCharacters(anyInt())).thenReturn(getFakeObservableCharacterList());
+		charactersUsecase.executeIncreasingOffset();
+
+		assertThat(charactersUsecase.getCurrentOffset(), is(DEFAULT_CHARACTERS_LIMIT));
+	}
 
 	@Test public void testThatCharactersUsecaseWithOffsetIsCalledOnce() throws Exception {
 		GetCharactersUsecase charactersUsecase = givenACharactersUsecase();
@@ -49,9 +54,8 @@ public class GetCharacterListTest {
 	}
 
 	private GetCharactersUsecase givenACharactersUsecase() {
-		GetCharactersUsecase charactersUsecase = new GetCharactersUsecase(mockRepository,
-				Schedulers.trampoline(), Schedulers.newThread());
-		return charactersUsecase;
+		return new GetCharactersUsecase(mockRepository,
+				Schedulers.io(), Schedulers.newThread());
 	}
 
 	private Observable<List<MarvelCharacter>> getFakeObservableCharacterList() {
