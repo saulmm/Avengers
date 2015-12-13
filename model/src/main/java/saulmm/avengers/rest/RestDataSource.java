@@ -53,8 +53,6 @@ public class RestDataSource implements CharacterRepository {
         client.interceptors().add(signingIterceptor);
         client.interceptors().add(logginInterceptor);
 
-
-
         Gson customGsonInstance = new GsonBuilder()
             .registerTypeAdapter(new TypeToken<List<MarvelCharacter>>() {}.getType(),
                 new MarvelResultsDeserializer<MarvelCharacter>())
