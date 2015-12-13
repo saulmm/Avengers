@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
+
+import java.lang.reflect.Type;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit.GsonConverterFactory;
