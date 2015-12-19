@@ -7,7 +7,7 @@ package saulmm.avengers;
 
 import rx.Observable;
 
-public interface Usecase<T> {
+public abstract class Usecase<T> {
 
-    Observable<T> execute();
+    abstract Observable<T> execute();
 }

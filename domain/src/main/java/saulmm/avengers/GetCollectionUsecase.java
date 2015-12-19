@@ -6,7 +6,7 @@ import rx.Observable;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.repository.CharacterRepository;
 
-public class GetCollectionUsecase implements Usecase<List<CollectionItem>> {
+public class GetCollectionUsecase extends Usecase<List<CollectionItem>> {
 	private final CharacterRepository mRepository;
 	private final int mCharacterId;
 

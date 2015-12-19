@@ -13,7 +13,7 @@ import rx.Scheduler;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
-public class CharacterDetailsUsecase implements Usecase<MarvelCharacter> {
+public class CharacterDetailsUsecase extends Usecase<MarvelCharacter> {
     private final CharacterRepository mRepository;
     private final Scheduler mResultsThread;
     private final Scheduler mExecutorThread;

@@ -9,7 +9,7 @@ import rx.functions.Action1;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
-public class GetCharactersUsecase implements Usecase<List<MarvelCharacter>> {
+public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
     public final static int DEFAULT_CHARACTERS_LIMIT = 20;
 
     private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
