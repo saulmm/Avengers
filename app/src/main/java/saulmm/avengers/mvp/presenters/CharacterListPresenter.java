@@ -80,7 +80,7 @@ import saulmm.avengers.mvp.views.View;
         mAvengersView.showLoadingMoreCharactersIndicator();
         mIsTheCharacterRequestRunning = true;
 
-        mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
+        mCharactersSubscription = mCharactersUsecase.execute()
             .subscribe(this::onNewCharactersReceived, this::onNewCharactersError);
     }
 
