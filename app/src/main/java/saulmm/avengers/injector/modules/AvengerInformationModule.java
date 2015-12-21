@@ -23,9 +23,8 @@ public class AvengerInformationModule {
         mCharacterId = characterId;
     }
 
-    @Provides @Activity CharacterDetailsUsecase provideGetCharacterInformationUsecase (CharacterRepository repository, @Named("ui_thread") Scheduler uiThread,
-                                                                                       @Named("executor_thread") Scheduler executorThread) {
-        return new CharacterDetailsUsecase(mCharacterId, repository, uiThread, executorThread);
+    @Provides @Activity CharacterDetailsUsecase provideGetCharacterInformationUsecase (CharacterRepository repository) {
+        return new CharacterDetailsUsecase(mCharacterId, repository);
     }
 
     @Provides @Activity GetCollectionUsecase provideGetCharacterComicsUsecase (CharacterRepository repository) {

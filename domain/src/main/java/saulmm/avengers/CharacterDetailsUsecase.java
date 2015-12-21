@@ -13,27 +13,19 @@ import rx.Scheduler;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
-public class CharacterDetailsUsecase implements Usecase<MarvelCharacter> {
+public class CharacterDetailsUsecase extends Usecase<MarvelCharacter> {
     private final CharacterRepository mRepository;
-    private final Scheduler mResultsThread;
-    private final Scheduler mExecutorThread;
     private int mCharacterId;
 
     @Inject public CharacterDetailsUsecase(int characterId,
-        CharacterRepository repository,
-        @Named("ui_thread") Scheduler uiThread,
-        @Named("executor_thread") Scheduler executorThread) {
+        CharacterRepository repository) {
 
         mCharacterId = characterId;
         mRepository = repository;
-        mResultsThread = uiThread;
-        mExecutorThread = executorThread;
     }
 
     @Override
-    public Observable<MarvelCharacter> execute() {
-        return mRepository.getCharacter(mCharacterId)
-                .observeOn(mResultsThread)
-                .subscribeOn(mExecutorThread);
+    public Observable<MarvelCharacter> buildObservable() {
+        return mRepository.getCharacter(mCharacterId);
     }
 }

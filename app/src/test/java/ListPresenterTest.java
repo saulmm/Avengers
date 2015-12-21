@@ -57,7 +57,7 @@ public class ListPresenterTest {
 	@Test public void testThatPresenterShowsALightErrorLoadingMoreCharacters() throws Exception {
 		CharacterListPresenter listPresenter = givenAListPresenter();
 
-		when(mockGetCharacterUsecase.executeIncreasingOffset()).thenReturn(Observable.error(new Exception()));
+		when(mockGetCharacterUsecase.execute()).thenReturn(Observable.error(new Exception()));
 		listPresenter.askForNewCharacters();
 
 		verify(mockCharacterListView, times(1)).showLightError();
@@ -66,10 +66,10 @@ public class ListPresenterTest {
 	@Test public void testThatPresenterRequestMoreCharacters() throws Exception {
 		CharacterListPresenter listPresenter = givenAListPresenter();
 
-		when(mockGetCharacterUsecase.executeIncreasingOffset()).thenReturn(getFakeObservableCharacterList());
+		when(mockGetCharacterUsecase.execute()).thenReturn(getFakeObservableCharacterList());
 		listPresenter.askForNewCharacters();
 
-		verify(mockGetCharacterUsecase, only()).executeIncreasingOffset();
+		verify(mockGetCharacterUsecase, only()).execute();
 	}
 
 	private ArrayList<MarvelCharacter> givenAFakeCharacterList() {

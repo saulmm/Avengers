@@ -17,12 +17,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.when;
 import static saulmm.avengers.GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT;
 
 public class GetCharactersUsecaseTest {
 	@Mock CharacterRepository mockRepository;
+	@Mock Scheduler mockUiScheduler;
+	@Mock Scheduler mockExecutorScheduler;
 
 	@Before public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -36,26 +39,26 @@ public class GetCharactersUsecaseTest {
 
 	@Test public void testThatCharactersUsecaseIncrementsOffset() throws Exception {
 		GetCharactersUsecase charactersUsecase = givenACharactersUsecase();
-
 		when(mockRepository.getCharacters(anyInt())).thenReturn(getFakeObservableCharacterList());
-		charactersUsecase.executeIncreasingOffset();
 
-		assertThat(charactersUsecase.getCurrentOffset(), is(DEFAULT_CHARACTERS_LIMIT));
+		charactersUsecase.execute();
+		charactersUsecase.execute();
+		charactersUsecase.execute();
+
+		assertThat(charactersUsecase.getCurrentOffset(), is(DEFAULT_CHARACTERS_LIMIT * 3));
 	}
 
 	@Test public void testThatCharactersUsecaseWithOffsetIsCalledOnce() throws Exception {
 		GetCharactersUsecase charactersUsecase = givenACharactersUsecase();
-		int fakeCurrentOffset = 20;
+		when(mockRepository.getCharacters(anyInt())).thenReturn(getFakeObservableCharacterList());
 
-		when(mockRepository.getCharacters(fakeCurrentOffset)).thenReturn(getFakeObservableCharacterList());
-		charactersUsecase.executeIncreasingOffset();
-		
-		Mockito.verify(mockRepository, only()).getCharacters(fakeCurrentOffset);
+		charactersUsecase.execute();
+
+		Mockito.verify(mockRepository, only()).getCharacters(anyInt());
 	}
 
 	private GetCharactersUsecase givenACharactersUsecase() {
-		return new GetCharactersUsecase(mockRepository,
-				Schedulers.io(), Schedulers.newThread());
+		return new GetCharactersUsecase(mockRepository, mockUiScheduler, mockExecutorScheduler);
 	}
 
 	private Observable<List<MarvelCharacter>> getFakeObservableCharacterList() {

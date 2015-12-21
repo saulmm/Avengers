@@ -37,9 +37,8 @@ public class CollectionPresenter implements Presenter {
 
 	@Override
 	public void onCreate() {
-		mGetCollectionUsecase.execute(mCollectionType)
-			.subscribeOn(Schedulers.newThread())
-			.observeOn(AndroidSchedulers.mainThread())
+		mGetCollectionUsecase.setType(mCollectionType);
+		mGetCollectionUsecase.execute()
 			.subscribe(this::onCollectionItemsReceived);
 	}
 

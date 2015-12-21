@@ -41,7 +41,7 @@ public class GetCharacterDetailsTest {
 	}
 
 	private CharacterDetailsUsecase givenACharacterUsecase() {
-		return new CharacterDetailsUsecase(FAKE_CHARACTER_ID, mRepository, mockScheduler, mockScheduler);
+		return new CharacterDetailsUsecase(FAKE_CHARACTER_ID, mRepository);
 	}
 
 	private Observable<MarvelCharacter> getFakeCharacterObservable() {

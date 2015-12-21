@@ -5,9 +5,17 @@
  */
 package saulmm.avengers;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import rx.Observable;
+import rx.Scheduler;
+import rx.Subscriber;
 
-public interface Usecase<T> {
+public abstract class Usecase<T> {
+    public abstract Observable<T> buildObservable();
 
-    Observable<T> execute();
+    public Observable<T> execute() {
+        return buildObservable();
+    }
 }
