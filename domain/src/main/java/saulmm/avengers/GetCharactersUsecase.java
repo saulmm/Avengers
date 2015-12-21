@@ -15,12 +15,13 @@ public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
     private final CharacterRepository mRepository;
     private int mCurrentOffset;
 
-    @Inject @Named("ui_thread") Scheduler uiThread;
-    @Inject @Named("executor_thread") Scheduler executorThread;
+     Scheduler uiThread, executorThread;
 
 
-    @Inject public GetCharactersUsecase(CharacterRepository repository) {
+    @Inject public GetCharactersUsecase(CharacterRepository repository,  @Named("ui_thread") Scheduler uiThread,  @Named("executor_thread") Scheduler executorThread) {
         mRepository = repository;
+        this.uiThread = uiThread;
+        this.executorThread = executorThread;
     }
 
     @Override
