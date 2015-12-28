@@ -21,6 +21,8 @@ android {
 
         buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${marvel_public_key}\""
         buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${marvel_private_key}\""
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     //noinspection GroovyAssignabilityCheck
@@ -63,4 +65,11 @@ dependencies {
     // Test
     testCompile "org.mockito:mockito-core:${test.mockito}"
     testCompile 'junit:junit:4.11'
+
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
+    androidTestCompile'com.android.support:support-annotations:23.1.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.1'
 }
