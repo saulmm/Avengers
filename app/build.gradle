@@ -72,5 +72,10 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
 
-    androidTestCompile "com.android.support:support-annotations:$libs.supportVersion"
+    androidTestApt "com.google.dagger:dagger-compiler:${libs.dagger}"
+
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$libs.supportVersion"
 }
