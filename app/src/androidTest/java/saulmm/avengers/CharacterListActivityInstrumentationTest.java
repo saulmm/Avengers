@@ -3,6 +3,7 @@ package saulmm.avengers;
 
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -32,10 +33,20 @@ public class CharacterListActivityInstrumentationTest {
 
     @Test
     public void clickOnAvenger() {
+        waitForRequest();
+
         Espresso.onView(withId(R.id.activity_avengers_recycler))
             .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        intended(hasComponent(CharacterDetailActivity.class.getName()));
+        intended(hasComponent(CharacterDetailActivity.class.getCanonicalName()));
+    }
+
+    public void waitForRequest() {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

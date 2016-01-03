@@ -10,7 +10,7 @@ ext {
     ]
 
     libraries = [
-        supportVersion      : "23.1.0",
+        supportVersion      : "23.1.1",
         dagger              : "2.0",
         rxjava              : "1.0.0",
         rxandroid           : "0.24.0",
@@ -24,7 +24,11 @@ ext {
     ]
 
     testingLibraries = [
-        mockito             : "1.+"
+        junit               : "4.11",
+        mockito             : "1.+",
+        espresso            : "2.2.1",
+        espressoRunner      : "0.4.1",
+        espressoRules       : "0.4.1"
     ]
 }
 
