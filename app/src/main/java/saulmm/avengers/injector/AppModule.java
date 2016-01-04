@@ -14,15 +14,17 @@ import saulmm.avengers.rest.RestDataSource;
 
 @Module
 public class AppModule {
-
     private final AvengersApplication mAvengersApplication;
 
     public AppModule(AvengersApplication avengersApplication) {
-
         this.mAvengersApplication = avengersApplication;
     }
 
-    @Provides @Singleton AvengersApplication provideAvengersApplicationContext () { return mAvengersApplication; }
+    @Provides @Singleton
+    AvengersApplication provideAvengersApplicationContext() {
+        return mAvengersApplication; }
 
-    @Provides @Singleton CharacterRepository provideDataRepository (RestDataSource restDataSource) { return restDataSource; }
+    @Provides @Singleton
+    CharacterRepository provideDataRepository(RestDataSource restDataSource) {
+        return restDataSource; }
 }

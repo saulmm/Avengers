@@ -1,6 +1,5 @@
 package saulmm.avengers.tests;
 
-
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.Intents;
@@ -15,10 +14,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
+
 import saulmm.avengers.R;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.rest.RestDataSource;
 import saulmm.avengers.views.activities.CharacterDetailActivity;
 import saulmm.avengers.views.activities.CharacterListActivity;
 
@@ -29,34 +31,19 @@ import static android.support.test.espresso.intent.Intents.times;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-@RunWith(AndroidJUnit4.class)
 @LargeTest
+@RunWith(AndroidJUnit4.class)
 public class CharacterListActivityInstrumentationTest {
 
     @Rule
     public IntentsTestRule<CharacterListActivity> mCharacterListIntentRule =
             new IntentsTestRule<>(CharacterListActivity.class);
 
-    @Before
-    public void setup() {
-    }
-
     @Test
     public void testThatAClickOnTheAvengerOPensTheDetailActivity() {
-        waitForRequest();
-
         onView(ViewMatchers.withId(R.id.activity_avengers_recycler))
             .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         intended(hasComponent(CharacterDetailActivity.class.getCanonicalName()));
     }
-
-    public void waitForRequest() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
