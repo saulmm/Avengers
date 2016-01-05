@@ -2,13 +2,9 @@ package saulmm.avengers.runner;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.test.internal.util.AndroidRunnerParams;
-import android.support.test.runner.AndroidJUnit4;
 import android.support.test.runner.AndroidJUnitRunner;
 
-import org.junit.runners.model.InitializationError;
-
-import saulmm.avengers.tests.TestAvengersApplication;
+import saulmm.avengers.TestAvengersApplication;
 
 /**
  * Created by saulmm on 04/01/16.

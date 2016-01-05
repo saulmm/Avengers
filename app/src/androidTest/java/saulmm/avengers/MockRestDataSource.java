@@ -1,4 +1,4 @@
-package saulmm.avengers.tests;
+package saulmm.avengers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import rx.Observable;
+import saulmm.avengers.TestData;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;

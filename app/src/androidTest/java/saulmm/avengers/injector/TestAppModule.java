@@ -3,15 +3,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package saulmm.avengers.tests;
+package saulmm.avengers.injector;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.repository.CharacterRepository;
-import saulmm.avengers.rest.RestDataSource;
+import saulmm.avengers.MockRestDataSource;
+import saulmm.avengers.TestAvengersApplication;
 
 @Module
 public class TestAppModule {
