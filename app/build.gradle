@@ -59,6 +59,7 @@ dependencies {
     testCompile "org.mockito:mockito-core:$test.mockito"
     testCompile "junit:junit:$test.junit"
 
+    androidTestCompile "com.squareup.okhttp:mockwebserver:$libs.okhttp"
     androidTestCompile "com.android.support.test:runner:$test.espressoRunner"
     androidTestCompile "com.android.support.test:rules:$test.espressoRules"
     androidTestCompile("com.android.support.test.espresso:espresso-core:$test.espresso") {
@@ -78,4 +79,5 @@ dependencies {
 
 configurations.all {
     resolutionStrategy.force "com.android.support:support-annotations:$libs.supportVersion"
+    resolutionStrategy.force "com.squareup.okhttp:okhttp:$libs.okhttp"
 }
