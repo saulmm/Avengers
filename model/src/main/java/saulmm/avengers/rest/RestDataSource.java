@@ -34,6 +34,10 @@ import static saulmm.avengers.entities.CollectionItem.SERIES;
 import static saulmm.avengers.entities.CollectionItem.STORIES;
 
 public class RestDataSource implements CharacterRepository {
+    public static String END_POINT       = "http://gateway.marvel.com/";
+    public static String PARAM_API_KEY   = "apikey";
+    public static String PARAM_HASH      = "hash";
+    public static String PARAM_TIMESTAMP = "ts";
 
     private final MarvelApi mMarvelApi;
     public final static int MAX_ATTEMPS = 3;
@@ -63,7 +67,7 @@ public class RestDataSource implements CharacterRepository {
             .create();
 
         Retrofit marvelApiAdapter = new Retrofit.Builder()
-            .baseUrl(MarvelApi.END_POINT)
+            .baseUrl(END_POINT)
             .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .client(client)

@@ -6,6 +6,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
 import saulmm.avengers.rest.MarvelApi;
+import saulmm.avengers.rest.RestDataSource;
 import saulmm.avengers.rest.utils.MarvelApiUtils;
 
 public class MarvelSigningIterceptor implements Interceptor {
@@ -25,9 +26,9 @@ public class MarvelSigningIterceptor implements Interceptor {
 			.scheme(oldRequest.httpUrl().scheme())
 			.host(oldRequest.httpUrl().host());
 
-		authorizedUrlBuilder.addQueryParameter(MarvelApi.PARAM_API_KEY, mApiKey)
-			.addQueryParameter(MarvelApi.PARAM_TIMESTAMP, MarvelApiUtils.getUnixTimeStamp())
-			.addQueryParameter(MarvelApi.PARAM_HASH, marvelHash);
+		authorizedUrlBuilder.addQueryParameter(RestDataSource.PARAM_API_KEY, mApiKey)
+			.addQueryParameter(RestDataSource.PARAM_TIMESTAMP, MarvelApiUtils.getUnixTimeStamp())
+			.addQueryParameter(RestDataSource.PARAM_HASH, marvelHash);
 
 		Request newRequest = oldRequest.newBuilder()
 			.method(oldRequest.method(), oldRequest.body())

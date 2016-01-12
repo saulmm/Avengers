@@ -12,6 +12,7 @@ import dagger.Provides;
 import saulmm.avengers.repository.CharacterRepository;
 import saulmm.avengers.MockRestDataSource;
 import saulmm.avengers.TestAvengersApplication;
+import saulmm.avengers.rest.Endpoint;
 
 @Module
 public class TestAppModule {
@@ -26,4 +27,9 @@ public class TestAppModule {
     @Provides @Singleton TestAvengersApplication provideAvengersApplicationContext () { return mTestAvengersApplication; }
 
     @Provides @Singleton CharacterRepository provideDataRepository () { return new MockRestDataSource(); }
+
+    @Provides
+    Endpoint provideRestEndpoint() {
+        return new Endpoint("http://gateway.marvel.com/");
+    }
 }

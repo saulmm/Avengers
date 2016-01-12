@@ -22,7 +22,7 @@ android {
         buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${marvel_public_key}\""
         buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${marvel_private_key}\""
 
-        testInstrumentationRunner "saulmm.avengers.runner.AvengerTestRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     //noinspection GroovyAssignabilityCheck

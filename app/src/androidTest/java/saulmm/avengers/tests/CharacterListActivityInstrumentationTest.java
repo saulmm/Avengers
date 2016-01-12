@@ -10,6 +10,10 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.widget.TextView;
 
+import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +22,7 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 import saulmm.avengers.R;
+import saulmm.avengers.TestData;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.repository.CharacterRepository;
@@ -40,18 +45,33 @@ import static org.hamcrest.CoreMatchers.is;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class CharacterListActivityInstrumentationTest {
+    private MockWebServer mMockWebServer;
 
     @Rule
     public IntentsTestRule<CharacterListActivity> mCharacterListIntentRule =
             new IntentsTestRule<>(CharacterListActivity.class);
 
+    @Before
+    public void setUp() throws Exception {
+        mMockWebServer = new MockWebServer();
+        mMockWebServer.start();
+        RestDataSource.END_POINT = mMockWebServer.getUrl("/").toString();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        mMockWebServer.shutdown();
+    }
+
     @Test
     public void testThatAvengersDataIsShown() {
+        mMockWebServer.enqueue(new MockResponse().setBody(TestData.TWENTY_CHARACTERS_JSON));
         onView(withText("Arcana")).check(matches(isDisplayed()));
     }
 
     @Test
     public void testThatAClickOnTheAvengerOpensTheDetailActivity() {
+        mMockWebServer.enqueue(new MockResponse().setBody(TestData.SINGLE_CHARACTER_JSON));
         onView(withId(R.id.activity_avengers_recycler))
             .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
