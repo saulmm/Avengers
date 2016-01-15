@@ -35,7 +35,7 @@ public class CharacterTest {
         Thumbnail thumbnail= new Thumbnail();
         Whitebox.setInternalState(thumbnail, "path", "D://a-folder/file");
         Whitebox.setInternalState(thumbnail, "extension", "txt");
-        Whitebox.setInternalState(character, "description", "a sample description");
+        Whitebox.setInternalState(character, "thumbnail", thumbnail);
 
         //then
         assertEquals("D://a-folder/file.txt", character.getImageUrl());
