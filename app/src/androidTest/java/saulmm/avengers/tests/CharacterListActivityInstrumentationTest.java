@@ -1,5 +1,6 @@
 package saulmm.avengers.tests;
 
+import android.content.Intent;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.Intents;
@@ -8,10 +9,13 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.util.Log;
 import android.widget.TextView;
 
+import com.squareup.okhttp.mockwebserver.Dispatcher;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,34 +51,29 @@ import static org.hamcrest.CoreMatchers.is;
 public class CharacterListActivityInstrumentationTest {
     private MockWebServer mMockWebServer;
 
-    @Rule
-    public IntentsTestRule<CharacterListActivity> mCharacterListIntentRule =
-            new IntentsTestRule<>(CharacterListActivity.class);
+    @Rule public ActivityTestRule<CharacterListActivity> mCharacterListIntentRule =
+            new ActivityTestRule<>(CharacterListActivity.class, false, false);
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
         mMockWebServer = new MockWebServer();
         mMockWebServer.start();
+
         RestDataSource.END_POINT = mMockWebServer.getUrl("/").toString();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Test public void showTheErrorViewOnError() {
+        mMockWebServer.enqueue(new MockResponse().setBody(""));
+        MockResponse mockResponse = new MockResponse();
+        mockResponse.setResponseCode(500);
+        mMockWebServer.enqueue(mockResponse);
+
+        mCharacterListIntentRule.launchActivity(new Intent());
+
+        onView(withId(R.id.view_error_message)).check(matches(isDisplayed()));
+        onView(withId(R.id.view_error_retry_button)).check(matches(isDisplayed()));
+    }
+
+    @After public void tearDown() throws Exception {
         mMockWebServer.shutdown();
-    }
-
-    @Test
-    public void testThatAvengersDataIsShown() {
-        mMockWebServer.enqueue(new MockResponse().setBody(TestData.TWENTY_CHARACTERS_JSON));
-        onView(withText("Arcana")).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testThatAClickOnTheAvengerOpensTheDetailActivity() {
-        mMockWebServer.enqueue(new MockResponse().setBody(TestData.SINGLE_CHARACTER_JSON));
-        onView(withId(R.id.activity_avengers_recycler))
-            .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
-        intended(hasComponent(CharacterDetailActivity.class.getCanonicalName()));
     }
 }
