@@ -65,9 +65,9 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeDependencyInjector();
         initializeBinding();
         initButterknife();
-        initializeDependencyInjector();
         initializePresenter();
         initToolbar();
         initTransitions();

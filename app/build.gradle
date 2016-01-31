@@ -21,6 +21,8 @@ android {
 
         buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${marvel_public_key}\""
         buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${marvel_private_key}\""
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     //noinspection GroovyAssignabilityCheck
@@ -34,23 +36,16 @@ android {
 dependencies {
     compile project(':domain')
 
-
-    // Others
     compile "com.github.bumptech.glide:glide:${libs.glide}"
     compile "jp.wasabeef:recyclerview-animators:${libs.recycler_animators}"
-
     compile "com.jakewharton:butterknife:${libs.butterknife}"
     compile "de.hdodenhof:circleimageview:${libs.circleimageview}"
-
     compile "io.reactivex:rxandroid:${libs.rxandroid}"
 
-
-    // Square
     compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
     compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
     compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
 
-    // Google
     apt "com.google.dagger:dagger-compiler:${libs.dagger}"
 
     // Android
@@ -61,6 +56,28 @@ dependencies {
     compile "com.android.support:palette-v7:${libs.supportVersion}"
 
     // Test
-    testCompile "org.mockito:mockito-core:${test.mockito}"
-    testCompile 'junit:junit:4.11'
+    testCompile "org.mockito:mockito-core:$test.mockito"
+    testCompile "junit:junit:$test.junit"
+
+    androidTestCompile "com.squareup.okhttp:mockwebserver:$libs.okhttp"
+    androidTestCompile "com.android.support.test:runner:$test.espressoRunner"
+    androidTestCompile "com.android.support.test:rules:$test.espressoRules"
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$test.espresso") {
+        exclude group: 'javax.inject'
+    }
+
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$test.espresso"
+    androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$test.espresso") {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+
+    androidTestApt "com.google.dagger:dagger-compiler:${libs.dagger}"
+
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$libs.supportVersion"
+    resolutionStrategy.force "com.squareup.okhttp:okhttp:$libs.okhttp"
 }

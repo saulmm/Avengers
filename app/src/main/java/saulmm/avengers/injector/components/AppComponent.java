@@ -10,9 +10,11 @@ import javax.inject.Singleton;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.injector.AppModule;
 import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.rest.Endpoint;
 
 @Singleton @Component(modules = AppModule.class)
 public interface AppComponent {
     AvengersApplication app();
     CharacterRepository dataRepository();
+    Endpoint restEndpoint();
 }

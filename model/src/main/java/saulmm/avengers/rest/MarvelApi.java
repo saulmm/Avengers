@@ -14,11 +14,6 @@ import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
 
 public interface MarvelApi {
-    String END_POINT       = "http://gateway.marvel.com/";
-    String PARAM_API_KEY   = "apikey";
-    String PARAM_HASH      = "hash";
-    String PARAM_TIMESTAMP = "ts";
-
     @GET("/v1/public/characters")
     Observable<List<MarvelCharacter>> getCharacters (@Query("offset") int offset);
 
