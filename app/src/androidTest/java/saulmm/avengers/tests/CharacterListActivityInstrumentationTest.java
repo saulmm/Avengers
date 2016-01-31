@@ -52,7 +52,7 @@ public class CharacterListActivityInstrumentationTest {
     private MockWebServer mMockWebServer;
 
     @Rule public ActivityTestRule<CharacterListActivity> mCharacterListIntentRule =
-            new ActivityTestRule<>(CharacterListActivity.class, false, false);
+            new ActivityTestRule<>(CharacterListActivity.class, true, false);
 
     @Before public void setUp() throws Exception {
         mMockWebServer = new MockWebServer();
@@ -61,16 +61,12 @@ public class CharacterListActivityInstrumentationTest {
         RestDataSource.END_POINT = mMockWebServer.getUrl("/").toString();
     }
 
-    @Test public void showTheErrorViewOnError() {
-        mMockWebServer.enqueue(new MockResponse().setBody(""));
-        MockResponse mockResponse = new MockResponse();
-        mockResponse.setResponseCode(500);
-        mMockWebServer.enqueue(mockResponse);
+    @Test public void showCharacters() {
+        mMockWebServer.enqueue(new MockResponse().setBody(TestData.TWENTY_CHARACTERS_JSON));
 
-        mCharacterListIntentRule.launchActivity(new Intent());
+        mCharacterListIntentRule.launchActivity(null);
 
-        onView(withId(R.id.view_error_message)).check(matches(isDisplayed()));
-        onView(withId(R.id.view_error_retry_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.activity_avengers_recycler)).check(matches(isDisplayed()));
     }
 
     @After public void tearDown() throws Exception {
