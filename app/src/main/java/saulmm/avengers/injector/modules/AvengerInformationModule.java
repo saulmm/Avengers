@@ -14,6 +14,7 @@ import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.GetCollectionUsecase;
 import saulmm.avengers.injector.Activity;
 import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.rest.MarvelAuthorizer;
 
 @Module
 public class AvengerInformationModule {

@@ -9,8 +9,10 @@ import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
 import saulmm.avengers.AvengersApplication;
+import saulmm.avengers.BuildConfig;
 import saulmm.avengers.repository.CharacterRepository;
 import saulmm.avengers.rest.Endpoint;
+import saulmm.avengers.rest.MarvelAuthorizer;
 import saulmm.avengers.rest.RestDataSource;
 
 @Module
@@ -25,12 +27,17 @@ public class AppModule {
     AvengersApplication provideAvengersApplicationContext() {
         return mAvengersApplication; }
 
-    @Provides @Singleton
-    CharacterRepository provideDataRepository(RestDataSource restDataSource) {
-        return restDataSource; }
+    @Provides
+    MarvelAuthorizer provideMarvelAuthorizer() {
+        return new MarvelAuthorizer(BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
+    }
 
     @Provides
     Endpoint provideRestEndpoint() {
         return new Endpoint("http://gateway.marvel.com/");
     }
+
+    @Provides @Singleton
+    CharacterRepository provideDataRepository(RestDataSource restDataSource) {
+        return restDataSource; }
 }

@@ -43,13 +43,13 @@ public class RestDataSource implements CharacterRepository {
     public final static int MAX_ATTEMPS = 3;
 
     @Inject
-    public RestDataSource() {
+    public RestDataSource(MarvelAuthorizer marvelAuthorizer) {
         OkHttpClient client = new OkHttpClient();
 
         MarvelSigningIterceptor signingIterceptor =
             new MarvelSigningIterceptor(
-                "74129ef99c9fd5f7692608f17abb88f9",
-                "281eb4f077e191f7863a11620fa1865f2940ebeb");
+                marvelAuthorizer.getApiClient(),
+                marvelAuthorizer.getApiSecret());
 
         HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
         logginInterceptor.setLevel(Level.BODY);
@@ -95,7 +95,7 @@ public class RestDataSource implements CharacterRepository {
                 public Observable<? extends List<MarvelCharacter>> call(Throwable throwable) {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
                     return Observable.error(
-                        (serverError) ? new ServerErrorException() : new UknownErrorException());
+                            (serverError) ? new ServerErrorException() : new UknownErrorException());
                 }
             });
     }
