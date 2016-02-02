@@ -7,6 +7,8 @@ package saulmm.avengers.injector.components;
 
 import dagger.Component;
 import javax.inject.Singleton;
+
+import rx.Scheduler;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.injector.AppModule;
 import saulmm.avengers.repository.CharacterRepository;
@@ -19,4 +21,6 @@ public interface AppComponent {
     CharacterRepository dataRepository();
     Endpoint restEndpoint();
     MarvelAuthorizer marvelAuthorizer();
+
+    Scheduler uiThread();
 }

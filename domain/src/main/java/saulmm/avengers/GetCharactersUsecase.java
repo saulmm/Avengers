@@ -18,7 +18,9 @@ public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
      Scheduler uiThread, executorThread;
 
 
-    @Inject public GetCharactersUsecase(CharacterRepository repository,  @Named("ui_thread") Scheduler uiThread,  @Named("executor_thread") Scheduler executorThread) {
+    @Inject public GetCharactersUsecase(CharacterRepository repository,
+        @Named("ui_thread") Scheduler uiThread,  @Named("executor_thread") Scheduler executorThread) {
+
         mRepository = repository;
         this.uiThread = uiThread;
         this.executorThread = executorThread;

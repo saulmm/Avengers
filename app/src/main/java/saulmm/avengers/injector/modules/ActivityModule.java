@@ -24,16 +24,6 @@ public class ActivityModule {
         this.mContext = mContext;
     }
 
-    @Provides @Activity @Named("executor_thread")
-    Scheduler provideExecutorThread() {
-        return Schedulers.newThread();
-    }
-
-    @Provides @Activity @Named("ui_thread")
-    Scheduler provideUiThread() {
-        return AndroidSchedulers.mainThread();
-    }
-
     @Provides @Activity
     Context provideActivityContext() {
         return mContext;

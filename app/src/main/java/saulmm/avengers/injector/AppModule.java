@@ -7,7 +7,13 @@ package saulmm.avengers.injector;
 
 import dagger.Module;
 import dagger.Provides;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
+
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.BuildConfig;
 import saulmm.avengers.repository.CharacterRepository;
@@ -40,4 +46,14 @@ public class AppModule {
     @Provides @Singleton
     CharacterRepository provideDataRepository(RestDataSource restDataSource) {
         return restDataSource; }
+
+    @Provides @Named("executor_thread")
+    Scheduler provideExecutorThread() {
+        return Schedulers.newThread();
+    }
+
+    @Provides @Named("ui_thread")
+    Scheduler provideUiThread() {
+        return AndroidSchedulers.mainThread();
+    }
 }
