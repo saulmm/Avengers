@@ -6,11 +6,13 @@
 package saulmm.avengers.injector.components;
 
 import dagger.Component;
+
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import rx.Scheduler;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.injector.AppModule;
+import saulmm.avengers.injector.modules.AppModule;
 import saulmm.avengers.repository.CharacterRepository;
 import saulmm.avengers.rest.Endpoint;
 import saulmm.avengers.rest.MarvelAuthorizer;
@@ -22,5 +24,6 @@ public interface AppComponent {
     Endpoint restEndpoint();
     MarvelAuthorizer marvelAuthorizer();
 
-    Scheduler uiThread();
+    @Named("ui_thread") Scheduler uiThread();
+    @Named("executor_thread") Scheduler executorThread();
 }

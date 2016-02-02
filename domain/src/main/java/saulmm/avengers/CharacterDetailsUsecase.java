@@ -18,7 +18,9 @@ public class CharacterDetailsUsecase extends Usecase<MarvelCharacter> {
     private int mCharacterId;
 
     @Inject public CharacterDetailsUsecase(int characterId,
-        CharacterRepository repository) {
+        CharacterRepository repository,
+                                           @Named("ui_thread") Scheduler uiThread,
+                                           @Named("executor_thread") Scheduler executorThread) {
 
         mCharacterId = characterId;
         mRepository = repository;

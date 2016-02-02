@@ -2,18 +2,29 @@ package saulmm.avengers;
 
 import java.util.List;
 import javax.inject.Inject;
+import javax.inject.Named;
+
 import rx.Observable;
+import rx.Scheduler;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.repository.CharacterRepository;
 
 public class GetCollectionUsecase extends Usecase<List<CollectionItem>> {
 	private final CharacterRepository mRepository;
 	private final int mCharacterId;
+	private final Scheduler mUIThread;
+	private final Scheduler mExecutorThread;
 	private String mType;
 
-	@Inject public GetCollectionUsecase(int characterId, CharacterRepository repository) {
+	@Inject public GetCollectionUsecase(int characterId,
+		CharacterRepository repository,
+		@Named("ui_thread") Scheduler uiThread,
+		@Named("executor_thread") Scheduler executorThread) {
+
 		mRepository = repository;
 		mCharacterId = characterId;
+		mUIThread = uiThread;
+		mExecutorThread = executorThread;
 	}
 
 	public void setType(String type) {
@@ -27,6 +38,7 @@ public class GetCollectionUsecase extends Usecase<List<CollectionItem>> {
 
 	@Override
 	public Observable<List<CollectionItem>> buildObservable() {
-		return mRepository.getCharacterCollection(mCharacterId, mType);
+		return mRepository.getCharacterCollection(mCharacterId, mType)
+			.observeOn(mUIThread).subscribeOn(mExecutorThread);
 	}
 }
