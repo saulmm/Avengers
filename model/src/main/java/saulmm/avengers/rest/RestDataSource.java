@@ -18,6 +18,7 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.entities.MarvelCharacter;
@@ -78,13 +79,12 @@ public class RestDataSource implements CharacterRepository {
 
 	@Override
     public Observable<MarvelCharacter> getCharacter(final int characterId) {
-           return mMarvelApi.getCharacterById(characterId)
-               .flatMap(new Func1<List<MarvelCharacter>, Observable<MarvelCharacter>>() {
+        return mMarvelApi.getCharacterById(characterId)
+                .flatMap(new Func1<List<MarvelCharacter>, Observable<MarvelCharacter>>() {
                    @Override public Observable<MarvelCharacter> call(List<MarvelCharacter> characters) {
                        return Observable.just(characters.get(0));
                    }
                });
-
 	}
 
     @Override

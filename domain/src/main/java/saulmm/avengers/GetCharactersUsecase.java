@@ -15,22 +15,23 @@ public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
     private final CharacterRepository mRepository;
     private int mCurrentOffset;
 
-     Scheduler uiThread, executorThread;
+    private final Scheduler mUiThread;
+    private final Scheduler mExecutorThread;
 
     @Inject public GetCharactersUsecase(CharacterRepository repository,
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread) {
 
         mRepository = repository;
-        this.uiThread = uiThread;
-        this.executorThread = executorThread;
+        mUiThread = uiThread;
+        mExecutorThread = executorThread;
     }
 
     @Override
     public Observable<List<MarvelCharacter>> buildObservable() {
         return mRepository.getCharacters(mCurrentOffset)
-            .observeOn(uiThread)
-            .subscribeOn(executorThread)
+            .observeOn(mUiThread)
+            .subscribeOn(mExecutorThread)
             .doOnError(new Action1<Throwable>() {
                 @Override
                 public void call(Throwable throwable) {
