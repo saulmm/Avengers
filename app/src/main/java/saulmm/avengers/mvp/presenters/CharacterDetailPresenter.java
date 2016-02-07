@@ -29,10 +29,10 @@ public class CharacterDetailPresenter implements Presenter {
     @Override
     public void onCreate() {
         if (mCharacterId == -1 || mCharacterName == null)
-            throw new IllegalStateException("initializePresenter was not well initialised");
+            throw new IllegalStateException();
 
-        askForCharacterDetails();
         mCharacterDetailView.disableScroll();
+        askForCharacterDetails();
     }
 
     public void askForCharacterDetails() {
@@ -61,19 +61,19 @@ public class CharacterDetailPresenter implements Presenter {
         mCharacterDetailView = (CharacterDetailView) v;
     }
 
-    @SuppressWarnings("Convert2MethodRef")
     public void initializePresenter(int characterId, String characterName) {
         mCharacterId = characterId;
         mCharacterName = characterName;
     }
 
     private void manageCharacterError(Throwable error) {
-        // TODO
     }
 
     private void onCharacterReceived(MarvelCharacter character) {
         mCharacterDetailView.bindCharacter(character);
-        mCharacterDetailView.enableScroll();
+
+        if (character.getDescription() != null && !character.getDescription().equals(""))
+            mCharacterDetailView.enableScroll();
     }
 
     public void onComicsIndicatorPressed() {

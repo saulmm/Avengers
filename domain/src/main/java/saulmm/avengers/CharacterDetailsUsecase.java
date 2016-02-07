@@ -32,10 +32,6 @@ public class CharacterDetailsUsecase extends Usecase<MarvelCharacter> {
 
     @Override
     public Observable<MarvelCharacter> buildObservable() {
-        mRepository.getCharacters(0)
-                .observeOn(mUiThread)
-                .subscribeOn(mExecutorThread);
-
         return mRepository.getCharacter(mCharacterId)
             .observeOn(mUiThread)
             .subscribeOn(mExecutorThread);
