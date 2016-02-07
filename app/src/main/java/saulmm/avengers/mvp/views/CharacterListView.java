@@ -7,12 +7,12 @@ package saulmm.avengers.mvp.views;
 
 import android.app.ActivityOptions;
 import java.util.List;
-import saulmm.avengers.model.entities.Character;
+import saulmm.avengers.entities.MarvelCharacter;
 
 @SuppressWarnings("unused")
 public interface CharacterListView extends View {
 
-    void bindCharacterList(List<Character> avengers);
+    void bindCharacterList(List<MarvelCharacter> avengers);
 
     void showCharacterList();
 
@@ -37,8 +37,6 @@ public interface CharacterListView extends View {
     void hideEmptyIndicator();
 
     void updateCharacterList(int charactersLimit);
-
-    ActivityOptions getActivityOptions(int position, android.view.View clickedView);
 
     void showConnectionErrorMessage();
 

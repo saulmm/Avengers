@@ -1,7 +1,7 @@
 package saulmm.avengers.mvp.views;
 
 import java.util.List;
-import saulmm.avengers.model.entities.CollectionItem;
+import saulmm.avengers.entities.CollectionItem;
 
 public interface CollectionView extends View {
 

@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
-import saulmm.avengers.domain.GetCharactersUsecase;
-import saulmm.avengers.model.entities.Character;
-import saulmm.avengers.model.rest.exceptions.NetworkUknownHostException;
-import saulmm.avengers.model.rest.exceptions.ServerErrorException;
+import saulmm.avengers.GetCharactersUsecase;
+import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 
@@ -21,13 +19,12 @@ import saulmm.avengers.mvp.views.View;
     private boolean mIsTheCharacterRequestRunning;
     private Subscription mCharactersSubscription;
 
-    private List<Character> mCharacters;
+    private List<MarvelCharacter> mCharacters = new ArrayList<>();
     private CharacterListView mAvengersView;
 
     @Inject
     public CharacterListPresenter(GetCharactersUsecase charactersUsecase) {
         mCharactersUsecase = charactersUsecase;
-        mCharacters = new ArrayList<>();
     }
 
     @Override
@@ -62,66 +59,52 @@ import saulmm.avengers.mvp.views.View;
         if (!mIsTheCharacterRequestRunning) askForNewCharacters();
     }
 
-    @SuppressWarnings("Convert2MethodRef")
-    private void askForCharacters() {
+     public void askForCharacters() {
       mIsTheCharacterRequestRunning = true;
         mAvengersView.hideErrorView();
         mAvengersView.showLoadingView();
 
         mCharactersSubscription = mCharactersUsecase.execute()
-            .subscribe(characters -> {
-                mCharacters.addAll(characters);
-                mAvengersView.bindCharacterList(mCharacters);
-                mAvengersView.showCharacterList();
-                mAvengersView.hideEmptyIndicator();
-                mIsTheCharacterRequestRunning = false;
-
-            }, error -> {
-                showErrorView(error);
-            });
-
+            .subscribe(this::onCharactersReceived, this::showErrorView);
     }
 
-    private void askForNewCharacters() {
+     public void onCharactersReceived(List<MarvelCharacter> characters) {
+         mCharacters.addAll(characters);
+         mAvengersView.bindCharacterList(mCharacters);
+         mAvengersView.showCharacterList();
+         mAvengersView.hideEmptyIndicator();
+         mIsTheCharacterRequestRunning = false;
+     }
+
+     public void askForNewCharacters() {
         mAvengersView.showLoadingMoreCharactersIndicator();
         mIsTheCharacterRequestRunning = true;
 
-        mCharactersSubscription = mCharactersUsecase.executeIncreasingOffset()
-            .subscribe(
-
-            newCharacters -> {
-                mCharacters.addAll(newCharacters);
-                mAvengersView.updateCharacterList (
-                    GetCharactersUsecase.CHARACTERS_LIMIT);
-
-                mAvengersView.hideLoadingIndicator();
-                mIsTheCharacterRequestRunning = false;
-            },
-
-            error -> {
-                showGenericError();
-                mIsTheCharacterRequestRunning = false;
-            }
-        );
+        mCharactersSubscription = mCharactersUsecase.execute()
+            .subscribe(this::onNewCharactersReceived, this::onNewCharactersError);
     }
 
-    private void showErrorView(Throwable error) {
-        if (error instanceof NetworkUknownHostException) {
-            mAvengersView.showConnectionErrorMessage();
+     private void onNewCharactersError(Throwable error) {
+         showGenericError();
+         mIsTheCharacterRequestRunning = false;
+     }
 
-        } else if (error instanceof ServerErrorException) {
-            mAvengersView.showServerErrorMessage();
+     private void onNewCharactersReceived(List<MarvelCharacter> newCharacters) {
+         mCharacters.addAll(newCharacters);
+         mAvengersView.updateCharacterList(GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT);
 
-        } else {
-            mAvengersView.showUknownErrorMessage();
-        }
+         mAvengersView.hideLoadingIndicator();
+         mIsTheCharacterRequestRunning = false;
+     }
 
+     public void showErrorView(Throwable error) {
+        mAvengersView.showUknownErrorMessage();
         mAvengersView.hideLoadingMoreCharactersIndicator();
         mAvengersView.hideEmptyIndicator();
         mAvengersView.hideCharactersList();
     }
 
-    private void showGenericError() {
+    public void showGenericError() {
         mAvengersView.hideLoadingIndicator();
         mAvengersView.showLightError();
     }

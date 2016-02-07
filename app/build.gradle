@@ -5,11 +5,13 @@ apply plugin: 'com.android.databinding'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries;
+def test = rootProject.ext.testingLibraries;
 
 android {
     compileSdkVersion cfg.compileVersion
     buildToolsVersion cfg.buildToolsVersion
 
+    //noinspection GroovyAssignabilityCheck
     defaultConfig {
         applicationId       cfg.package
         minSdkVersion       cfg.compileVersion
@@ -19,34 +21,33 @@ android {
 
         buildConfigField "String", "MARVEL_PUBLIC_KEY", "\"${marvel_public_key}\""
         buildConfigField "String", "MARVEL_PRIVATE_KEY", "\"${marvel_private_key}\""
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    //noinspection GroovyAssignabilityCheck
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion '23.0.2'
 }
 
+//noinspection GroovyAssignabilityCheck
 dependencies {
-    // Square
-    compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
-    compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
-    compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
+    compile project(':domain')
 
-    // ReactiveX
-    compile "io.reactivex:rxjava:${libs.rxjava}"
-    compile "io.reactivex:rxandroid:${libs.rxandroid}"
-
-    // Others
     compile "com.github.bumptech.glide:glide:${libs.glide}"
     compile "jp.wasabeef:recyclerview-animators:${libs.recycler_animators}"
     compile "com.jakewharton:butterknife:${libs.butterknife}"
     compile "de.hdodenhof:circleimageview:${libs.circleimageview}"
+    compile "io.reactivex:rxandroid:${libs.rxandroid}"
 
-    // Google
-    compile "com.google.dagger:dagger:${libs.dagger}"
+    compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
+    compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
+    compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
+
     apt "com.google.dagger:dagger-compiler:${libs.dagger}"
-    compile "org.glassfish:javax.annotation:${libs.javax_annotation}"
 
     // Android
     compile "com.android.support:design:${libs.supportVersion}"
@@ -54,4 +55,30 @@ dependencies {
     compile "com.android.support:cardview-v7:${libs.supportVersion}"
     compile "com.android.support:recyclerview-v7:${libs.supportVersion}"
     compile "com.android.support:palette-v7:${libs.supportVersion}"
+
+    // Test
+    testCompile "org.mockito:mockito-core:$test.mockito"
+    testCompile "junit:junit:$test.junit"
+
+    androidTestCompile "com.squareup.okhttp:mockwebserver:$libs.okhttp"
+    androidTestCompile "com.android.support.test:runner:$test.espressoRunner"
+    androidTestCompile "com.android.support.test:rules:$test.espressoRules"
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$test.espresso") {
+        exclude group: 'javax.inject'
+    }
+
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$test.espresso"
+    androidTestCompile ("com.android.support.test.espresso:espresso-contrib:$test.espresso") {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+
+    androidTestApt "com.google.dagger:dagger-compiler:${libs.dagger}"
+
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$libs.supportVersion"
+    resolutionStrategy.force "com.squareup.okhttp:okhttp:$libs.okhttp"
 }

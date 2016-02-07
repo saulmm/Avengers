@@ -42,11 +42,10 @@
         <item name="android:minHeight">0dp</item>
     </style>
 
-    <style name="Text.CollapsedExpanded">
+    <style name="Text.Expanded">
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@android:color/transparent</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="Text.Counters">

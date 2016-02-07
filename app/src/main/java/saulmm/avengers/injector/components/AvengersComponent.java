@@ -10,12 +10,12 @@ import android.content.Context;
 import dagger.Component;
 import saulmm.avengers.injector.Activity;
 import saulmm.avengers.injector.modules.ActivityModule;
-import saulmm.avengers.views.activities.CharacterListListActivity;
+import saulmm.avengers.views.activities.CharacterListActivity;
 
 @Activity
 @Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface AvengersComponent extends ActivityComponent {
-    void inject (CharacterListListActivity activity);
+    void inject (CharacterListActivity activity);
 
     Context activityContext();
 }

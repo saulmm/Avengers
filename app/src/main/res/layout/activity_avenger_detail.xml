@@ -8,10 +8,11 @@
 	<data>
 		<import type="android.view.View"/>
 		<import type="android.text.TextUtils"/>
-		<import type="saulmm.avengers.model.entities.ComicsCollection"/>
+		<import type="saulmm.avengers.entities.ComicsCollection"/>
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
-		<variable name="character" type="saulmm.avengers.model.entities.Character"/>
+		<variable name="character" type="saulmm.avengers.entities.MarvelCharacter"/>
+		<variable name="imageCallback" type="saulmm.avengers.utils.OnCharacterImageCallback"/>
 		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
 
 	</data>
@@ -29,6 +30,7 @@
 			android:layout_height="wrap_content"
 			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 			android:fitsSystemWindows="true"
+            app:elevation="0dp"
  			>
 
 			<android.support.design.widget.CollapsingToolbarLayout
@@ -40,43 +42,44 @@
 				app:contentScrim="@{darkSwatch.rgb}"
 				>
 
-				<FrameLayout
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					app:layout_collapseMode="parallax"
-					android:fitsSystemWindows="true"
-					>
+                <ImageView
+                    android:id="@+id/character_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    presenter="@{presenter}"
+                    callback="@{imageCallback}"
+                    source="@{character.imageUrl}"
+                    tools:ignore="ContentDescription"
+                    android:foreground="@drawable/gradient_dark_up"
+                    />
 
-					<ImageView
-						android:id="@+id/character_image"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:layout_gravity="center"
-						android:scaleType="centerCrop"
-						android:fitsSystemWindows="true"
-						presenter="@{presenter}"
-						source="@{character.imageUrl}"
-						/>
 
-					<View
-						android:id="@+id/character_image_reveal"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						tools:background="#dc6767"
-						/>
-				</FrameLayout>
+                <View
+                    android:id="@+id/character_image_reveal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:background="#dc6767"
+                    />
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@drawable/gradient_dark_up"-->
+                    <!--/>-->
 
 				<android.support.v7.widget.Toolbar
 					android:id="@+id/character_toolbar"
 					android:layout_width="match_parent"
 					android:layout_height="?attr/actionBarSize"
-					android:elevation="@dimen/elevation_small"
+					android:elevation="0dp"
 					app:title="@{character.name}"
 					style="@style/Toolbar.WithNavigationBack"
 					app:layout_collapseMode="pin"
 					android:background="@null"
 					/>
-
 			</android.support.design.widget.CollapsingToolbarLayout>
 
 

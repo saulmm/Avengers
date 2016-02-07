@@ -5,12 +5,16 @@
  */
 package saulmm.avengers.injector.modules;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
-import saulmm.avengers.domain.GetCharacterInformationUsecase;
-import saulmm.avengers.domain.GetCollectionUsecase;
+import rx.Scheduler;
+import saulmm.avengers.CharacterDetailsUsecase;
+import saulmm.avengers.GetCollectionUsecase;
 import saulmm.avengers.injector.Activity;
-import saulmm.avengers.model.repository.Repository;
+import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.rest.MarvelAuthorizer;
 
 @Module
 public class AvengerInformationModule {
@@ -20,11 +24,18 @@ public class AvengerInformationModule {
         mCharacterId = characterId;
     }
 
-    @Provides @Activity GetCharacterInformationUsecase provideGetCharacterInformationUsecase (Repository repository) {
-        return new GetCharacterInformationUsecase(mCharacterId, repository);
+    @Provides @Activity CharacterDetailsUsecase provideGetCharacterInformationUsecase (
+        CharacterRepository repository,
+        @Named("ui_thread") Scheduler uiThread,
+        @Named("executor_thread") Scheduler executorThread) {
+
+        return new CharacterDetailsUsecase(mCharacterId, repository, uiThread, executorThread);
     }
 
-    @Provides @Activity GetCollectionUsecase provideGetCharacterComicsUsecase (Repository repository) {
-        return new GetCollectionUsecase(mCharacterId, repository);
+    @Provides @Activity GetCollectionUsecase provideGetCharacterComicsUsecase (CharacterRepository repository,
+        @Named("ui_thread") Scheduler uiThread,
+        @Named("executor_thread") Scheduler executorThread) {
+
+        return new GetCollectionUsecase(mCharacterId, repository, uiThread, executorThread);
     }
 }

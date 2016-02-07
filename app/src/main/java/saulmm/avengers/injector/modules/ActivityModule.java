@@ -10,15 +10,17 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Named;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import saulmm.avengers.injector.Activity;
 
 @Module
 public class ActivityModule {
-
     private final Context mContext;
 
     public ActivityModule(Context mContext) {
-
         this.mContext = mContext;
     }
 

@@ -12,6 +12,8 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -20,6 +22,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+
+import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
@@ -30,11 +34,14 @@ import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
+import saulmm.avengers.entities.CollectionItem;
+import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
 import saulmm.avengers.mvp.presenters.CharacterDetailPresenter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
+import saulmm.avengers.utils.OnCharacterImageCallback;
 import saulmm.avengers.utils.TransitionUtils;
 import saulmm.avengers.views.utils.AnimUtils;
 
@@ -42,6 +49,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     private static final String EXTRA_CHARACTER_NAME    = "character.name";
     public static final String EXTRA_CHARACTER_ID       = "character.id";
 
+    @Bind(R.id.character_collapsing)                    CollapsingToolbarLayout mCollapsing;
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
     @BindColor(R.color.brand_primary_dark)              int mColorPrimaryDark;
@@ -49,20 +57,40 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @Inject CharacterDetailPresenter mCharacterDetailPresenter;
     private ActivityAvengerDetailBinding mBinding;
 
+    private OnCharacterImageCallback onCharacterImageCallback = new OnCharacterImageCallback() {
+
+        @Override
+        public void onReceive(Bitmap bitmap) {
+            initActivityColors(bitmap);
+        }
+    };
+
+    private int mScrolleableAppbarLayoutFlags;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeDependencyInjector();
         initializeBinding();
         initButterknife();
-        initializeDependencyInjector();
         initializePresenter();
         initToolbar();
         initTransitions();
     }
 
+    @Override
+    public void disableScroll() {
+        mScrolleableAppbarLayoutFlags = ((AppBarLayout.LayoutParams) mCollapsing.getLayoutParams()).getScrollFlags();
+        AppBarLayout.LayoutParams layoutParams = ((AppBarLayout.LayoutParams) mCollapsing.getLayoutParams());
+        layoutParams.setScrollFlags(0);
+        mCollapsing.setLayoutParams(layoutParams);
+    }
+
     private void initializeBinding() {
         mBinding = DataBindingUtil.setContentView(
             this, R.layout.activity_avenger_detail);
+
+        mBinding.setImageCallback(onCharacterImageCallback);
     }
 
 
@@ -135,10 +163,10 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     private void initTransitions() {
         final String sharedViewName = getIntent().getStringExtra(
-            CharacterListListActivity.EXTRA_IMAGE_TRANSITION_NAME);
+            CharacterListActivity.EXTRA_IMAGE_TRANSITION_NAME);
 
         String characterTitle = getIntent().getStringExtra(
-            CharacterListListActivity.EXTRA_CHARACTER_NAME);
+            CharacterListActivity.EXTRA_CHARACTER_NAME);
 
         Transition enterTransition = TransitionUtils.buildSlideTransition(Gravity.BOTTOM);
         enterTransition.setDuration(mAnimMediumDuration);
@@ -167,9 +195,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     private void initToolbar() {
-        mBinding.characterCollapsing.setExpandedTitleTextAppearance(
-            R.style.Text_CollapsedExpanded);
-
         mBinding.characterToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
@@ -183,18 +208,49 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     @Override
-    public void bindCharacter(saulmm.avengers.model.entities.Character character) {
+    public void bindCharacter(MarvelCharacter character) {
         mBinding.setCharacter(character);
     }
 
-    @BindingAdapter({"source", "presenter"})
-    public static void setImageSource(ImageView v, String url, CharacterDetailPresenter detailPresenter) {
+    @Override
+    public void enableScroll() {
+        AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) mCollapsing.getLayoutParams();
+        layoutParams.setScrollFlags(mScrolleableAppbarLayoutFlags);
+        mCollapsing.setLayoutParams(layoutParams);
+    }
+
+    @Override
+    public void goToCharacterComicsView(int characterId) {
+        CollectionActivity.start(this, characterId, CollectionItem.COMICS);
+    }
+
+    @Override
+    public void goToCharacterSeriesView(int characterId) {
+        CollectionActivity.start(this, characterId, CollectionItem.SERIES);
+    }
+
+    @Override
+    public void goToCharacterEventsView(int characterId) {
+        CollectionActivity.start(this, characterId, CollectionItem.EVENTS);
+    }
+
+    @Override
+    public void goToCharacterStoriesView(int characterId) {
+        CollectionActivity.start(this, characterId, CollectionItem.STORIES);
+    }
+
+    @BindingAdapter({"source", "presenter", "callback"})
+    public static void setImageSource(ImageView v, String url,
+          CharacterDetailPresenter detailPresenter, OnCharacterImageCallback imageCallback) {
+
         Glide.with(v.getContext()).load(url).asBitmap().into(new BitmapImageViewTarget(v) {
             @Override public void onResourceReady(Bitmap resource,
                 GlideAnimation<? super Bitmap> glideAnimation) {
                 super.onResourceReady(resource, glideAnimation);
                 v.setImageBitmap(resource);
-                detailPresenter.onImageReceived(resource);
+                imageCallback.onReceive(resource);
+                detailPresenter.onImageReceived();
+
             }
         });
     }

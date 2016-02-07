@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+def libs = rootProject.ext.libraries;
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  // ReactiveX
+  compile "io.reactivex:rxjava:${libs.rxjava}"
+
+  // Square
+  compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
+  compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
+  compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
+
+  compile "com.google.dagger:dagger:${libs.dagger}"
+  compile "com.squareup.okhttp:logging-interceptor:${libs.loggin_interceptor}"
+  compile "org.glassfish:javax.annotation:${libs.javax_annotation}"
+
+  //test dependencies
+  testCompile 'junit:junit:4.11'
+  testCompile 'org.mockito:mockito-core:1.9.5'
+
+}

@@ -5,41 +5,37 @@
  */
 package saulmm.avengers.mvp.presenters;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import javax.inject.Inject;
 import rx.Subscription;
-import saulmm.avengers.domain.GetCharacterInformationUsecase;
-import saulmm.avengers.model.entities.Character;
-import saulmm.avengers.model.entities.CollectionItem;
+import saulmm.avengers.CharacterDetailsUsecase;
+import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
-import saulmm.avengers.views.activities.CollectionActivity;
 
 public class CharacterDetailPresenter implements Presenter {
-
-    private final Context mActivityContext;
     private CharacterDetailView mCharacterDetailView;
 
-    private final GetCharacterInformationUsecase mGetCharacterInformationUsecase;
+    private final CharacterDetailsUsecase mGetCharacterInformationUsecase;
 
     private Subscription mCharacterSubscription;
     private int mCharacterId;
     private String mCharacterName;
 
     @Inject
-    public CharacterDetailPresenter(GetCharacterInformationUsecase getCharacterInformationUsecase,
-        Context activityContext) {
-
+    public CharacterDetailPresenter(CharacterDetailsUsecase getCharacterInformationUsecase) {
         mGetCharacterInformationUsecase = getCharacterInformationUsecase;
-        mActivityContext = activityContext;
     }
 
     @Override
     public void onCreate() {
         if (mCharacterId == -1 || mCharacterName == null)
-            throw new IllegalStateException("initializePresenter was not well initialised");
+            throw new IllegalStateException();
 
+        mCharacterDetailView.disableScroll();
+        askForCharacterDetails();
+    }
+
+    public void askForCharacterDetails() {
         mCharacterSubscription = mGetCharacterInformationUsecase.execute()
             .subscribe(this::onCharacterReceived, this::manageCharacterError);
     }
@@ -65,42 +61,42 @@ public class CharacterDetailPresenter implements Presenter {
         mCharacterDetailView = (CharacterDetailView) v;
     }
 
-    @SuppressWarnings("Convert2MethodRef")
     public void initializePresenter(int characterId, String characterName) {
         mCharacterId = characterId;
         mCharacterName = characterName;
     }
 
     private void manageCharacterError(Throwable error) {
-        // TODO
     }
 
-    private void onCharacterReceived(Character character) {
+    private void onCharacterReceived(MarvelCharacter character) {
         mCharacterDetailView.bindCharacter(character);
+
+        if (character.getDescription() != null && !character.getDescription().equals(""))
+            mCharacterDetailView.enableScroll();
     }
 
     public void onComicsIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.COMIC);
+        mCharacterDetailView.goToCharacterComicsView(mCharacterId);
     }
 
     public void onSeriesIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.SERIES);
+        mCharacterDetailView.goToCharacterSeriesView(mCharacterId);
     }
 
     public void onStoriesIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.STORY);
+        mCharacterDetailView.goToCharacterStoriesView(mCharacterId);
     }
 
     public void onEventIndicatorPressed() {
-        CollectionActivity.start(mActivityContext, mCharacterId, CollectionItem.EVENT);
+        mCharacterDetailView.goToCharacterEventsView(mCharacterId);
     }
 
     public void setCharacterId(int characterId) {
         mCharacterId = characterId;
     }
 
-    public void onImageReceived(Bitmap resource) {
+    public void onImageReceived() {
         mCharacterDetailView.hideRevealViewByAlpha();
-        mCharacterDetailView.initActivityColors(resource);
     }
 }

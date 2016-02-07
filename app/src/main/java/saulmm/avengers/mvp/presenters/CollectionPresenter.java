@@ -3,8 +3,10 @@ package saulmm.avengers.mvp.presenters;
 import android.content.Context;
 import java.util.List;
 import javax.inject.Inject;
-import saulmm.avengers.domain.GetCollectionUsecase;
-import saulmm.avengers.model.entities.CollectionItem;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import saulmm.avengers.GetCollectionUsecase;
+import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.mvp.views.CollectionView;
 import saulmm.avengers.mvp.views.View;
 
@@ -35,8 +37,9 @@ public class CollectionPresenter implements Presenter {
 
 	@Override
 	public void onCreate() {
-		mGetCollectionUsecase.execute(mCollectionType).subscribe(
-			this::onCollectionItemsReceived);
+		mGetCollectionUsecase.setType(mCollectionType);
+		mGetCollectionUsecase.execute()
+			.subscribe(this::onCollectionItemsReceived);
 	}
 
 	public void initialisePresenters(String collectionType, int characterId) {
