@@ -12,6 +12,8 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -20,6 +22,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+
+import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
@@ -42,11 +46,10 @@ import saulmm.avengers.utils.TransitionUtils;
 import saulmm.avengers.views.utils.AnimUtils;
 
 public class CharacterDetailActivity extends AppCompatActivity implements CharacterDetailView {
-
-
     private static final String EXTRA_CHARACTER_NAME    = "character.name";
     public static final String EXTRA_CHARACTER_ID       = "character.id";
 
+    @Bind(R.id.character_collapsing)                    CollapsingToolbarLayout mCollapsing;
     @BindInt(R.integer.duration_medium)                 int mAnimMediumDuration;
     @BindInt(R.integer.duration_huge)                   int mAnimHugeDuration;
     @BindColor(R.color.brand_primary_dark)              int mColorPrimaryDark;
@@ -62,6 +65,8 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         }
     };
 
+    private int mLayoutFlags;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +76,15 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         initializePresenter();
         initToolbar();
         initTransitions();
+
+        disableScroll();
+    }
+
+    private void disableScroll() {
+        mLayoutFlags = ((AppBarLayout.LayoutParams) mCollapsing.getLayoutParams()).getScrollFlags();
+        AppBarLayout.LayoutParams layoutParams = ((AppBarLayout.LayoutParams) mCollapsing.getLayoutParams());
+        layoutParams.setScrollFlags(0);
+        mCollapsing.setLayoutParams(layoutParams);
     }
 
     private void initializeBinding() {
@@ -200,6 +214,9 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @Override
     public void bindCharacter(MarvelCharacter character) {
         mBinding.setCharacter(character);
+        AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) mCollapsing.getLayoutParams();
+        layoutParams.setScrollFlags(mLayoutFlags);
+        mCollapsing.setLayoutParams(layoutParams);
     }
 
     @Override
