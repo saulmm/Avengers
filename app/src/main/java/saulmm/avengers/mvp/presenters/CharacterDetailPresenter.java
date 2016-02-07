@@ -31,8 +31,8 @@ public class CharacterDetailPresenter implements Presenter {
         if (mCharacterId == -1 || mCharacterName == null)
             throw new IllegalStateException();
 
-        askForCharacterDetails();
         mCharacterDetailView.disableScroll();
+        askForCharacterDetails();
     }
 
     public void askForCharacterDetails() {
@@ -71,7 +71,9 @@ public class CharacterDetailPresenter implements Presenter {
 
     private void onCharacterReceived(MarvelCharacter character) {
         mCharacterDetailView.bindCharacter(character);
-        mCharacterDetailView.enableScroll();
+
+        if (character.getDescription() != null && !character.getDescription().equals(""))
+            mCharacterDetailView.enableScroll();
     }
 
     public void onComicsIndicatorPressed() {

@@ -195,9 +195,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     private void initToolbar() {
-        mBinding.characterCollapsing.setExpandedTitleTextAppearance(
-            R.style.Text_CollapsedExpanded);
-
         mBinding.characterToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
@@ -213,7 +210,6 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @Override
     public void bindCharacter(MarvelCharacter character) {
         mBinding.setCharacter(character);
-        enableScroll();
     }
 
     @Override
