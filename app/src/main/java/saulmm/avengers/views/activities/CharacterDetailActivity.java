@@ -65,7 +65,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         }
     };
 
-    private int mLayoutFlags;
+    private int mScrolleableAppbarLayoutFlags;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,12 +76,11 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
         initializePresenter();
         initToolbar();
         initTransitions();
-
-        disableScroll();
     }
 
-    private void disableScroll() {
-        mLayoutFlags = ((AppBarLayout.LayoutParams) mCollapsing.getLayoutParams()).getScrollFlags();
+    @Override
+    public void disableScroll() {
+        mScrolleableAppbarLayoutFlags = ((AppBarLayout.LayoutParams) mCollapsing.getLayoutParams()).getScrollFlags();
         AppBarLayout.LayoutParams layoutParams = ((AppBarLayout.LayoutParams) mCollapsing.getLayoutParams());
         layoutParams.setScrollFlags(0);
         mCollapsing.setLayoutParams(layoutParams);
@@ -214,8 +213,13 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     @Override
     public void bindCharacter(MarvelCharacter character) {
         mBinding.setCharacter(character);
+        enableScroll();
+    }
+
+    @Override
+    public void enableScroll() {
         AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) mCollapsing.getLayoutParams();
-        layoutParams.setScrollFlags(mLayoutFlags);
+        layoutParams.setScrollFlags(mScrolleableAppbarLayoutFlags);
         mCollapsing.setLayoutParams(layoutParams);
     }
 

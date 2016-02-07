@@ -9,9 +9,13 @@ import android.graphics.Bitmap;
 import saulmm.avengers.entities.MarvelCharacter;
 
 public interface CharacterDetailView extends View {
+    void disableScroll();
+
     void hideRevealViewByAlpha();
 
     void bindCharacter(MarvelCharacter character);
+
+    void enableScroll();
 
     void goToCharacterComicsView(int characterId);
 

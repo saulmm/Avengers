@@ -32,6 +32,7 @@ public class CharacterDetailPresenter implements Presenter {
             throw new IllegalStateException("initializePresenter was not well initialised");
 
         askForCharacterDetails();
+        mCharacterDetailView.disableScroll();
     }
 
     public void askForCharacterDetails() {
@@ -72,6 +73,7 @@ public class CharacterDetailPresenter implements Presenter {
 
     private void onCharacterReceived(MarvelCharacter character) {
         mCharacterDetailView.bindCharacter(character);
+        mCharacterDetailView.enableScroll();
     }
 
     public void onComicsIndicatorPressed() {
