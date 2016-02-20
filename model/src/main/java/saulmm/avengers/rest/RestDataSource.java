@@ -11,17 +11,15 @@ import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.functions.Func1;
-import saulmm.avengers.entities.CollectionItem;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.CollectionItem;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 import saulmm.avengers.rest.exceptions.ServerErrorException;
 import saulmm.avengers.rest.exceptions.UknownErrorException;
@@ -29,10 +27,10 @@ import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
 import saulmm.avengers.rest.utils.interceptors.MarvelSigningIterceptor;
 
 import static com.squareup.okhttp.logging.HttpLoggingInterceptor.*;
-import static saulmm.avengers.entities.CollectionItem.COMICS;
-import static saulmm.avengers.entities.CollectionItem.EVENTS;
-import static saulmm.avengers.entities.CollectionItem.SERIES;
-import static saulmm.avengers.entities.CollectionItem.STORIES;
+import static saulmm.avengers.rest.entities.CollectionItem.COMICS;
+import static saulmm.avengers.rest.entities.CollectionItem.EVENTS;
+import static saulmm.avengers.rest.entities.CollectionItem.SERIES;
+import static saulmm.avengers.rest.entities.CollectionItem.STORIES;
 
 public class RestDataSource implements CharacterRepository {
     public static String END_POINT       = "http://gateway.marvel.com/";

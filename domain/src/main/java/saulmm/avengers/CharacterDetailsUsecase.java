@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 import rx.Observable;
 import rx.Scheduler;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 public class CharacterDetailsUsecase extends Usecase<MarvelCharacter> {

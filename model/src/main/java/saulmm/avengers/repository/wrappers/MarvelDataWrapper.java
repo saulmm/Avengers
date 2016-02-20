@@ -6,7 +6,7 @@
 package saulmm.avengers.model.repository.wrappers;
 
 import java.util.List;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 
 public class MarvelDataWrapper {
 

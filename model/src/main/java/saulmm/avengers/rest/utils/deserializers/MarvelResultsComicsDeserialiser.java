@@ -9,7 +9,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
-import saulmm.avengers.entities.Comic;
+import saulmm.avengers.rest.entities.Comic;
 
 public class MarvelResultsComicsDeserialiser implements JsonDeserializer<List<Comic>> {
 

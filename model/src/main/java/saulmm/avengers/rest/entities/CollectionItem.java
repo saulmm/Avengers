@@ -1,4 +1,4 @@
-package saulmm.avengers.entities;
+package saulmm.avengers.rest.entities;
 
 public class CollectionItem {
 	public final static String COMICS = "comics";

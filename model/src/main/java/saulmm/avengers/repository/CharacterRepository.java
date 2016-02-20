@@ -7,8 +7,8 @@ package saulmm.avengers.repository;
 
 import java.util.List;
 import rx.Observable;
-import saulmm.avengers.entities.CollectionItem;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.CollectionItem;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 
 public interface CharacterRepository {
     Observable<MarvelCharacter> getCharacter (final int characterId);

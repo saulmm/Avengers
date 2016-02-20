@@ -9,7 +9,7 @@ import rx.Observable;
 import rx.Scheduler;
 import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.Usecase;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 import static org.hamcrest.CoreMatchers.instanceOf;

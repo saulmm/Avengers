@@ -8,7 +8,7 @@ package saulmm.avengers.mvp.presenters;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.CharacterDetailsUsecase;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
 

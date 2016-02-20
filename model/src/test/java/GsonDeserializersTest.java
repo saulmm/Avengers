@@ -8,9 +8,8 @@ import org.junit.Test;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import saulmm.avengers.entities.CollectionItem;
-import saulmm.avengers.entities.MarvelCharacter;
-import saulmm.avengers.entities.Thumbnail;
+import saulmm.avengers.rest.entities.CollectionItem;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

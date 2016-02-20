@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 import saulmm.avengers.GetCharactersUsecase;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.mvp.presenters.CharacterListPresenter;
 import saulmm.avengers.mvp.views.CharacterListView;
 

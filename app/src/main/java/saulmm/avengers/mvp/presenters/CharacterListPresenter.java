@@ -10,7 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.GetCharactersUsecase;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 

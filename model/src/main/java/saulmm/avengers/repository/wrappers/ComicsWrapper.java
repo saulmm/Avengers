@@ -6,7 +6,7 @@
 package saulmm.avengers.model.repository.wrappers;
 
 import java.util.ArrayList;
-import saulmm.avengers.entities.Comic;
+import saulmm.avengers.rest.entities.Comic;
 
 public class ComicsWrapper {
 

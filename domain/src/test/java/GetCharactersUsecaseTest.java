@@ -7,9 +7,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import rx.Observable;
 import rx.Scheduler;
-import rx.schedulers.Schedulers;
 import saulmm.avengers.GetCharactersUsecase;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 import static org.hamcrest.CoreMatchers.instanceOf;

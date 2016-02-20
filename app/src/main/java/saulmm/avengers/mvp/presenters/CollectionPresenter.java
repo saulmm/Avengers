@@ -3,10 +3,9 @@ package saulmm.avengers.mvp.presenters;
 import android.content.Context;
 import java.util.List;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+
 import saulmm.avengers.GetCollectionUsecase;
-import saulmm.avengers.entities.CollectionItem;
+import saulmm.avengers.rest.entities.CollectionItem;
 import saulmm.avengers.mvp.views.CollectionView;
 import saulmm.avengers.mvp.views.View;
 

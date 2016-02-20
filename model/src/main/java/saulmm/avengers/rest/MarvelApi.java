@@ -10,8 +10,8 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
-import saulmm.avengers.entities.CollectionItem;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.CollectionItem;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 
 public interface MarvelApi {
     @GET("/v1/public/characters")

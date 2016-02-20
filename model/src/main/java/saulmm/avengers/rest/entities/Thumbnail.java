@@ -3,14 +3,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package saulmm.avengers.entities;
+package saulmm.avengers.rest.entities;
 
-public class TextObject {
+public class Thumbnail {
 
-    private String text;
+    private String path;
+    private String extension;
 
-    public String getText() {
+    public String getImageUrl () {
 
-        return text;
+        return String.format("%s.%s", path, extension);
     }
 }

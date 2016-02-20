@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 import rx.Observable;
 import rx.Scheduler;
-import saulmm.avengers.entities.CollectionItem;
+import saulmm.avengers.rest.entities.CollectionItem;
 import saulmm.avengers.repository.CharacterRepository;
 
 public class GetCollectionUsecase extends Usecase<List<CollectionItem>> {

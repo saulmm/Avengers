@@ -5,7 +5,6 @@
  */
 package saulmm.avengers.views.activities;
 
-import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -24,13 +23,12 @@ import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 
 import saulmm.avengers.mvp.presenters.CharacterListPresenter;
 import saulmm.avengers.mvp.views.CharacterListView;
-import saulmm.avengers.utils.Utils;
 import saulmm.avengers.views.adapter.AvengersListAdapter;
 import saulmm.avengers.views.views.RecyclerInsetsDecoration;
 

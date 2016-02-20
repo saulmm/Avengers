@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import java.util.List;
 import saulmm.avengers.R;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.MarvelCharacter;
 import saulmm.avengers.utils.Utils;
 import saulmm.avengers.views.RecyclerClickListener;
 
