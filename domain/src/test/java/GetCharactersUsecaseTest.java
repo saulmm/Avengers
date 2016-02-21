@@ -9,7 +9,7 @@ import rx.Observable;
 import rx.Scheduler;
 import saulmm.avengers.GetCharactersUsecase;
 import saulmm.avengers.rest.entities.RestCharacter;
-import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.CharacterDatasource;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -22,7 +22,8 @@ import static org.mockito.Mockito.when;
 import static saulmm.avengers.GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT;
 
 public class GetCharactersUsecaseTest {
-	@Mock CharacterRepository mockRepository;
+	@Mock
+	CharacterDatasource mockRepository;
 	@Mock Scheduler mockUiScheduler;
 	@Mock Scheduler mockExecutorScheduler;
 

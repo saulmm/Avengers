@@ -7,18 +7,17 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.functions.Action1;
 import saulmm.avengers.rest.entities.RestCharacter;
-import saulmm.avengers.repository.CharacterRepository;
 
 public class GetCharactersUsecase extends Usecase<List<RestCharacter>> {
     public final static int DEFAULT_CHARACTERS_LIMIT = 20;
     private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
-    private final CharacterRepository mRepository;
+    private final CharacterDatasource mRepository;
     private int mCurrentOffset;
 
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
 
-    @Inject public GetCharactersUsecase(CharacterRepository repository,
+    @Inject public GetCharactersUsecase(CharacterDatasource repository,
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread) {
 

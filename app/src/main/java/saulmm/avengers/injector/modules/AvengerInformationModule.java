@@ -13,8 +13,7 @@ import rx.Scheduler;
 import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.GetCollectionUsecase;
 import saulmm.avengers.injector.Activity;
-import saulmm.avengers.repository.CharacterRepository;
-import saulmm.avengers.rest.MarvelAuthorizer;
+import saulmm.avengers.CharacterDatasource;
 
 @Module
 public class AvengerInformationModule {
@@ -25,14 +24,14 @@ public class AvengerInformationModule {
     }
 
     @Provides @Activity CharacterDetailsUsecase provideGetCharacterInformationUsecase (
-        CharacterRepository repository,
+        CharacterDatasource repository,
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread) {
 
         return new CharacterDetailsUsecase(mCharacterId, repository, uiThread, executorThread);
     }
 
-    @Provides @Activity GetCollectionUsecase provideGetCharacterComicsUsecase (CharacterRepository repository,
+    @Provides @Activity GetCollectionUsecase provideGetCharacterComicsUsecase (CharacterDatasource repository,
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread) {
 

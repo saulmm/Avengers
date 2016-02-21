@@ -10,7 +10,7 @@ import rx.Scheduler;
 import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.Usecase;
 import saulmm.avengers.rest.entities.RestCharacter;
-import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.CharacterDatasource;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,7 +18,8 @@ import static org.mockito.internal.verification.VerificationModeFactory.only;
 
 public class GetCharacterDetailsTest {
 	private final static int FAKE_CHARACTER_ID = 69;
-	@Mock CharacterRepository mRepository;
+	@Mock
+	CharacterDatasource mRepository;
 	@Mock Scheduler mockScheduler;
 
 	@Before public void setUp() {

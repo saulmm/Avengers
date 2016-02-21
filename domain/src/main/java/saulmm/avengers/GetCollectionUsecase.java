@@ -7,17 +7,16 @@ import javax.inject.Named;
 import rx.Observable;
 import rx.Scheduler;
 import saulmm.avengers.rest.entities.RestCollectionItem;
-import saulmm.avengers.repository.CharacterRepository;
 
 public class GetCollectionUsecase extends Usecase<List<RestCollectionItem>> {
-	private final CharacterRepository mRepository;
+	private final CharacterDatasource mRepository;
 	private final int mCharacterId;
 	private final Scheduler mUIThread;
 	private final Scheduler mExecutorThread;
 	private String mType;
 
 	@Inject public GetCollectionUsecase(int characterId,
-		CharacterRepository repository,
+		CharacterDatasource repository,
 		@Named("ui_thread") Scheduler uiThread,
 		@Named("executor_thread") Scheduler executorThread) {
 

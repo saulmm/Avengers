@@ -18,11 +18,14 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
 import rx.functions.Func1;
+import saulmm.avengers.entities.Character;
+import saulmm.avengers.entities.mappers.ListMapper;
 import saulmm.avengers.rest.entities.RestCollectionItem;
 import saulmm.avengers.rest.entities.RestCharacter;
-import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.CharacterDatasource;
 import saulmm.avengers.rest.exceptions.ServerErrorException;
 import saulmm.avengers.rest.exceptions.UknownErrorException;
+import saulmm.avengers.rest.mappers.RestCharacterMapper;
 import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
 import saulmm.avengers.rest.utils.interceptors.MarvelSigningIterceptor;
 
@@ -32,7 +35,7 @@ import static saulmm.avengers.rest.entities.RestCollectionItem.EVENTS;
 import static saulmm.avengers.rest.entities.RestCollectionItem.SERIES;
 import static saulmm.avengers.rest.entities.RestCollectionItem.STORIES;
 
-public class RestDataSource implements CharacterRepository {
+public class RestDataSource implements CharacterDatasource {
     public static String END_POINT       = "http://gateway.marvel.com/";
     public static String PARAM_API_KEY   = "apikey";
     public static String PARAM_HASH      = "hash";
@@ -76,24 +79,31 @@ public class RestDataSource implements CharacterRepository {
     }
 
 	@Override
-    public Observable<RestCharacter> getCharacter(final int characterId) {
-        return mMarvelApi.getCharacterById(characterId)
-                .flatMap(new Func1<List<RestCharacter>, Observable<RestCharacter>>() {
-                   @Override public Observable<RestCharacter> call(List<RestCharacter> characters) {
-                       return Observable.just(characters.get(0));
-                   }
-               });
+    public Observable<Character> getCharacter(final int characterId) {
+        mMarvelApi.getCharacterById(characterId)
+            .flatMap(new Func1<List<RestCharacter>, Observable<?>>() {
+                @Override
+                public Observable<?> call(List<RestCharacter> restCharacters) {
+                    RestCharacter restCharacter = restCharacters.get(0);
+                    return Observable.just(RestCharacterMapper.map(restCharacter));
+                }
+            });
 	}
 
     @Override
-    public Observable<List<RestCharacter>> getCharacters(int currentOffset) {
+    public Observable<List<Character>> getCharacters(int currentOffset) {
         return mMarvelApi.getCharacters(currentOffset)
-            .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<RestCharacter>>>() {
+            .flatMap(new Func1<List<RestCharacter>, Observable<List<Character>>>() {
                 @Override
-                public Observable<? extends List<RestCharacter>> call(Throwable throwable) {
+                public Observable<List<Character>> call(List<RestCharacter> restCharacters) {
+                    return Observable.just(ListMapper.map(restCharacters, new RestCharacterMapper()));
+                }
+            })
+            .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<Character>>>() {
+                @Override
+                public Observable<? extends List<Character>> call(Throwable throwable) {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
-                    return Observable.error(
-                            (serverError) ? new ServerErrorException() : new UknownErrorException());
+                    return Observable.error((serverError) ? new ServerErrorException() : new UknownErrorException());
                 }
             });
     }

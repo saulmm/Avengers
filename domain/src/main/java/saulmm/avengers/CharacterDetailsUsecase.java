@@ -11,16 +11,15 @@ import javax.inject.Named;
 import rx.Observable;
 import rx.Scheduler;
 import saulmm.avengers.rest.entities.RestCharacter;
-import saulmm.avengers.repository.CharacterRepository;
 
 public class CharacterDetailsUsecase extends Usecase<RestCharacter> {
-    private final CharacterRepository mRepository;
+    private final CharacterDatasource mRepository;
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
     private int mCharacterId;
 
     @Inject public CharacterDetailsUsecase(int characterId,
-        CharacterRepository repository,
+        CharacterDatasource repository,
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread) {
 

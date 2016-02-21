@@ -16,7 +16,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.BuildConfig;
-import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.CharacterDatasource;
 import saulmm.avengers.rest.Endpoint;
 import saulmm.avengers.rest.MarvelAuthorizer;
 import saulmm.avengers.rest.RestDataSource;
@@ -44,7 +44,7 @@ public class AppModule {
     }
 
     @Provides @Singleton
-    CharacterRepository provideDataRepository(RestDataSource restDataSource) {
+    CharacterDatasource provideDataRepository(RestDataSource restDataSource) {
         return restDataSource; }
 
     @Provides @Named("executor_thread")
