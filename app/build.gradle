@@ -32,6 +32,10 @@ android {
     }
 
     buildToolsVersion '23.0.3'
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor' // butterknife
+    }
 }
 
 //noinspection GroovyAssignabilityCheck
