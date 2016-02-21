@@ -1,6 +1,6 @@
 package saulmm.avengers.rest.entities;
 
-public class ComicDate {
+public class RestComicDate {
 
     private String type;
     private String date;

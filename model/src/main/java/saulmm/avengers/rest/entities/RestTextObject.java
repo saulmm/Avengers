@@ -5,13 +5,12 @@
  */
 package saulmm.avengers.rest.entities;
 
-public class Thumbnail {
+public class RestTextObject {
 
-    private String path;
-    private String extension;
+    private String text;
 
-    public String getImageUrl () {
+    public String getText() {
 
-        return String.format("%s.%s", path, extension);
+        return text;
     }
 }

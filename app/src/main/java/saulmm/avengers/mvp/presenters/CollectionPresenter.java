@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import saulmm.avengers.GetCollectionUsecase;
-import saulmm.avengers.rest.entities.CollectionItem;
+import saulmm.avengers.rest.entities.RestCollectionItem;
 import saulmm.avengers.mvp.views.CollectionView;
 import saulmm.avengers.mvp.views.View;
 
@@ -46,7 +46,7 @@ public class CollectionPresenter implements Presenter {
 		mCharacterId = characterId;
 	}
 
-	private void onCollectionItemsReceived(List<CollectionItem> items) {
+	private void onCollectionItemsReceived(List<RestCollectionItem> items) {
 		mCollectionView.hideLoadingIndicator();
 		mCollectionView.showItems(items);
 	}

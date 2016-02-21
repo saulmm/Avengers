@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import rx.Observable;
 import rx.Scheduler;
 import saulmm.avengers.GetCharactersUsecase;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -60,8 +60,8 @@ public class GetCharactersUsecaseTest {
 		return new GetCharactersUsecase(mockRepository, mockUiScheduler, mockExecutorScheduler);
 	}
 
-	private Observable<List<MarvelCharacter>> getFakeObservableCharacterList() {
-		List<MarvelCharacter> test = new ArrayList<MarvelCharacter>();
+	private Observable<List<RestCharacter>> getFakeObservableCharacterList() {
+		List<RestCharacter> test = new ArrayList<RestCharacter>();
 		return Observable.just(test);
 	}
 }

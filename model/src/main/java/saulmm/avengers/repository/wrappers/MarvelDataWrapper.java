@@ -6,19 +6,19 @@
 package saulmm.avengers.model.repository.wrappers;
 
 import java.util.List;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 
 public class MarvelDataWrapper {
 
     private int count;
-    private List<MarvelCharacter> results;
+    private List<RestCharacter> results;
 
     public int getCount() {
 
         return count;
     }
 
-    public List<MarvelCharacter> getResults() {
+    public List<RestCharacter> getResults() {
 
         return results;
     }

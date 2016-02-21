@@ -6,7 +6,7 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 import saulmm.avengers.CharacterDetailsUsecase;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.mvp.presenters.CharacterDetailPresenter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 
@@ -68,7 +68,7 @@ public class DetailPresenterTest {
         return characterDetailPresenter;
     }
 
-    private Observable<MarvelCharacter> getFakeObservableCharacter() {
-        return Observable.just(new MarvelCharacter("", -1));
+    private Observable<RestCharacter> getFakeObservableCharacter() {
+        return Observable.just(new RestCharacter("", -1));
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
-import saulmm.avengers.rest.entities.CollectionItem;
+import saulmm.avengers.rest.entities.RestCollectionItem;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -72,7 +72,7 @@ public class CollectionActivity extends AppCompatActivity implements CollectionV
 	}
 
 	@Override
-	public void showItems(List<CollectionItem> items) {
+	public void showItems(List<RestCollectionItem> items) {
 		mCollectionRecycler.setAdapter(new CollectionAdapter(items));
 	}
 
@@ -85,9 +85,9 @@ public class CollectionActivity extends AppCompatActivity implements CollectionV
 
 
 	private class CollectionAdapter extends RecyclerView.Adapter<CollectionItemViewHolder> {
-		private List<CollectionItem> mCollectionItems;
+		private List<RestCollectionItem> mCollectionItems;
 
-		public CollectionAdapter(List<CollectionItem> collectionItems) {
+		public CollectionAdapter(List<RestCollectionItem> collectionItems) {
 			mCollectionItems = collectionItems;
 		}
 
@@ -119,7 +119,7 @@ public class CollectionActivity extends AppCompatActivity implements CollectionV
 			ButterKnife.bind(this, itemView);
 		}
 
-		public void bindItem(CollectionItem collectionItem) {
+		public void bindItem(RestCollectionItem collectionItem) {
 			itemTitleTextView.setText(collectionItem.getTitle());
 			itemTextTextView.setText(collectionItem.getDescription());
 

@@ -10,18 +10,18 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
-import saulmm.avengers.rest.entities.CollectionItem;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCollectionItem;
+import saulmm.avengers.rest.entities.RestCharacter;
 
 public interface MarvelApi {
     @GET("/v1/public/characters")
-    Observable<List<MarvelCharacter>> getCharacters (@Query("offset") int offset);
+    Observable<List<RestCharacter>> getCharacters (@Query("offset") int offset);
 
     @GET("/v1/public/characters")
-    Observable<List<MarvelCharacter>> getCharacterById(@Query("id") int id);
+    Observable<List<RestCharacter>> getCharacterById(@Query("id") int id);
 
     @GET("/v1/public/characters/{characterId}/{collectionType}")
-    Observable<List<CollectionItem>> getCharacterCollection(
+    Observable<List<RestCollectionItem>> getCharacterCollection(
         @Path("characterId") int id,
         @Path("collectionType") String collectionType);
 }

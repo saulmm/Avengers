@@ -9,15 +9,15 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
-import saulmm.avengers.rest.entities.Comic;
+import saulmm.avengers.rest.entities.RestComic;
 
-public class MarvelResultsComicsDeserialiser implements JsonDeserializer<List<Comic>> {
+public class MarvelResultsComicsDeserialiser implements JsonDeserializer<List<RestComic>> {
 
     @Override
-    public List<Comic> deserialize(JsonElement je, Type typeOfT,
-            JsonDeserializationContext context) throws JsonParseException {
+    public List<RestComic> deserialize(JsonElement je, Type typeOfT,
+                                       JsonDeserializationContext context) throws JsonParseException {
 
-            Type listType = new TypeToken<List<Comic>>() {}.getType();
+            Type listType = new TypeToken<List<RestComic>>() {}.getType();
 
             JsonElement data = je.getAsJsonObject().get("data");
             JsonElement results = je.getAsJsonObject().get("results");

@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 
 import rx.Observable;
 import saulmm.avengers.GetCharactersUsecase;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.mvp.presenters.CharacterListPresenter;
 import saulmm.avengers.mvp.views.CharacterListView;
 
@@ -28,7 +28,7 @@ public class ListPresenterTest {
 
 	@Test public void testThatCharactersArePassedToTheView() throws Exception {
 		CharacterListPresenter listPresenter = givenAListPresenter();
-		ArrayList<MarvelCharacter> fakeCharacterList = givenAFakeCharacterList();
+		ArrayList<RestCharacter> fakeCharacterList = givenAFakeCharacterList();
 
 		listPresenter.onCharactersReceived(fakeCharacterList);
 
@@ -72,10 +72,10 @@ public class ListPresenterTest {
 		verify(mockGetCharacterUsecase, only()).execute();
 	}
 
-	private ArrayList<MarvelCharacter> givenAFakeCharacterList() {
-		ArrayList<MarvelCharacter> marvelCharacters = new ArrayList<>();
-		marvelCharacters.add(new MarvelCharacter("", -1));
-		marvelCharacters.add(new MarvelCharacter("", -1));
+	private ArrayList<RestCharacter> givenAFakeCharacterList() {
+		ArrayList<RestCharacter> marvelCharacters = new ArrayList<>();
+		marvelCharacters.add(new RestCharacter("", -1));
+		marvelCharacters.add(new RestCharacter("", -1));
 		return marvelCharacters;
 	}
 
@@ -85,8 +85,8 @@ public class ListPresenterTest {
 		return listPresenter;
 	}
 
-	private Observable<List<MarvelCharacter>> getFakeObservableCharacterList() {
-		List<MarvelCharacter> test = new ArrayList<MarvelCharacter>();
+	private Observable<List<RestCharacter>> getFakeObservableCharacterList() {
+		List<RestCharacter> test = new ArrayList<RestCharacter>();
 		return Observable.just(test);
 	}
 }

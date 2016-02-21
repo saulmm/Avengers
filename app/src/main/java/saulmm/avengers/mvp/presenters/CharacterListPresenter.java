@@ -10,7 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.GetCharactersUsecase;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 
@@ -19,7 +19,7 @@ import saulmm.avengers.mvp.views.View;
     private boolean mIsTheCharacterRequestRunning;
     private Subscription mCharactersSubscription;
 
-    private List<MarvelCharacter> mCharacters = new ArrayList<>();
+    private List<RestCharacter> mCharacters = new ArrayList<>();
     private CharacterListView mAvengersView;
 
     @Inject
@@ -68,7 +68,7 @@ import saulmm.avengers.mvp.views.View;
             .subscribe(this::onCharactersReceived, this::showErrorView);
     }
 
-     public void onCharactersReceived(List<MarvelCharacter> characters) {
+     public void onCharactersReceived(List<RestCharacter> characters) {
          mCharacters.addAll(characters);
          mAvengersView.bindCharacterList(mCharacters);
          mAvengersView.showCharacterList();
@@ -89,7 +89,7 @@ import saulmm.avengers.mvp.views.View;
          mIsTheCharacterRequestRunning = false;
      }
 
-     private void onNewCharactersReceived(List<MarvelCharacter> newCharacters) {
+     private void onNewCharactersReceived(List<RestCharacter> newCharacters) {
          mCharacters.addAll(newCharacters);
          mAvengersView.updateCharacterList(GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT);
 

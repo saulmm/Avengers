@@ -8,10 +8,10 @@
 	<data>
 		<import type="android.view.View"/>
 		<import type="android.text.TextUtils"/>
-		<import type="saulmm.avengers.rest.entities.ComicsCollection"/>
+		<import type="saulmm.avengers.rest.entities.RestComicsCollection"/>
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
-		<variable name="character" type="saulmm.avengers.rest.entities.MarvelCharacter"/>
+		<variable name="character" type="saulmm.avengers.rest.entities.RestCharacter"/>
 		<variable name="imageCallback" type="saulmm.avengers.utils.OnCharacterImageCallback"/>
 		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
 

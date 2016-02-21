@@ -6,26 +6,26 @@
 package saulmm.avengers.rest.entities;
 
 @SuppressWarnings("unused")
-public class MarvelCharacter {
+public class RestCharacter {
     private int id;
     private int imageResource;
     private String name;
     private String description;
-    private Thumbnail thumbnail;
+    private RestThumbnail thumbnail;
     private String resourceURI;
-    private ComicsCollection comics;
-    private ComicsCollection series;
-    private ComicsCollection stories;
-    private ComicsCollection events;
+    private RestComicsCollection comics;
+    private RestComicsCollection series;
+    private RestComicsCollection stories;
+    private RestComicsCollection events;
 
 
-    public MarvelCharacter(String name, int thumb_resource, int id) {
+    public RestCharacter(String name, int thumb_resource, int id) {
         this.name = name;
         this.imageResource = thumb_resource;
         this.id = id;
     }
 
-    public MarvelCharacter(String name, int imageResource) {
+    public RestCharacter(String name, int imageResource) {
         this.name = name;
         this.imageResource = imageResource;
     }
@@ -50,19 +50,19 @@ public class MarvelCharacter {
         return imageResource;
     }
 
-    public ComicsCollection getSeries() {
+    public RestComicsCollection getSeries() {
         return series;
     }
 
-    public ComicsCollection getStories() {
+    public RestComicsCollection getStories() {
         return stories;
     }
 
-    public ComicsCollection getEvents() {
+    public RestComicsCollection getEvents() {
         return events;
     }
 
-    public ComicsCollection getComics() {
+    public RestComicsCollection getComics() {
         return comics;
     }
 }

@@ -7,14 +7,14 @@ package saulmm.avengers.rest.entities;
 
 import java.util.List;
 
-public class Comic {
+public class RestComic {
 
     private String id;
     private String title;
     private String desccription;
-    private List<Thumbnail> images;
-    private List<TextObject> textObjects;
-    private List<ComicDate> dates;
+    private List<RestThumbnail> images;
+    private List<RestTextObject> textObjects;
+    private List<RestComicDate> dates;
     private int pageCount;
 
     public String getId() {
@@ -53,7 +53,7 @@ public class Comic {
         return null;
     }
 
-    public List<ComicDate> getDates() {
+    public List<RestComicDate> getDates() {
 
         return dates;
     }

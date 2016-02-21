@@ -19,19 +19,19 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import java.util.List;
 import saulmm.avengers.R;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.utils.Utils;
 import saulmm.avengers.views.RecyclerClickListener;
 
 public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapter.CharacterViewHolder> {
     private final String NOT_AVAILABLE_URL = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg";
     private final RecyclerClickListener mRecyclerListener;
-    private final List<MarvelCharacter> mCharacters;
+    private final List<RestCharacter> mCharacters;
 
     private Context mContext;
 
-    public AvengersListAdapter(List<MarvelCharacter> avengers, Context context,
-        RecyclerClickListener recyclerClickListener) {
+    public AvengersListAdapter(List<RestCharacter> avengers, Context context,
+                               RecyclerClickListener recyclerClickListener) {
 
         mCharacters = avengers;
         mContext = context;
@@ -68,7 +68,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
             bindListener(itemView, recyclerClickListener);
         }
 
-        public void bindAvenger(MarvelCharacter character) {
+        public void bindAvenger(RestCharacter character) {
             avengerTitleTextView.setText(character.getName());
             avengerTitleTextView.setTransitionName(Utils.getListTransitionName(getPosition()));
 

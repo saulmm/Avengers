@@ -18,8 +18,8 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
 import rx.functions.Func1;
-import saulmm.avengers.rest.entities.CollectionItem;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCollectionItem;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 import saulmm.avengers.rest.exceptions.ServerErrorException;
 import saulmm.avengers.rest.exceptions.UknownErrorException;
@@ -27,10 +27,10 @@ import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
 import saulmm.avengers.rest.utils.interceptors.MarvelSigningIterceptor;
 
 import static com.squareup.okhttp.logging.HttpLoggingInterceptor.*;
-import static saulmm.avengers.rest.entities.CollectionItem.COMICS;
-import static saulmm.avengers.rest.entities.CollectionItem.EVENTS;
-import static saulmm.avengers.rest.entities.CollectionItem.SERIES;
-import static saulmm.avengers.rest.entities.CollectionItem.STORIES;
+import static saulmm.avengers.rest.entities.RestCollectionItem.COMICS;
+import static saulmm.avengers.rest.entities.RestCollectionItem.EVENTS;
+import static saulmm.avengers.rest.entities.RestCollectionItem.SERIES;
+import static saulmm.avengers.rest.entities.RestCollectionItem.STORIES;
 
 public class RestDataSource implements CharacterRepository {
     public static String END_POINT       = "http://gateway.marvel.com/";
@@ -57,11 +57,11 @@ public class RestDataSource implements CharacterRepository {
         client.interceptors().add(logginInterceptor);
 
         Gson customGsonInstance = new GsonBuilder()
-            .registerTypeAdapter(new TypeToken<List<MarvelCharacter>>() {}.getType(),
-                new MarvelResultsDeserializer<MarvelCharacter>())
+            .registerTypeAdapter(new TypeToken<List<RestCharacter>>() {}.getType(),
+                new MarvelResultsDeserializer<RestCharacter>())
 
-            .registerTypeAdapter(new TypeToken<List<CollectionItem>>() {}.getType(),
-                new MarvelResultsDeserializer<CollectionItem>())
+            .registerTypeAdapter(new TypeToken<List<RestCollectionItem>>() {}.getType(),
+                new MarvelResultsDeserializer<RestCollectionItem>())
 
             .create();
 
@@ -76,21 +76,21 @@ public class RestDataSource implements CharacterRepository {
     }
 
 	@Override
-    public Observable<MarvelCharacter> getCharacter(final int characterId) {
+    public Observable<RestCharacter> getCharacter(final int characterId) {
         return mMarvelApi.getCharacterById(characterId)
-                .flatMap(new Func1<List<MarvelCharacter>, Observable<MarvelCharacter>>() {
-                   @Override public Observable<MarvelCharacter> call(List<MarvelCharacter> characters) {
+                .flatMap(new Func1<List<RestCharacter>, Observable<RestCharacter>>() {
+                   @Override public Observable<RestCharacter> call(List<RestCharacter> characters) {
                        return Observable.just(characters.get(0));
                    }
                });
 	}
 
     @Override
-    public Observable<List<MarvelCharacter>> getCharacters(int currentOffset) {
+    public Observable<List<RestCharacter>> getCharacters(int currentOffset) {
         return mMarvelApi.getCharacters(currentOffset)
-            .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<MarvelCharacter>>>() {
+            .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<RestCharacter>>>() {
                 @Override
-                public Observable<? extends List<MarvelCharacter>> call(Throwable throwable) {
+                public Observable<? extends List<RestCharacter>> call(Throwable throwable) {
                     boolean serverError = throwable.getMessage().equals(HttpErrors.SERVER_ERROR);
                     return Observable.error(
                             (serverError) ? new ServerErrorException() : new UknownErrorException());
@@ -99,7 +99,7 @@ public class RestDataSource implements CharacterRepository {
     }
 
     @Override
-    public Observable<List<CollectionItem>> getCharacterCollection(int characterId, String type) {
+    public Observable<List<RestCollectionItem>> getCharacterCollection(int characterId, String type) {
         if (!type.equals(COMICS) && !type.equals(EVENTS) && !type.equals(SERIES) && !type.equals(STORIES))
             throw new IllegalArgumentException("Collection type must be: events|series|comics|stories");
 

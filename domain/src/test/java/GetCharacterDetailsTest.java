@@ -9,7 +9,7 @@ import rx.Observable;
 import rx.Scheduler;
 import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.Usecase;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -44,7 +44,7 @@ public class GetCharacterDetailsTest {
 		return new CharacterDetailsUsecase(FAKE_CHARACTER_ID, mRepository);
 	}
 
-	private Observable<MarvelCharacter> getFakeCharacterObservable() {
-		return Observable.just(new MarvelCharacter("", -1));
+	private Observable<RestCharacter> getFakeCharacterObservable() {
+		return Observable.just(new RestCharacter("", -1));
 	}
 }

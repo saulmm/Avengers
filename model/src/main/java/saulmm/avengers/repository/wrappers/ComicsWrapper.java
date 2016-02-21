@@ -6,18 +6,18 @@
 package saulmm.avengers.model.repository.wrappers;
 
 import java.util.ArrayList;
-import saulmm.avengers.rest.entities.Comic;
+import saulmm.avengers.rest.entities.RestComic;
 
 public class ComicsWrapper {
 
-    private ArrayList<Comic> mComics;
+    private ArrayList<RestComic> mComics;
 
-    public ComicsWrapper(ArrayList<Comic> comicsList) {
+    public ComicsWrapper(ArrayList<RestComic> comicsList) {
 
         mComics = comicsList;
     }
 
-    public ArrayList<Comic> getmComics() {
+    public ArrayList<RestComic> getmComics() {
 
         return mComics;
     }

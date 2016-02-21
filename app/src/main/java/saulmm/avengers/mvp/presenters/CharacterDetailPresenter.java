@@ -8,7 +8,7 @@ package saulmm.avengers.mvp.presenters;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.CharacterDetailsUsecase;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
 
@@ -69,7 +69,7 @@ public class CharacterDetailPresenter implements Presenter {
     private void manageCharacterError(Throwable error) {
     }
 
-    private void onCharacterReceived(MarvelCharacter character) {
+    private void onCharacterReceived(RestCharacter character) {
         mCharacterDetailView.bindCharacter(character);
 
         if (character.getDescription() != null && !character.getDescription().equals(""))

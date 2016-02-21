@@ -34,8 +34,8 @@ import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
-import saulmm.avengers.rest.entities.CollectionItem;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCollectionItem;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -208,7 +208,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     @Override
-    public void bindCharacter(MarvelCharacter character) {
+    public void bindCharacter(RestCharacter character) {
         mBinding.setCharacter(character);
     }
 
@@ -221,22 +221,22 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     @Override
     public void goToCharacterComicsView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.COMICS);
+        CollectionActivity.start(this, characterId, RestCollectionItem.COMICS);
     }
 
     @Override
     public void goToCharacterSeriesView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.SERIES);
+        CollectionActivity.start(this, characterId, RestCollectionItem.SERIES);
     }
 
     @Override
     public void goToCharacterEventsView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.EVENTS);
+        CollectionActivity.start(this, characterId, RestCollectionItem.EVENTS);
     }
 
     @Override
     public void goToCharacterStoriesView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.STORIES);
+        CollectionActivity.start(this, characterId, RestCollectionItem.STORIES);
     }
 
     @BindingAdapter({"source", "presenter", "callback"})

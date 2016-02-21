@@ -6,10 +6,10 @@ import javax.inject.Named;
 import rx.Observable;
 import rx.Scheduler;
 import rx.functions.Action1;
-import saulmm.avengers.rest.entities.MarvelCharacter;
+import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.repository.CharacterRepository;
 
-public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
+public class GetCharactersUsecase extends Usecase<List<RestCharacter>> {
     public final static int DEFAULT_CHARACTERS_LIMIT = 20;
     private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
     private final CharacterRepository mRepository;
@@ -28,7 +28,7 @@ public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
     }
 
     @Override
-    public Observable<List<MarvelCharacter>> buildObservable() {
+    public Observable<List<RestCharacter>> buildObservable() {
         return mRepository.getCharacters(mCurrentOffset)
             .observeOn(mUiThread)
             .subscribeOn(mExecutorThread)
@@ -41,7 +41,7 @@ public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
     }
 
     @Override
-    public Observable<List<MarvelCharacter>> execute() {
+    public Observable<List<RestCharacter>> execute() {
         increaseOffset();
         return super.execute();
     }

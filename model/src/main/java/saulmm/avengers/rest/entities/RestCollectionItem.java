@@ -1,6 +1,6 @@
 package saulmm.avengers.rest.entities;
 
-public class CollectionItem {
+public class RestCollectionItem {
 	public final static String COMICS = "comics";
 	public final static String SERIES	  	= "series";
 	public final static String STORIES = "stories";
@@ -10,7 +10,7 @@ public class CollectionItem {
 	protected String title;
 	protected String description;
 	protected String resourceURI;
-	protected Thumbnail thumbnail;
+	protected RestThumbnail thumbnail;
 
 	public int getId() {
 		return id;
@@ -24,7 +24,7 @@ public class CollectionItem {
 		return resourceURI;
 	}
 
-	public Thumbnail getThumbnail() {
+	public RestThumbnail getThumbnail() {
 		return thumbnail;
 	}
 

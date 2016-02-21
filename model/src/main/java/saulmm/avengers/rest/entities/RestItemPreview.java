@@ -1,6 +1,6 @@
 package saulmm.avengers.rest.entities;
 
-public class ItemPreview {
+public class RestItemPreview {
 	private String resourceURI;
 	private String name;
 }

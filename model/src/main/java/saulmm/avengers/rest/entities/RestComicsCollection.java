@@ -6,7 +6,7 @@
 package saulmm.avengers.rest.entities;
 
 @SuppressWarnings("unused")
-public class ComicsCollection {
+public class RestComicsCollection {
 	private int available;
 	private String collectionURI;
 
