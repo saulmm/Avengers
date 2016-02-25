@@ -8,6 +8,7 @@ package saulmm.avengers.mvp.presenters;
 import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.CharacterDetailsUsecase;
+import saulmm.avengers.entities.Character;
 import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
@@ -69,10 +70,10 @@ public class CharacterDetailPresenter implements Presenter {
     private void manageCharacterError(Throwable error) {
     }
 
-    private void onCharacterReceived(RestCharacter character) {
+    private void onCharacterReceived(Character character) {
         mCharacterDetailView.bindCharacter(character);
 
-        if (character.getDescription() != null && !character.getDescription().equals(""))
+        if (character.getBio() != null && !character.getBio().equals(""))
             mCharacterDetailView.enableScroll();
     }
 

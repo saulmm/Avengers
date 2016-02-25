@@ -85,7 +85,7 @@ public class RestDataSource implements CharacterDatasource {
                     @Override
                     public Observable<Character> call(List<RestCharacter> restCharacters) {
                         RestCharacter restCharacter = restCharacters.get(0);
-                        return  Observable.just(new RestCharacterMapper().map(restCharacter));;
+                        return  Observable.just(new RestCharacterMapper().map(restCharacter));
                     }
                 });
 	}

@@ -6,12 +6,14 @@
 package saulmm.avengers.mvp.views;
 
 import java.util.List;
+
+import saulmm.avengers.entities.Character;
 import saulmm.avengers.rest.entities.RestCharacter;
 
 @SuppressWarnings("unused")
 public interface CharacterListView extends View {
 
-    void bindCharacterList(List<RestCharacter> avengers);
+    void bindCharacterList(List<Character> avengers);
 
     void showCharacterList();
 

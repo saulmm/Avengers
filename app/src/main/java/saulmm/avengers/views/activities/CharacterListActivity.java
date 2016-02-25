@@ -23,7 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
-import saulmm.avengers.rest.entities.RestCharacter;
+import saulmm.avengers.entities.Character;
 import saulmm.avengers.injector.components.DaggerAvengersComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 
@@ -108,7 +108,7 @@ public class CharacterListActivity extends AppCompatActivity
     }
 
     @Override
-    public void bindCharacterList(List<RestCharacter> avengers) {
+    public void bindCharacterList(List<Character> avengers) {
         mCharacterListAdapter = new AvengersListAdapter(avengers, this,
             (position, sharedView, characterImageView) -> {
                 mAvengersListPresenter.onElementClick(position);

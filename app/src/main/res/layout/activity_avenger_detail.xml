@@ -11,7 +11,7 @@
 		<import type="saulmm.avengers.rest.entities.RestComicsCollection"/>
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
-		<variable name="character" type="saulmm.avengers.rest.entities.RestCharacter"/>
+		<variable name="character" type="saulmm.avengers.entities.Character"/>
 		<variable name="imageCallback" type="saulmm.avengers.utils.OnCharacterImageCallback"/>
 		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
 
@@ -134,7 +134,7 @@
 							android:layout_height="wrap_content"
 							android:layout_marginTop="@dimen/spacing_small"
 							android:textSize="20sp"
-							android:text='@{"" + character.comics.available}'
+							android:text="-"
 							tools:text="1"
 							/>
 					</LinearLayout>
@@ -164,7 +164,7 @@
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text='@{"" + character.events.available}'
+							android:text="-"
 							tools:text="0"
 							/>
 					</LinearLayout>
@@ -193,7 +193,7 @@
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text='@{"" + character.series.available}'
+							android:text="-"
 							tools:text="50"
 							/>
 					</LinearLayout>
@@ -223,7 +223,7 @@
 							android:layout_height="wrap_content"
 							android:textSize="20sp"
 							android:layout_marginTop="@dimen/spacing_small"
-							android:text='@{"" + character.stories.available}'
+							android:text="-"
 							tools:text="20"
 							/>
 					</LinearLayout>
@@ -262,7 +262,7 @@
 					android:lineSpacingExtra="8dp"
 					android:paddingLeft="@dimen/spacing_normal"
 					android:paddingRight="@dimen/spacing_normal"
-					android:text="@{TextUtils.isEmpty(character.description) ? @string/messages_empty_description : character.description}"
+					android:text="@{TextUtils.isEmpty(character.bio) ? @string/messages_empty_description : character.bio}"
 					android:visibility="@{character != null ? View.VISIBLE : View.GONE}"
 					android:textSize="20sp"
 					tools:visibility="gone"

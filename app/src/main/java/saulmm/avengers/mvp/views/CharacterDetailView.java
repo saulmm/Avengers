@@ -5,14 +5,14 @@
  */
 package saulmm.avengers.mvp.views;
 
-import saulmm.avengers.rest.entities.RestCharacter;
+import saulmm.avengers.entities.Character;
 
 public interface CharacterDetailView extends View {
     void disableScroll();
 
     void hideRevealViewByAlpha();
 
-    void bindCharacter(RestCharacter character);
+    void bindCharacter(Character character);
 
     void enableScroll();
 

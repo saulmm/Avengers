@@ -10,9 +10,10 @@ import javax.inject.Named;
 
 import rx.Observable;
 import rx.Scheduler;
+import saulmm.avengers.entities.Character;
 import saulmm.avengers.rest.entities.RestCharacter;
 
-public class CharacterDetailsUsecase extends Usecase<RestCharacter> {
+public class CharacterDetailsUsecase extends Usecase<Character> {
     private final CharacterDatasource mRepository;
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
@@ -30,7 +31,7 @@ public class CharacterDetailsUsecase extends Usecase<RestCharacter> {
     }
 
     @Override
-    public Observable<RestCharacter> buildObservable() {
+    public Observable<Character> buildObservable() {
         return mRepository.getCharacter(mCharacterId)
             .observeOn(mUiThread)
             .subscribeOn(mExecutorThread);

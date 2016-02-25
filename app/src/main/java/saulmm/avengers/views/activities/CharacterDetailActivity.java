@@ -34,8 +34,8 @@ import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
+import saulmm.avengers.entities.Character;
 import saulmm.avengers.rest.entities.RestCollectionItem;
-import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -208,7 +208,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     @Override
-    public void bindCharacter(RestCharacter character) {
+    public void bindCharacter(Character character) {
         mBinding.setCharacter(character);
     }
 
