@@ -12,5 +12,5 @@ public interface Repository<T> {
 
     void remove(T item);
 
-    Observable<List<T>> get();
+    Observable<List<T>> get(Specification specification);
 }
