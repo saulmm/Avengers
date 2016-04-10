@@ -9,11 +9,11 @@ import saulmm.avengers.rest.MarvelApi;
 import saulmm.avengers.rest.RestDataSource;
 import saulmm.avengers.rest.utils.MarvelApiUtils;
 
-public class MarvelSigningIterceptor implements Interceptor {
+public class MarvelSigningInterceptor implements Interceptor {
 	private final String mApiKey;
 	private final String mApiSecret;
 
-	public MarvelSigningIterceptor(String apiKey, String apiSecret) {
+	public MarvelSigningInterceptor(String apiKey, String apiSecret) {
 		mApiKey = apiKey;
 		mApiSecret = apiSecret;
 	}

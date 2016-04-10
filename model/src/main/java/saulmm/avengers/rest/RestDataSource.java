@@ -27,7 +27,7 @@ import saulmm.avengers.rest.exceptions.ServerErrorException;
 import saulmm.avengers.rest.exceptions.UknownErrorException;
 import saulmm.avengers.rest.mappers.RestCharacterMapper;
 import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
-import saulmm.avengers.rest.utils.interceptors.MarvelSigningIterceptor;
+import saulmm.avengers.rest.utils.interceptors.MarvelSigningInterceptor;
 
 import static com.squareup.okhttp.logging.HttpLoggingInterceptor.*;
 import static saulmm.avengers.rest.entities.RestCollectionItem.COMICS;
@@ -42,13 +42,13 @@ public class RestDataSource implements CharacterDatasource {
     public static String PARAM_TIMESTAMP = "ts";
 
     private final MarvelApi mMarvelApi;
- 
+
     @Inject
     public RestDataSource(MarvelAuthorizer marvelAuthorizer) {
         OkHttpClient client = new OkHttpClient();
 
-        MarvelSigningIterceptor signingIterceptor =
-            new MarvelSigningIterceptor(
+        MarvelSigningInterceptor signingIterceptor =
+            new MarvelSigningInterceptor(
                 marvelAuthorizer.getApiClient(),
                 marvelAuthorizer.getApiSecret());
 
