@@ -80,14 +80,14 @@ public class RestDataSource implements CharacterDatasource {
 
 	@Override
     public Observable<Character> getCharacter(final int characterId) {
-        return mMarvelApi.getCharacterById(characterId)
-                .flatMap(new Func1<List<RestCharacter>, Observable<Character>>() {
-                    @Override
-                    public Observable<Character> call(List<RestCharacter> restCharacters) {
-                        RestCharacter restCharacter = restCharacters.get(0);
-                        return  Observable.just(new RestCharacterMapper().map(restCharacter));
-                    }
-                });
+        mMarvelApi.getCharacterById(characterId)
+            .flatMap(new Func1<List<RestCharacter>, Observable<?>>() {
+                @Override
+                public Observable<?> call(List<RestCharacter> restCharacters) {
+                    RestCharacter restCharacter = restCharacters.get(0);
+                    return Observable.just(RestCharacterMapper.map(restCharacter));
+                }
+            });
 	}
 
     @Override
