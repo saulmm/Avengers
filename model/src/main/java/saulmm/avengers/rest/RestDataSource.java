@@ -44,37 +44,8 @@ public class RestDataSource implements CharacterDatasource {
     private final MarvelApi mMarvelApi;
 
     @Inject
-    public RestDataSource(MarvelAuthorizer marvelAuthorizer) {
-        OkHttpClient client = new OkHttpClient();
-
-        MarvelSigningInterceptor signingIterceptor =
-            new MarvelSigningInterceptor(
-                marvelAuthorizer.getApiClient(),
-                marvelAuthorizer.getApiSecret());
-
-        HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
-        logginInterceptor.setLevel(Level.BODY);
-
-        client.interceptors().add(signingIterceptor);
-        client.interceptors().add(logginInterceptor);
-
-        Gson customGsonInstance = new GsonBuilder()
-            .registerTypeAdapter(new TypeToken<List<RestCharacter>>() {}.getType(),
-                new MarvelResultsDeserializer<RestCharacter>())
-
-            .registerTypeAdapter(new TypeToken<List<RestCollectionItem>>() {}.getType(),
-                new MarvelResultsDeserializer<RestCollectionItem>())
-
-            .create();
-
-        Retrofit marvelApiAdapter = new Retrofit.Builder()
-            .baseUrl(END_POINT)
-            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .client(client)
-            .build();
-
-        mMarvelApi =  marvelApiAdapter.create(MarvelApi.class);
+    public RestDataSource(MarvelApi marvelApi) {
+        mMarvelApi = marvelApi;
     }
 
 	@Override
