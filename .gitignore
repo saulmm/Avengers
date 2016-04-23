@@ -15,6 +15,7 @@ gen-external-apklibs
 #gradle
 .gradle
 build/
+local.properties
 
 #Other
 .DS_Store
