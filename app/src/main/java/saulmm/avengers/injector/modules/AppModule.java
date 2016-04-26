@@ -28,6 +28,9 @@ import rx.schedulers.Schedulers;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.BuildConfig;
 import saulmm.avengers.CharacterDatasource;
+import saulmm.avengers.CharacterRestRepository;
+import saulmm.avengers.Repository;
+import saulmm.avengers.entities.Character;
 import saulmm.avengers.rest.Endpoint;
 import saulmm.avengers.rest.MarvelApi;
 import saulmm.avengers.rest.MarvelAuthorizer;
@@ -74,6 +77,9 @@ public class AppModule {
     Scheduler provideUiThread() {
         return AndroidSchedulers.mainThread();
     }
+
+    @Provides @Singleton
+    Repository<Character> provideCharacterRestRepository(CharacterRestRepository restRepository) { return restRepository; }
 
     @Provides @Singleton
     public MarvelApi provideMarvelApi(MarvelAuthorizer marvelAuthorizer) {

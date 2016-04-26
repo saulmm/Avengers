@@ -4,6 +4,7 @@ package saulmm.avengers;
 import java.util.List;
 
 import rx.Observable;
+import saulmm.avengers.specifications.Specification;
 
 public interface Repository<T> {
     void add(T item);

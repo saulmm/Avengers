@@ -11,6 +11,7 @@ import saulmm.avengers.rest.entities.RestCharacter;
 
 public class GetCharactersUsecase extends Usecase<List<Character>> {
     public final static int DEFAULT_CHARACTERS_LIMIT = 20;
+    private final Repository<Character> mCharacterRestRepository;
     private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
     private final CharacterDatasource mRepository;
     private int mCurrentOffset;
@@ -18,13 +19,16 @@ public class GetCharactersUsecase extends Usecase<List<Character>> {
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
 
-    @Inject public GetCharactersUsecase(CharacterDatasource repository,
+    @Inject public GetCharactersUsecase(
+        CharacterDatasource repository,
+        Repository<Character> characterRestRepository,
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread) {
 
         mRepository = repository;
         mUiThread = uiThread;
         mExecutorThread = executorThread;
+        mCharacterRestRepository = characterRestRepository;
     }
 
     @Override
