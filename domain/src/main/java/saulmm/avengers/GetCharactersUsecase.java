@@ -11,37 +11,29 @@ import saulmm.avengers.rest.entities.RestCharacter;
 
 public class GetCharactersUsecase extends Usecase<List<Character>> {
     public final static int DEFAULT_CHARACTERS_LIMIT = 20;
-    private final Repository<Character> mCharacterRestRepository;
+    private final Repository<Character> mCharacterRepository;
+
     private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
-    private final CharacterDatasource mRepository;
     private int mCurrentOffset;
 
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
 
     @Inject public GetCharactersUsecase(
-        CharacterDatasource repository,
-        Repository<Character> characterRestRepository,
         @Named("ui_thread") Scheduler uiThread,
-        @Named("executor_thread") Scheduler executorThread) {
+        @Named("executor_thread") Scheduler executorThread,
 
-        mRepository = repository;
+        Repository<Character> characterRepository) {
+
         mUiThread = uiThread;
         mExecutorThread = executorThread;
-        mCharacterRestRepository = characterRestRepository;
+        mCharacterRepository = characterRepository;
     }
 
     @Override
     public Observable<List<Character>> buildObservable() {
-        return mRepository.getCharacters(mCurrentOffset)
-            .observeOn(mUiThread)
-            .subscribeOn(mExecutorThread)
-            .doOnError(new Action1<Throwable>() {
-                @Override
-                public void call(Throwable throwable) {
-                    mCurrentOffset -= mCharactersLimit;
-                }
-            });
+        System.out.println(mCharacterRepository);
+        return null;
     }
 
     @Override

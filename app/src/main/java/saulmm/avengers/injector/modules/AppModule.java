@@ -49,40 +49,28 @@ public class AppModule {
         this.mAvengersApplication = avengersApplication;
     }
 
-    @Provides @Singleton
+    @Provides
+    @Named("executor_thread")
+    Scheduler provideExecutorThread() {
+        return Schedulers.newThread();
+    }
+
+    @Provides
+    @Named("ui_thread")
+    @Singleton
+    Scheduler provideUiThread() {
+        return AndroidSchedulers.mainThread();
+    }
+
+    @Provides
+    @Singleton
     AvengersApplication provideAvengersApplicationContext() {
         return mAvengersApplication;
     }
 
     @Provides
-    MarvelAuthorizer provideMarvelAuthorizer() {
-        return new MarvelAuthorizer(BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
-    }
-
-    @Provides
-    Endpoint provideRestEndpoint() {
-        return new Endpoint("http://gateway.marvel.com/");
-    }
-
-    @Provides @Singleton
-    CharacterDatasource provideDataRepository(RestDataSource restDataSource) {
-        return restDataSource; }
-
-    @Provides @Named("executor_thread")
-    Scheduler provideExecutorThread() {
-        return Schedulers.newThread();
-    }
-
-    @Provides @Named("ui_thread")
-    Scheduler provideUiThread() {
-        return AndroidSchedulers.mainThread();
-    }
-
-    @Provides @Singleton
-    Repository<Character> provideCharacterRestRepository(CharacterRestRepository restRepository) { return restRepository; }
-
-    @Provides @Singleton
-    public MarvelApi provideMarvelApi(MarvelAuthorizer marvelAuthorizer) {
+    @Singleton
+    MarvelApi provideMarvelApi(MarvelAuthorizer marvelAuthorizer) {
         OkHttpClient client = new OkHttpClient();
 
         MarvelSigningInterceptor signingIterceptor =
@@ -113,5 +101,29 @@ public class AppModule {
                 .build();
 
         return marvelApiAdapter.create(MarvelApi.class);
+    }
+
+    @Provides
+    @Singleton
+    MarvelAuthorizer provideMarvelAuthorizer() {
+        return new MarvelAuthorizer(BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
+    }
+
+    @Provides
+    @Singleton
+    Endpoint provideRestEndpoint() {
+        return new Endpoint("http://gateway.marvel.com/");
+    }
+
+    @Provides
+    @Singleton
+    CharacterDatasource provideCharacterDataSource(RestDataSource restDataSource) {
+        return restDataSource;
+    }
+
+    @Provides
+    @Singleton
+    Repository<Character> provideCharacterRepository(CharacterRestRepository characterRestRepository) {
+        return characterRestRepository;
     }
 }
