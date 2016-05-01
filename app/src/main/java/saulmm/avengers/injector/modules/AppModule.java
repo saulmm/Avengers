@@ -27,7 +27,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.BuildConfig;
-import saulmm.avengers.CharacterDatasource;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.repository.CharacterRestRepository;
 import saulmm.avengers.repository.CollectionRestRepository;
@@ -36,7 +35,6 @@ import saulmm.avengers.entities.Character;
 import saulmm.avengers.rest.Endpoint;
 import saulmm.avengers.rest.MarvelApi;
 import saulmm.avengers.rest.MarvelAuthorizer;
-import saulmm.avengers.rest.RestDataSource;
 import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.rest.entities.RestCollectionItem;
 import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
@@ -117,12 +115,6 @@ public class AppModule {
     @Singleton
     Endpoint provideRestEndpoint() {
         return new Endpoint("http://gateway.marvel.com/");
-    }
-
-    @Provides
-    @Singleton
-    CharacterDatasource provideCharacterDataSource(RestDataSource restDataSource) {
-        return restDataSource;
     }
 
     @Provides

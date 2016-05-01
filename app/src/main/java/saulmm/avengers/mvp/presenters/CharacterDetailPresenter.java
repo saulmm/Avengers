@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import rx.Subscription;
 import saulmm.avengers.CharacterDetailsUsecase;
 import saulmm.avengers.entities.Character;
-import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.mvp.views.CharacterDetailView;
 import saulmm.avengers.mvp.views.View;
 

@@ -15,8 +15,6 @@ import org.junit.runner.RunWith;
 
 import saulmm.avengers.R;
 import saulmm.avengers.TestData;
-import saulmm.avengers.injector.components.DaggerAvengersComponent;
-import saulmm.avengers.rest.RestDataSource;
 import saulmm.avengers.views.activities.CharacterListActivity;
 
 import static android.support.test.espresso.Espresso.*;

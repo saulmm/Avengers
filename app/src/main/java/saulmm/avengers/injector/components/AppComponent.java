@@ -16,9 +16,6 @@ import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.repository.Repository;
 import saulmm.avengers.entities.Character;
 import saulmm.avengers.injector.modules.AppModule;
-import saulmm.avengers.CharacterDatasource;
-import saulmm.avengers.rest.Endpoint;
-import saulmm.avengers.rest.MarvelAuthorizer;
 
 @Singleton @Component(modules = AppModule.class)
 public interface AppComponent {

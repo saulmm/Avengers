@@ -15,7 +15,6 @@ import saulmm.avengers.GetCollectionUsecase;
 import saulmm.avengers.entities.Character;
 import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.injector.Activity;
-import saulmm.avengers.CharacterDatasource;
 import saulmm.avengers.repository.Repository;
 
 @Module
