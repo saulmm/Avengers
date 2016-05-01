@@ -6,17 +6,23 @@ import javax.inject.Named;
 
 import rx.Observable;
 import rx.Scheduler;
+import saulmm.avengers.entities.Character;
+import saulmm.avengers.entities.CollectionItem;
+import saulmm.avengers.repository.Repository;
 import saulmm.avengers.rest.entities.RestCollectionItem;
+import saulmm.avengers.specifications.CollectionSpecificationFactory;
 
-public class GetCollectionUsecase extends Usecase<List<RestCollectionItem>> {
-	private final CharacterDatasource mRepository;
+public class GetCollectionUsecase extends Usecase<List<CollectionItem>> {
+	private final Repository<CollectionItem> mRepository;
 	private final int mCharacterId;
 	private final Scheduler mUIThread;
 	private final Scheduler mExecutorThread;
-	private String mType;
+	private CollectionItem.Type mType;
 
-	@Inject public GetCollectionUsecase(int characterId,
-		CharacterDatasource repository,
+	@Inject
+	public GetCollectionUsecase(
+		int characterId,
+		Repository<CollectionItem> repository,
 		@Named("ui_thread") Scheduler uiThread,
 		@Named("executor_thread") Scheduler executorThread) {
 
@@ -26,18 +32,13 @@ public class GetCollectionUsecase extends Usecase<List<RestCollectionItem>> {
 		mExecutorThread = executorThread;
 	}
 
-	public void setType(String type) {
-		if (!type.equals(RestCollectionItem.COMICS) && !type.equals(RestCollectionItem.EVENTS) && !type.equals(
-				RestCollectionItem.SERIES) && !type.equals(RestCollectionItem.STORIES))
-
-			throw new IllegalArgumentException("Collection type must be events|series|comics|stories");
-
+	public void setType(CollectionItem.Type type) {
 		mType = type;
 	}
 
 	@Override
-	public Observable<List<RestCollectionItem>> buildObservable() {
-		return mRepository.getCharacterCollection(mCharacterId, mType)
+	public Observable<List<CollectionItem>> buildObservable() {
+		return mRepository.get(CollectionSpecificationFactory.get(mType, mCharacterId))
 			.observeOn(mUIThread).subscribeOn(mExecutorThread);
 	}
 }

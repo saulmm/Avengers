@@ -5,17 +5,9 @@
  */
 package saulmm.avengers.rest;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.logging.HttpLoggingInterceptor;
-
 import java.util.List;
 import javax.inject.Inject;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+
 import rx.Observable;
 import rx.functions.Func1;
 import saulmm.avengers.entities.Character;
@@ -26,14 +18,6 @@ import saulmm.avengers.CharacterDatasource;
 import saulmm.avengers.rest.exceptions.ServerErrorException;
 import saulmm.avengers.rest.exceptions.UknownErrorException;
 import saulmm.avengers.rest.mappers.RestCharacterMapper;
-import saulmm.avengers.rest.utils.deserializers.MarvelResultsDeserializer;
-import saulmm.avengers.rest.utils.interceptors.MarvelSigningInterceptor;
-
-import static com.squareup.okhttp.logging.HttpLoggingInterceptor.*;
-import static saulmm.avengers.rest.entities.RestCollectionItem.COMICS;
-import static saulmm.avengers.rest.entities.RestCollectionItem.EVENTS;
-import static saulmm.avengers.rest.entities.RestCollectionItem.SERIES;
-import static saulmm.avengers.rest.entities.RestCollectionItem.STORIES;
 
 public class RestDataSource implements CharacterDatasource {
     public static String END_POINT       = "http://gateway.marvel.com/";
@@ -80,9 +64,6 @@ public class RestDataSource implements CharacterDatasource {
 
     @Override
     public Observable<List<RestCollectionItem>> getCharacterCollection(int characterId, String type) {
-        if (!type.equals(COMICS) && !type.equals(EVENTS) && !type.equals(SERIES) && !type.equals(STORIES))
-            throw new IllegalArgumentException("Collection type must be: events|series|comics|stories");
-
-        return mMarvelApi.getCharacterCollection(characterId, type);
+        return null;
     }
 }

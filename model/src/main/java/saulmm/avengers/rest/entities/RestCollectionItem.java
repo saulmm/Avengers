@@ -1,11 +1,6 @@
 package saulmm.avengers.rest.entities;
 
 public class RestCollectionItem {
-	public final static String COMICS = "comics";
-	public final static String SERIES	  	= "series";
-	public final static String STORIES = "stories";
-	public final static String EVENTS = "events";
-
 	protected int id;
 	protected String title;
 	protected String description;

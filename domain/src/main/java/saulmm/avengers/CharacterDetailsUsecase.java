@@ -5,35 +5,50 @@
  */
 package saulmm.avengers;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import rx.Observable;
 import rx.Scheduler;
+import rx.functions.Func1;
 import saulmm.avengers.entities.Character;
+import saulmm.avengers.repository.Repository;
 import saulmm.avengers.rest.entities.RestCharacter;
+import saulmm.avengers.specifications.IdSpecification;
 
 public class CharacterDetailsUsecase extends Usecase<Character> {
-    private final CharacterDatasource mRepository;
+    private Repository<Character> mRepository;
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
-    private int mCharacterId;
+
+    private final IdSpecification mIdSpecification;
 
     @Inject public CharacterDetailsUsecase(int characterId,
-        CharacterDatasource repository,
+        Repository<Character> repository,
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread) {
 
-        mCharacterId = characterId;
         mRepository = repository;
         mUiThread = uiThread;
         mExecutorThread = executorThread;
+        mIdSpecification = new IdSpecification(characterId);
     }
 
     @Override
     public Observable<Character> buildObservable() {
-        return mRepository.getCharacter(mCharacterId)
+        return mRepository.get(mIdSpecification)
             .observeOn(mUiThread)
-            .subscribeOn(mExecutorThread);
+            .subscribeOn(mExecutorThread)
+            .flatMap(new Func1<List<Character>, Observable<Character>>() {
+                @Override
+                public Observable<Character> call(List<Character> characters) {
+                    if (!characters.isEmpty())
+                        return Observable.just(characters.get(0));
+
+                    else return Observable.empty();
+                }
+            });
     }
 }

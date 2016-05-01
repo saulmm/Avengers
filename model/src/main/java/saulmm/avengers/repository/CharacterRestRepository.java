@@ -1,4 +1,4 @@
-package saulmm.avengers;
+package saulmm.avengers.repository;
 
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import saulmm.avengers.specifications.IdSpecification;
 import saulmm.avengers.specifications.PaginationSpecification;
 import saulmm.avengers.specifications.Specification;
 
-public class CharacterRestRepository implements Repository<Character> {
+public class CharacterRestRepository implements saulmm.avengers.repository.Repository<Character> {
     private MarvelApi mMarvelApi;
 
     @Inject

@@ -1,4 +1,4 @@
-package saulmm.avengers;
+package saulmm.avengers.repository;
 
 
 import java.util.List;

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import saulmm.avengers.GetCollectionUsecase;
+import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.rest.entities.RestCollectionItem;
 import saulmm.avengers.mvp.views.CollectionView;
 import saulmm.avengers.mvp.views.View;
@@ -13,7 +14,7 @@ public class CollectionPresenter implements Presenter {
 	private final GetCollectionUsecase mGetCollectionUsecase;
 	private final Context mActivityContext;
 	private int mCharacterId;
-	private String mCollectionType;
+	private CollectionItem.Type mCollectionType;
 	private CollectionView mCollectionView;
 
 	@Inject
@@ -41,12 +42,12 @@ public class CollectionPresenter implements Presenter {
 			.subscribe(this::onCollectionItemsReceived);
 	}
 
-	public void initialisePresenters(String collectionType, int characterId) {
+	public void initialisePresenters(CollectionItem.Type collectionType, int characterId) {
 		mCollectionType = collectionType;
 		mCharacterId = characterId;
 	}
 
-	private void onCollectionItemsReceived(List<RestCollectionItem> items) {
+	private void onCollectionItemsReceived(List<CollectionItem> items) {
 		mCollectionView.hideLoadingIndicator();
 		mCollectionView.showItems(items);
 	}

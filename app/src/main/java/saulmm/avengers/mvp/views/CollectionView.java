@@ -1,6 +1,8 @@
 package saulmm.avengers.mvp.views;
 
 import java.util.List;
+
+import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.rest.entities.RestCollectionItem;
 
 public interface CollectionView extends View {
@@ -9,5 +11,5 @@ public interface CollectionView extends View {
 
 	void hideLoadingIndicator();
 
-	void showItems(List<RestCollectionItem> items);
+	void showItems(List<CollectionItem> items);
 }

@@ -7,46 +7,48 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.functions.Action1;
 import saulmm.avengers.entities.Character;
-import saulmm.avengers.rest.entities.RestCharacter;
+import saulmm.avengers.specifications.PaginationSpecification;
 
 public class GetCharactersUsecase extends Usecase<List<Character>> {
     public final static int DEFAULT_CHARACTERS_LIMIT = 20;
-    private final Repository<Character> mCharacterRepository;
-
-    private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
-    private int mCurrentOffset;
+    private final saulmm.avengers.repository.Repository<Character> mCharacterRepository;
 
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
 
+    private final PaginationSpecification mPaginationSpecification;
+
     @Inject public GetCharactersUsecase(
         @Named("ui_thread") Scheduler uiThread,
         @Named("executor_thread") Scheduler executorThread,
-
-        Repository<Character> characterRepository) {
+        saulmm.avengers.repository.Repository<Character> characterRepository) {
 
         mUiThread = uiThread;
         mExecutorThread = executorThread;
         mCharacterRepository = characterRepository;
+        mPaginationSpecification = new PaginationSpecification(0, DEFAULT_CHARACTERS_LIMIT);
     }
 
     @Override
     public Observable<List<Character>> buildObservable() {
-        System.out.println(mCharacterRepository);
-        return null;
+        return mCharacterRepository.get(mPaginationSpecification)
+            .observeOn(mUiThread)
+            .subscribeOn(mExecutorThread)
+            .doOnError(new Action1<Throwable>() {
+                @Override
+                public void call(Throwable throwable) {
+                    mPaginationSpecification.decreaseOffset();
+                }
+            });
     }
 
     @Override
     public Observable<List<Character>> execute() {
-        increaseOffset();
+        mPaginationSpecification.increaseOffset();
         return super.execute();
     }
 
-    public void increaseOffset() {
-        mCurrentOffset += mCharactersLimit;
-    }
-
     public int getCurrentOffset() {
-        return mCurrentOffset;
+        return mPaginationSpecification.getOffset();
     }
 }

@@ -12,7 +12,8 @@ import javax.inject.Singleton;
 
 import rx.Scheduler;
 import saulmm.avengers.AvengersApplication;
-import saulmm.avengers.Repository;
+import saulmm.avengers.entities.CollectionItem;
+import saulmm.avengers.repository.Repository;
 import saulmm.avengers.entities.Character;
 import saulmm.avengers.injector.modules.AppModule;
 import saulmm.avengers.CharacterDatasource;
@@ -22,10 +23,8 @@ import saulmm.avengers.rest.MarvelAuthorizer;
 @Singleton @Component(modules = AppModule.class)
 public interface AppComponent {
     AvengersApplication app();
-    CharacterDatasource dataRepository();
     Repository<Character> characterRepository();
-    Endpoint restEndpoint();
-    MarvelAuthorizer marvelAuthorizer();
+    Repository<CollectionItem> collectionRespoitory();
 
     @Named("ui_thread") Scheduler uiThread();
     @Named("executor_thread") Scheduler executorThread();

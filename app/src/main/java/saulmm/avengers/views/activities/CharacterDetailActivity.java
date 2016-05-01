@@ -35,6 +35,7 @@ import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
 import saulmm.avengers.entities.Character;
+import saulmm.avengers.entities.CollectionItem;
 import saulmm.avengers.rest.entities.RestCollectionItem;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
@@ -221,22 +222,22 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     @Override
     public void goToCharacterComicsView(int characterId) {
-        CollectionActivity.start(this, characterId, RestCollectionItem.COMICS);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.COMIC);
     }
 
     @Override
     public void goToCharacterSeriesView(int characterId) {
-        CollectionActivity.start(this, characterId, RestCollectionItem.SERIES);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.SERIE);
     }
 
     @Override
     public void goToCharacterEventsView(int characterId) {
-        CollectionActivity.start(this, characterId, RestCollectionItem.EVENTS);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.EVENT);
     }
 
     @Override
     public void goToCharacterStoriesView(int characterId) {
-        CollectionActivity.start(this, characterId, RestCollectionItem.STORIES);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.STORY);
     }
 
     @BindingAdapter({"source", "presenter", "callback"})

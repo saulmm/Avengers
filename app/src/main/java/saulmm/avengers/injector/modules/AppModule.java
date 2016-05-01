@@ -28,8 +28,10 @@ import rx.schedulers.Schedulers;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.BuildConfig;
 import saulmm.avengers.CharacterDatasource;
-import saulmm.avengers.CharacterRestRepository;
-import saulmm.avengers.Repository;
+import saulmm.avengers.entities.CollectionItem;
+import saulmm.avengers.repository.CharacterRestRepository;
+import saulmm.avengers.repository.CollectionRestRepository;
+import saulmm.avengers.repository.Repository;
 import saulmm.avengers.entities.Character;
 import saulmm.avengers.rest.Endpoint;
 import saulmm.avengers.rest.MarvelApi;
@@ -68,45 +70,47 @@ public class AppModule {
         return mAvengersApplication;
     }
 
-    @Provides
-    @Singleton
-    MarvelApi provideMarvelApi(MarvelAuthorizer marvelAuthorizer) {
-        OkHttpClient client = new OkHttpClient();
+        @Provides
+        @Singleton
+        MarvelApi provideMarvelApi(MarvelAuthorizer marvelAuthorizer) {
+            OkHttpClient client = new OkHttpClient();
 
-        MarvelSigningInterceptor signingIterceptor =
-                new MarvelSigningInterceptor(
-                        marvelAuthorizer.getApiClient(),
-                        marvelAuthorizer.getApiSecret());
+            MarvelSigningInterceptor signingIterceptor =
+                    new MarvelSigningInterceptor(
+                            marvelAuthorizer.getApiClient(),
+                            marvelAuthorizer.getApiSecret());
 
-        HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
-        logginInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
+            logginInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        client.interceptors().add(signingIterceptor);
-        client.interceptors().add(logginInterceptor);
+            client.interceptors().add(signingIterceptor);
+            client.interceptors().add(logginInterceptor);
 
-        Gson customGsonInstance = new GsonBuilder()
-                .registerTypeAdapter(new TypeToken<List<RestCharacter>>() {}.getType(),
-                        new MarvelResultsDeserializer<RestCharacter>())
+            Gson customGsonInstance = new GsonBuilder()
+                    .registerTypeAdapter(new TypeToken<List<RestCharacter>>() {}.getType(),
+                            new MarvelResultsDeserializer<RestCharacter>())
 
-                .registerTypeAdapter(new TypeToken<List<RestCollectionItem>>() {}.getType(),
-                        new MarvelResultsDeserializer<RestCollectionItem>())
+                    .registerTypeAdapter(new TypeToken<List<RestCollectionItem>>() {}.getType(),
+                            new MarvelResultsDeserializer<RestCollectionItem>())
 
-                .create();
+                    .create();
 
-        Retrofit marvelApiAdapter = new Retrofit.Builder()
-                .baseUrl(END_POINT)
-                .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(client)
-                .build();
+            Retrofit marvelApiAdapter = new Retrofit.Builder()
+                    .baseUrl(END_POINT)
+                    .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .client(client)
+                    .build();
 
-        return marvelApiAdapter.create(MarvelApi.class);
-    }
+            return marvelApiAdapter.create(MarvelApi.class);
+        }
 
     @Provides
     @Singleton
     MarvelAuthorizer provideMarvelAuthorizer() {
-        return new MarvelAuthorizer(BuildConfig.MARVEL_PUBLIC_KEY, BuildConfig.MARVEL_PRIVATE_KEY);
+        return new MarvelAuthorizer(
+            BuildConfig.MARVEL_PUBLIC_KEY,
+            BuildConfig.MARVEL_PRIVATE_KEY);
     }
 
     @Provides
@@ -126,4 +130,11 @@ public class AppModule {
     Repository<Character> provideCharacterRepository(CharacterRestRepository characterRestRepository) {
         return characterRestRepository;
     }
+
+    @Provides
+    @Singleton
+    Repository<CollectionItem> provideCollectionRepository(CollectionRestRepository collectionRestRepository) {
+        return collectionRestRepository;
+    }
+
 }
