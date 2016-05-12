@@ -23,11 +23,6 @@ import saulmm.avengers.views.activities.CollectionActivity;
     }
 )
 public interface AvengerInformationComponent extends ActivityComponent {
-
     void inject (CharacterDetailActivity detailActivity);
-
     void inject (CollectionActivity detailActivity);
-
-    CharacterDetailsUsecase getCharacerInformationUsecase();
-    GetCollectionUsecase getCollectionUsecase();
 }
