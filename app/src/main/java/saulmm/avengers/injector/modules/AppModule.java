@@ -42,7 +42,7 @@ import saulmm.avengers.rest.utils.interceptors.MarvelSigningInterceptor;
 
 @Module
 public class AppModule {
-    public static String END_POINT       = "http://gateway.marvel.com/";
+    public static String END_POINT  = "http://gateway.marvel.com/";
     private final AvengersApplication mAvengersApplication;
 
     public AppModule(AvengersApplication avengersApplication) {
@@ -68,40 +68,38 @@ public class AppModule {
         return mAvengersApplication;
     }
 
-        @Provides
-        @Singleton
-        MarvelApi provideMarvelApi(MarvelAuthorizer marvelAuthorizer) {
-            OkHttpClient client = new OkHttpClient();
+    @Provides
+    @Singleton
+    MarvelApi provideMarvelApi(MarvelAuthorizer marvelAuthorizer) {
+        OkHttpClient client = new OkHttpClient();
 
-            MarvelSigningInterceptor signingIterceptor =
-                    new MarvelSigningInterceptor(
-                            marvelAuthorizer.getApiClient(),
-                            marvelAuthorizer.getApiSecret());
+        MarvelSigningInterceptor signingIterceptor =
+            new MarvelSigningInterceptor(marvelAuthorizer.getApiClient(),
+                marvelAuthorizer.getApiSecret());
 
-            HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
-            logginInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
+        logginInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            client.interceptors().add(signingIterceptor);
-            client.interceptors().add(logginInterceptor);
+        client.interceptors().add(signingIterceptor);
+        client.interceptors().add(logginInterceptor);
 
-            Gson customGsonInstance = new GsonBuilder()
-                    .registerTypeAdapter(new TypeToken<List<RestCharacter>>() {}.getType(),
-                            new MarvelResultsDeserializer<RestCharacter>())
+        Gson customGsonInstance = new GsonBuilder()
+            .registerTypeAdapter(new TypeToken<List<RestCharacter>>() {}.getType(),
+                new MarvelResultsDeserializer<RestCharacter>())
 
-                    .registerTypeAdapter(new TypeToken<List<RestCollectionItem>>() {}.getType(),
-                            new MarvelResultsDeserializer<RestCollectionItem>())
+            .registerTypeAdapter(new TypeToken<List<RestCollectionItem>>() {}.getType(),
+                new MarvelResultsDeserializer<RestCollectionItem>())
+                .create();
 
-                    .create();
+        Retrofit marvelApiAdapter = new Retrofit.Builder()
+            .baseUrl(END_POINT)
+            .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .client(client)
+            .build();
 
-            Retrofit marvelApiAdapter = new Retrofit.Builder()
-                    .baseUrl(END_POINT)
-                    .addConverterFactory(GsonConverterFactory.create(customGsonInstance))
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .client(client)
-                    .build();
-
-            return marvelApiAdapter.create(MarvelApi.class);
-        }
+        return marvelApiAdapter.create(MarvelApi.class);
+    }
 
     @Provides
     @Singleton
@@ -114,7 +112,7 @@ public class AppModule {
     @Provides
     @Singleton
     Endpoint provideRestEndpoint() {
-        return new Endpoint("http://gateway.marvel.com/");
+        return new Endpoint(END_POINT);
     }
 
     @Provides
