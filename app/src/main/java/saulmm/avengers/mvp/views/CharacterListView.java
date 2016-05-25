@@ -5,14 +5,15 @@
  */
 package saulmm.avengers.mvp.views;
 
-import android.app.ActivityOptions;
 import java.util.List;
-import saulmm.avengers.entities.MarvelCharacter;
+
+import saulmm.avengers.entities.Character;
+import saulmm.avengers.rest.entities.RestCharacter;
 
 @SuppressWarnings("unused")
 public interface CharacterListView extends View {
 
-    void bindCharacterList(List<MarvelCharacter> avengers);
+    void bindCharacterList(List<Character> avengers);
 
     void showCharacterList();
 

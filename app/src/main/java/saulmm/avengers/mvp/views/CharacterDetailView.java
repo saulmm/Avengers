@@ -5,15 +5,14 @@
  */
 package saulmm.avengers.mvp.views;
 
-import android.graphics.Bitmap;
-import saulmm.avengers.entities.MarvelCharacter;
+import saulmm.avengers.entities.Character;
 
 public interface CharacterDetailView extends View {
     void disableScroll();
 
     void hideRevealViewByAlpha();
 
-    void bindCharacter(MarvelCharacter character);
+    void bindCharacter(Character character);
 
     void enableScroll();
 

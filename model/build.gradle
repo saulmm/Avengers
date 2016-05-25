@@ -2,6 +2,10 @@ apply plugin: 'java'
 
 def libs = rootProject.ext.libraries;
 
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
+
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -12,6 +16,7 @@ dependencies {
   compile "com.squareup.retrofit:retrofit:${libs.retrofit}"
   compile "com.squareup.retrofit:converter-gson:${libs.retrofit}"
   compile "com.squareup.retrofit:adapter-rxjava:${libs.retrofit}"
+  compile "io.realm:realm-android:${libs.realm}"
 
   compile "com.google.dagger:dagger:${libs.dagger}"
   compile "com.squareup.okhttp:logging-interceptor:${libs.loggin_interceptor}"

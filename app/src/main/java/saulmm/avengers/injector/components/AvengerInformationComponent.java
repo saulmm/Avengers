@@ -15,13 +15,14 @@ import saulmm.avengers.views.activities.CharacterDetailActivity;
 import saulmm.avengers.views.activities.CollectionActivity;
 
 @Activity
-@Component(dependencies = AppComponent.class, modules = {AvengerInformationModule.class, ActivityModule.class})
+@Component(
+    dependencies = AppComponent.class,
+    modules = {
+        AvengerInformationModule.class,
+        ActivityModule.class
+    }
+)
 public interface AvengerInformationComponent extends ActivityComponent {
-
     void inject (CharacterDetailActivity detailActivity);
-
     void inject (CollectionActivity detailActivity);
-
-    CharacterDetailsUsecase getCharacerInformationUsecase();
-    GetCollectionUsecase getCollectionUsecase();
 }

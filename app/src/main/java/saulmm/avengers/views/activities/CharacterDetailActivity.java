@@ -23,19 +23,21 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.databinding.ActivityAvengerDetailBinding;
+import saulmm.avengers.entities.Character;
 import saulmm.avengers.entities.CollectionItem;
-import saulmm.avengers.entities.MarvelCharacter;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -208,7 +210,7 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
     }
 
     @Override
-    public void bindCharacter(MarvelCharacter character) {
+    public void bindCharacter(Character character) {
         mBinding.setCharacter(character);
     }
 
@@ -221,22 +223,22 @@ public class CharacterDetailActivity extends AppCompatActivity implements Charac
 
     @Override
     public void goToCharacterComicsView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.COMICS);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.COMIC);
     }
 
     @Override
     public void goToCharacterSeriesView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.SERIES);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.SERIE);
     }
 
     @Override
     public void goToCharacterEventsView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.EVENTS);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.EVENT);
     }
 
     @Override
     public void goToCharacterStoriesView(int characterId) {
-        CollectionActivity.start(this, characterId, CollectionItem.STORIES);
+        CollectionActivity.start(this, characterId, CollectionItem.Type.STORY);
     }
 
     @BindingAdapter({"source", "presenter", "callback"})

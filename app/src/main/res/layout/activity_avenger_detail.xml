@@ -8,10 +8,10 @@
 	<data>
 		<import type="android.view.View"/>
 		<import type="android.text.TextUtils"/>
-		<import type="saulmm.avengers.entities.ComicsCollection"/>
+		<import type="saulmm.avengers.entities.CollectionItem"/>
 
 		<variable name="presenter" type="saulmm.avengers.mvp.presenters.CharacterDetailPresenter"/>
-		<variable name="character" type="saulmm.avengers.entities.MarvelCharacter"/>
+		<variable name="character" type="saulmm.avengers.entities.Character"/>
 		<variable name="imageCallback" type="saulmm.avengers.utils.OnCharacterImageCallback"/>
 		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
 
@@ -109,124 +109,54 @@
 					android:baselineAligned="false"
 					>
 
-					<LinearLayout
-						android:id="@+id/character_comics_container"
+					<TextView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
-						android:orientation="vertical"
 						android:gravity="center"
-						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
+						android:text="@string/label_character_comics"
+						style="@style/Text.Header.Min"
 						app:onClick="@{presenter.onComicsIndicatorPressed}"
-						>
+						/>
 
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/label_character_comics"
-							style="@style/Text.Header.Min"
-							/>
-
-						<TextView
-							android:id="@+id/character_comics"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginTop="@dimen/spacing_small"
-							android:textSize="20sp"
-							android:text='@{"" + character.comics.available}'
-							tools:text="1"
-							/>
-					</LinearLayout>
-
-					<LinearLayout
-						android:id="@+id/character_events_container"
+					<TextView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
-						android:orientation="vertical"
+						android:text="@string/label_character_events"
 						android:gravity="center"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
 						app:onClick="@{presenter.onEventIndicatorPressed}"
-						>
+						style="@style/Text.Header.Min"
+						/>
 
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/label_character_events"
-							style="@style/Text.Header.Min"
-							/>
 
-						<TextView
-							android:id="@+id/character_events"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textSize="20sp"
-							android:layout_marginTop="@dimen/spacing_small"
-							android:text='@{"" + character.events.available}'
-							tools:text="0"
-							/>
-					</LinearLayout>
-					<LinearLayout
-						android:id="@+id/character_series_container"
+					<TextView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
-						android:orientation="vertical"
+						android:text="@string/label_character_series"
 						android:gravity="center"
+						style="@style/Text.Header.Min"
 						android:clickable="true"
 						android:background="?attr/selectableItemBackgroundBorderless"
 						app:onClick="@{presenter.onSeriesIndicatorPressed}"
-						>
+						/>
 
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/label_character_series"
-							style="@style/Text.Header.Min"
-							/>
 
-						<TextView
-							android:id="@+id/character_series"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textSize="20sp"
-							android:layout_marginTop="@dimen/spacing_small"
-							android:text='@{"" + character.series.available}'
-							tools:text="50"
-							/>
-					</LinearLayout>
-
-					<LinearLayout
-						android:id="@+id/character_stories_container"
+					<TextView
 						android:layout_width="0dp"
 						android:layout_height="match_parent"
 						android:layout_weight="1"
-						android:orientation="vertical"
-						android:gravity="center"
+						android:text="@string/label_character_stories"
 						android:clickable="true"
+						android:gravity="center"
 						android:background="?attr/selectableItemBackgroundBorderless"
 						app:onClick="@{presenter.onStoriesIndicatorPressed}"
-						>
-
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/label_character_stories"
-							style="@style/Text.Header.Min"
-							/>
-
-						<TextView
-							android:id="@+id/character_stories"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textSize="20sp"
-							android:layout_marginTop="@dimen/spacing_small"
-							android:text='@{"" + character.stories.available}'
-							tools:text="20"
-							/>
-					</LinearLayout>
+						style="@style/Text.Header.Min"
+						/>
 				</LinearLayout>
 			</FrameLayout>
 		</android.support.design.widget.AppBarLayout>
@@ -262,7 +192,7 @@
 					android:lineSpacingExtra="8dp"
 					android:paddingLeft="@dimen/spacing_normal"
 					android:paddingRight="@dimen/spacing_normal"
-					android:text="@{TextUtils.isEmpty(character.description) ? @string/messages_empty_description : character.description}"
+					android:text="@{TextUtils.isEmpty(character.bio) ? @string/messages_empty_description : character.bio}"
 					android:visibility="@{character != null ? View.VISIBLE : View.GONE}"
 					android:textSize="20sp"
 					tools:visibility="gone"

@@ -1,34 +1,63 @@
 package saulmm.avengers.entities;
 
+
 public class CollectionItem {
-	public final static String COMICS = "comics";
-	public final static String SERIES	  	= "series";
-	public final static String STORIES = "stories";
-	public final static String EVENTS = "events";
+    public final static String KEY_COMICS 	= "comics";
+    public final static String KEY_SERIES 	= "series";
+    public final static String KEY_STORIES 	= "stories";
+    public final static String KEY_EVENTS 	= "events";
 
-	protected int id;
-	protected String title;
-	protected String description;
-	protected String resourceURI;
-	protected Thumbnail thumbnail;
+    public enum Type {
+        COMIC(KEY_COMICS),
+        SERIE(KEY_SERIES),
+        STORY(KEY_STORIES),
+        EVENT(KEY_EVENTS);
 
-	public int getId() {
-		return id;
-	}
+        private String key;
 
-	public String getTitle() {
-		return title;
-	}
+        Type(String keyComics) {
+            key = keyComics;
+        }
 
-	public String getResourceURI() {
-		return resourceURI;
-	}
+        public String key() {
+            return key;
+        }
+    }
 
-	public Thumbnail getThumbnail() {
-		return thumbnail;
-	}
+    private int id;
+    private String title;
+    private String description;
+    private String imageUrl;
 
-	public String getDescription() {
-		return description;
-	}
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

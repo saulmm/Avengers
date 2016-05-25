@@ -6,51 +6,49 @@ import javax.inject.Named;
 import rx.Observable;
 import rx.Scheduler;
 import rx.functions.Action1;
-import saulmm.avengers.entities.MarvelCharacter;
-import saulmm.avengers.repository.CharacterRepository;
+import saulmm.avengers.entities.Character;
+import saulmm.avengers.specifications.PaginationSpecification;
 
-public class GetCharactersUsecase extends Usecase<List<MarvelCharacter>> {
+public class GetCharactersUsecase extends Usecase<List<Character>> {
     public final static int DEFAULT_CHARACTERS_LIMIT = 20;
-    private int mCharactersLimit = DEFAULT_CHARACTERS_LIMIT;
-    private final CharacterRepository mRepository;
-    private int mCurrentOffset;
+    private final saulmm.avengers.repository.Repository<Character> mCharacterRepository;
 
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
 
-    @Inject public GetCharactersUsecase(CharacterRepository repository,
-        @Named("ui_thread") Scheduler uiThread,
-        @Named("executor_thread") Scheduler executorThread) {
+    private final PaginationSpecification mPaginationSpecification;
 
-        mRepository = repository;
+    @Inject public GetCharactersUsecase(
+        @Named("ui_thread") Scheduler uiThread,
+        @Named("executor_thread") Scheduler executorThread,
+        saulmm.avengers.repository.Repository<Character> characterRepository) {
+
         mUiThread = uiThread;
         mExecutorThread = executorThread;
+        mCharacterRepository = characterRepository;
+        mPaginationSpecification = new PaginationSpecification(0, DEFAULT_CHARACTERS_LIMIT);
     }
 
     @Override
-    public Observable<List<MarvelCharacter>> buildObservable() {
-        return mRepository.getCharacters(mCurrentOffset)
+    public Observable<List<Character>> buildObservable() {
+        return mCharacterRepository.get(mPaginationSpecification)
             .observeOn(mUiThread)
             .subscribeOn(mExecutorThread)
             .doOnError(new Action1<Throwable>() {
                 @Override
                 public void call(Throwable throwable) {
-                    mCurrentOffset -= mCharactersLimit;
+                    mPaginationSpecification.decreaseOffset();
                 }
             });
     }
 
     @Override
-    public Observable<List<MarvelCharacter>> execute() {
-        increaseOffset();
+    public Observable<List<Character>> execute() {
+        mPaginationSpecification.increaseOffset();
         return super.execute();
     }
 
-    public void increaseOffset() {
-        mCurrentOffset += mCharactersLimit;
-    }
-
     public int getCurrentOffset() {
-        return mCurrentOffset;
+        return mPaginationSpecification.getOffset();
     }
 }

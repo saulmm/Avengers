@@ -3,8 +3,10 @@ package saulmm.avengers.views.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 import saulmm.avengers.AvengersApplication;
 import saulmm.avengers.R;
 import saulmm.avengers.entities.CollectionItem;
+import saulmm.avengers.rest.entities.RestCollectionItem;
 import saulmm.avengers.injector.components.DaggerAvengerInformationComponent;
 import saulmm.avengers.injector.modules.ActivityModule;
 import saulmm.avengers.injector.modules.AvengerInformationModule;
@@ -55,7 +58,7 @@ public class CollectionActivity extends AppCompatActivity implements CollectionV
 
 	private void initializePresenter() {
 		int characterId = getIntent().getIntExtra(EXTRA_CHARACTER_ID, -1);
-		String collectionType = getIntent().getStringExtra(EXTRA_COLLECTION_TYPE);
+		CollectionItem.Type collectionType = (CollectionItem.Type) getIntent().getSerializableExtra(EXTRA_COLLECTION_TYPE);
 		mCollectionPresenter.attachView(this);
 		mCollectionPresenter.initialisePresenters(collectionType, characterId);
 		mCollectionPresenter.onCreate();
@@ -76,7 +79,7 @@ public class CollectionActivity extends AppCompatActivity implements CollectionV
 		mCollectionRecycler.setAdapter(new CollectionAdapter(items));
 	}
 
-	public static void start(Context context, int characterId, String type) {
+	public static void start(Context context, int characterId, CollectionItem.Type type) {
 		Intent collectionIntent = new Intent(context, CollectionActivity.class);
 		collectionIntent.putExtra(EXTRA_CHARACTER_ID, characterId);
 		collectionIntent.putExtra(EXTRA_COLLECTION_TYPE, type);
@@ -123,9 +126,9 @@ public class CollectionActivity extends AppCompatActivity implements CollectionV
 			itemTitleTextView.setText(collectionItem.getTitle());
 			itemTextTextView.setText(collectionItem.getDescription());
 
-			if (collectionItem.getThumbnail() != null) {
+			if (!TextUtils.isEmpty(collectionItem.getImageUrl())) {
 				Glide.with(CollectionActivity.this)
-					.load(collectionItem.getThumbnail().getImageUrl())
+					.load(collectionItem.getImageUrl())
 					.error(R.drawable.error_placeholder)
 					.into(itemImageView);
 
