@@ -69,6 +69,7 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
         }
 
         public void bindAvenger(Character character) {
+            // BK -> getAdapterPosition() == 20
             avengerTitleTextView.setText(character.getName());
             avengerTitleTextView.setTransitionName(Utils.getListTransitionName(getPosition()));
 
