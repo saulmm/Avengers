@@ -2,6 +2,9 @@ apply plugin: 'java'
 
 def libs = rootProject.ext.libraries;
 
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile project(':model')

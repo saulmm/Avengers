@@ -22,7 +22,8 @@ ext {
         circleimageview     : "1.3.0",
         loggin_interceptor  : "2.6.0",
         okhttp              : "2.7.1",
-        realm               : "0.87.4"
+        realm               : "0.87.4",
+        rxlifecycle         : "0.6.1"
     ]
 
     testingLibraries = [
@@ -33,6 +34,8 @@ ext {
         espressoRules       : "0.4.1"
     ]
 }
+
+
 
 buildscript {
     repositories {

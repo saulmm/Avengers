@@ -7,15 +7,16 @@ package saulmm.avengers.mvp.presenters;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import rx.Subscription;
 import saulmm.avengers.GetCharactersUsecase;
 import saulmm.avengers.entities.Character;
-import saulmm.avengers.rest.entities.RestCharacter;
 import saulmm.avengers.mvp.views.CharacterListView;
 import saulmm.avengers.mvp.views.View;
 
- public class CharacterListPresenter implements Presenter {
+public class CharacterListPresenter implements Presenter {
     private final GetCharactersUsecase mCharactersUsecase;
     private boolean mIsTheCharacterRequestRunning;
     private Subscription mCharactersSubscription;
@@ -60,45 +61,49 @@ import saulmm.avengers.mvp.views.View;
         if (!mIsTheCharacterRequestRunning) askForNewCharacters();
     }
 
-     public void askForCharacters() {
-      mIsTheCharacterRequestRunning = true;
+    public void askForCharacters() {
+        mIsTheCharacterRequestRunning = true;
         mAvengersView.hideErrorView();
         mAvengersView.showLoadingView();
 
         mCharactersSubscription = mCharactersUsecase.execute()
-            .subscribe(this::onCharactersReceived, this::showErrorView);
+            .subscribe(
+                this::onCharactersReceived,
+                this::showErrorView);
     }
 
-     public void onCharactersReceived(List<Character> characters) {
-         mCharacters.addAll(characters);
-         mAvengersView.bindCharacterList(mCharacters);
-         mAvengersView.showCharacterList();
-         mAvengersView.hideEmptyIndicator();
-         mIsTheCharacterRequestRunning = false;
-     }
+    public void onCharactersReceived(List<Character> characters) {
+        mCharacters.addAll(characters);
+        mAvengersView.bindCharacterList(mCharacters);
+        mAvengersView.showCharacterList();
+        mAvengersView.hideEmptyIndicator();
+        mIsTheCharacterRequestRunning = false;
+    }
 
-     public void askForNewCharacters() {
+    public void askForNewCharacters() {
         mAvengersView.showLoadingMoreCharactersIndicator();
         mIsTheCharacterRequestRunning = true;
 
         mCharactersSubscription = mCharactersUsecase.execute()
-            .subscribe(this::onNewCharactersReceived, this::onNewCharactersError);
+            .subscribe(
+                this::onNewCharactersReceived,
+                this::onNewCharactersError);
     }
 
-     private void onNewCharactersError(Throwable error) {
-         showGenericError();
-         mIsTheCharacterRequestRunning = false;
-     }
+    private void onNewCharactersError(Throwable error) {
+        showGenericError();
+        mIsTheCharacterRequestRunning = false;
+    }
 
-     private void onNewCharactersReceived(List<Character> newCharacters) {
-         mCharacters.addAll(newCharacters);
-         mAvengersView.updateCharacterList(GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT);
+    private void onNewCharactersReceived(List<Character> newCharacters) {
+        mCharacters.addAll(newCharacters);
+        mAvengersView.updateCharacterList(GetCharactersUsecase.DEFAULT_CHARACTERS_LIMIT);
 
-         mAvengersView.hideLoadingIndicator();
-         mIsTheCharacterRequestRunning = false;
-     }
+        mAvengersView.hideLoadingIndicator();
+        mIsTheCharacterRequestRunning = false;
+    }
 
-     public void showErrorView(Throwable error) {
+    public void showErrorView(Throwable error) {
         mAvengersView.showUknownErrorMessage();
         mAvengersView.hideLoadingMoreCharactersIndicator();
         mAvengersView.hideEmptyIndicator();
