@@ -70,6 +70,7 @@ public class CharacterDetailPresenter implements Presenter {
     }
 
     private void onCharacterReceived(Character character) {
+        // BK -> Evaluate expression -> Change data on runtime
         mCharacterDetailView.bindCharacter(character);
 
         if (character.getBio() != null && !character.getBio().equals(""))

@@ -1,21 +1,54 @@
 package saulmm.avengers.idea;
 
 import android.app.Activity;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
+import saulmm.avengers.R;
 
-public class Editor {
+
+public class Editor extends Activity {
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Complete current statement (shift + cmd + enter)
-    public boolean canIClainTheThrone(IronThrone throne) {
-        if (throne.isEmpty( )) {
+    public boolean canIClaimTheThrone(IronThrone throne) {
+        if (throne.isEmpty()) {
             return true;
         }
 
         return false;
     }
+
+
+
+
+
+
+
+
+
+
+
 
     // Join lines shift + ctrl + j
     public String theDoor() {
@@ -28,7 +61,18 @@ public class Editor {
 
 
 
-    // Surround with: cmd + control + T
+
+
+
+
+
+
+
+
+
+
+
+    // Surround with: cmd + alt + T
     public void getANicePositionOnWesteros() {
         RedWoman redWoman = new RedWoman();
 
@@ -36,14 +80,39 @@ public class Editor {
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
     // Multiple cursors : CTRL + G
     public void bindButtons (Activity a) {
-//        FloatingActionButton fab    = (FloatingActionButton) a.findViewById(R.id.fab_edit_task);
-//        Button button               = (Button) a.findViewById(R.id.fab_edit_task);
-//        TextView textView           = (TextView) a.findViewById(R.id.fab_edit_task);
-//        EditText editText           = (EditText) a.findViewById(R.id.fab_edit_task);
-//        FrameLayout frameLayout     = (FrameLayout) a.findViewById(R.id.fab_edit_task);
+        Toolbar chToolbar               = (Toolbar) findViewById(R.id.character_toolbar);
+        TextView chBiographyTextView    = (TextView) findViewById(R.id.character_biography);
+        TextView chLabelTextView        = (TextView) findViewById(R.id.character_label_info);
+        ProgressBar chProgress          = (ProgressBar) findViewById(R.id.collection_loading);
+        ViewGroup chInfoContainer       = (ViewGroup) findViewById(R.id.character_info_container);
+        ImageView chImage               = (ImageView) findViewById(R.id.character_image);
+        AppBarLayout chAppBar           = (AppBarLayout) findViewById(R.id.character_appbar);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -54,6 +123,100 @@ public class Editor {
         }
         return true;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    // cmd + opt + v -> Variable
+    // cmd + opt + f -> field
+    // cmd + opt + c -> constant
+    public void lookForSwag(String toValidate, List<String> aList) {
+        boolean isEmpty = aList.isEmpty();
+
+        if (isEmpty) {
+            for (String yupi : aList) {
+                if (toValidate.equals("CONSTANT")) {
+                    System.out.println(yupi);
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // extract
+    // cmd + opt - m -> method
+    public void lookForSwag2(String toValidate, List<String> aList) {
+        boolean isEmpty = aList.isEmpty();
+
+        if (isEmpty) {
+            for (String yupi : aList) {
+                if (toValidate.equals("CONSTANT")) {
+                    System.out.println(yupi);
+                }
+            }
+        }
+    }
+
+
+
+
+
+    // Inject code
+    public String injectingCode(String a) {
+        String html = "";
+
+        return html;
+    }
+
+
+
+
+
+
+    // Live templates
+    // logt
+
+    public boolean doHardComputation(String param1, int param2, String param3) {
+        // logm
+
+        boolean computationResult = 1 + 1 == 2;
+        // live_template.xml
+
+        // cmd + j
+
+        // logr
+        return computationResult;
+    }
+
+
+
+
+
+
+
+
+
 
 
     // Postfix
@@ -77,23 +240,12 @@ public class Editor {
 
     }
 
-    // Live templates menu: CMD + J
-    public void anAmazingLongMethod2() {
-        // TODO: 25/05/16
 
-        // TODO: 25/05/16
-    }
 
-    // Inject code
-    public String injectingCode(String a) {
-        String html = "<html>\n" +
-            "    <body>\n" +
-            "        <comment id=\"nunca sere una app\"/>\n" +
-            "    </body>\n" +
-            "</html>";
 
-        return "{\"clave2\":{\"df\":\"\"}, \"clave1\":\"valor1\"}";
-    }
+
+
+
 
 
     // CMD + A -> scrach file

@@ -71,8 +71,10 @@ public class AvengersListAdapter extends RecyclerView.Adapter<AvengersListAdapte
         public void bindAvenger(Character character) {
             // BK -> getAdapterPosition() == 20
             avengerTitleTextView.setText(character.getName());
+            // BK -> break on second condition
             avengerTitleTextView.setTransitionName(Utils.getListTransitionName(getPosition()));
 
+            // BK -> Print name
             if (character.getImageUrl().equals(NOT_AVAILABLE_URL)) {
                 ColorDrawable colorDrawable = new ColorDrawable(mColorPrimary);
                 avengerThumbImageView.setDrawingCacheEnabled(true);

@@ -38,9 +38,4 @@ public class Character {
     public String getImageUrl() {
         return imageUrl;
     }
-
-    @Override
-    public String toString() {
-        return name;
-    }
 }

@@ -73,6 +73,7 @@ public class CharacterListPresenter implements Presenter {
     }
 
     public void onCharactersReceived(List<Character> characters) {
+        // BK -> Create custom view
         mCharacters.addAll(characters);
         mAvengersView.bindCharacterList(mCharacters);
         mAvengersView.showCharacterList();
