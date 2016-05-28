@@ -129,6 +129,24 @@ public class Editor extends Activity {
 
 
 
+    public Object refactoringWithMenu() {
+        float farAway = .3f;
+        long ago = 10000L;
+        int string = 1337;
+        long member = 10000L;
+        Object wat = null;
+
+
+        // option + t
+        farAway *= 3;
+        string /= 2 % 3;
+        wat.hashCode();
+
+        return wat;
+    }
+
+
+
 
 
 
@@ -138,7 +156,7 @@ public class Editor extends Activity {
     // cmd + opt + v -> Variable
     // cmd + opt + f -> field
     // cmd + opt + c -> constant
-    public void lookForSwag(String toValidate, List<String> aList) {
+    public void refactorIsNotRefactorWithoutTests(String toValidate, List<String> aList) {
         boolean isEmpty = aList.isEmpty();
 
         if (isEmpty) {
@@ -184,7 +202,15 @@ public class Editor extends Activity {
 
     // Inject code
     public String injectingCode(String a) {
+        //JSON
+        String amazingJson = "";
+
+
+        //HTML div>(header>ul>li*2>a)+footer>p
         String html = "";
+
+        //regXp .+@.+\..+
+        String regExp = "";
 
         return html;
     }
@@ -194,10 +220,11 @@ public class Editor extends Activity {
 
 
 
+
     // Live templates
     // logt
 
-    public boolean doHardComputation(String param1, int param2, String param3) {
+    public boolean longLiveToTemplates(String param1, int param2, String param3) {
         // logm
 
         boolean computationResult = 1 + 1 == 2;
@@ -229,16 +256,23 @@ public class Editor extends Activity {
     }
 
 
-    private static final String TAG = "Editor";
 
-    // Live templates
-    public String anAmazingLongMethod(String param1, int param2, Person param3) {
-        Log.d(TAG, "anAmazingLongMethod() called with: " + "param1 = [" + param1 + "], param2 = [" + param2 + "], param3 = [" + param3 + "]");
 
-        Log.d(TAG, "anAmazingLongMethod() returned: " + param1);
-        return param1;
 
+    public void structuralReplaceHere() {
+        // Replace structuraelly
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+
+
+
+
+
 
 
 
@@ -276,6 +310,24 @@ public class Editor extends Activity {
     class Person {
         String name;
     }
+
+
+
+    class DaenerisDragon {
+        boolean isMomLookingForBurnSomeone;
+
+        public void waitForMom() {
+            if (!isMomLookingForBurnSomeone) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 
     class RedWoman {
         public void helpStannisTheTrueKing() {};
