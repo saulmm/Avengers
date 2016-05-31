@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,22 +14,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import saulmm.avengers.R;
+import saulmm.avengers.entities.Character;
+import saulmm.avengers.views.activities.CharacterDetailActivity;
 
 
+@SuppressWarnings("unused")
 public class Editor extends Activity {
 
 
-
-
-
-
-
-
-
-
-
-
-
+    public static final String BEST_CHARACTER_EVER = "Iron Man";
 
     // Complete current statement (shift + cmd + enter)
     public boolean canIClaimTheThrone(IronThrone throne) {
@@ -39,6 +33,33 @@ public class Editor extends Activity {
         return false;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void replaceVsAppend(Character character) {
+        Toolbar b = (Toolbar) findViewById(R.id.character_appbar);
+
+        // Replace vs append
+        if (character.getName().equals(BEST_CHARACTER_EVER)) {
+            CharacterDetailActivity.start(this, character.getName(), character.getId());
+        }
+    }
 
 
 
@@ -72,12 +93,42 @@ public class Editor extends Activity {
 
 
 
-    // Surround with: cmd + alt + T
-    public void getANicePositionOnWesteros() {
-        RedWoman redWoman = new RedWoman();
 
-        redWoman.helpStannisTheTrueKing();
+    public void moveAllTheThings() {
+        String one = "one";
+        String two = "two";
+        String three = "three";
+        String four = "four";
+        String five = "five";
+        String six = "six";
+
+
+        // xml
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Expand / Collapse selection
+    public static void excludeTransitionIds(Transition transition, Integer[] exlcudeIds) {
+        transition.excludeTarget(android.R.id.statusBarBackground, true);
+        transition.excludeTarget(android.R.id.navigationBarBackground, true);
+
+        for (Integer exlcudeId : exlcudeIds) {
+            transition.excludeTarget(exlcudeId, true);
+        }
+    }
+
 
 
 
@@ -100,6 +151,25 @@ public class Editor extends Activity {
         ViewGroup chInfoContainer       = (ViewGroup) findViewById(R.id.character_info_container);
         ImageView chImage               = (ImageView) findViewById(R.id.character_image);
         AppBarLayout chAppBar           = (AppBarLayout) findViewById(R.id.character_appbar);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Surround with: cmd + alt + T
+    public void getANicePositionOnWesteros() {
+        RedWoman redWoman = new RedWoman();
+
+        redWoman.helpStannisTheTrueKing();
     }
 
 
