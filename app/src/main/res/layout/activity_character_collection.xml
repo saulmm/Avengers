@@ -8,18 +8,6 @@
 	android:layout_height="match_parent"
 	>
 
-	<android.support.v7.widget.RecyclerView
-	    android:id="@+id/collection.list"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:scrollbars="vertical"
-		android:layout_marginTop="@dimen/spacing_small"
-		android:orientation="vertical"
-		app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-		tools:listitem="@layout/item_comic"
-		android:fitsSystemWindows="true"
-		/>
-
 	<ProgressBar
 		android:id="@+id/collection.loading"
 		android:layout_width="wrap_content"
@@ -27,4 +15,16 @@
 		android:layout_centerInParent="true"
 		style="?android:attr/progressBarStyle"
 		/>
+
+	<android.support.v7.widget.RecyclerView
+	    android:id="@+id/collection.list"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		android:orientation="vertical"
+		app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+		tools:listitem="@layout/item_comic"
+		android:fitsSystemWindows="true"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentStart="true"/>
 </RelativeLayout>

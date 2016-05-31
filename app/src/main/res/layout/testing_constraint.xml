@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/constraintLayout">
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="368dp"
+        app:relativePercent="65"/>
+
+    <Button
+        android:text="Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button8"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        android:layout_marginStart="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/button9"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintHorizontal_bias="0.47"/>
+
+    <Button
+        android:text="Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button9"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        android:layout_marginStart="24dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        android:layout_marginEnd="24dp"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="384dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline3"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="289dp"
+        app:relativePercent="51"/>
+
+    <ImageView
+        android:src="@drawable/abc_btn_rating_star_on_mtrl_alpha"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/imageView2"
+        app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
+        android:layout_marginStart="24dp"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        android:layout_marginTop="24dp"
+        app:layout_constraintRight_toRightOf="@+id/constraintLayout"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        android:layout_marginBottom="24dp"/>
+
+</android.support.constraint.ConstraintLayout>

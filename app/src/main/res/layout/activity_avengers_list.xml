@@ -98,6 +98,6 @@
 			app:layout_behavior="saulmm.avengers.ResizeBehavior"
 			android:elevation="10dp"
 			tools:visibility="gone"
-			/>
+			android:id="@+id/imageView"/>
 	</android.support.design.widget.CoordinatorLayout>
 </merge>

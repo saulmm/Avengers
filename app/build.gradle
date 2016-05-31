@@ -87,6 +87,7 @@ dependencies {
 
     androidTestApt "com.google.dagger:dagger-compiler:${libs.dagger}"
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha2'
 }
 
 configurations.all {
