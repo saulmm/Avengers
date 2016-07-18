@@ -14,7 +14,7 @@ android {
     //noinspection GroovyAssignabilityCheck
     defaultConfig {
         applicationId       cfg.package
-        minSdkVersion       cfg.compileVersion
+        minSdkVersion       cfg.minSdk
         targetSdkVersion    cfg.targetSdk
         versionCode         cfg.version_code
         versionName         cfg.version_name
