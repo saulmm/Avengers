@@ -1,16 +1,16 @@
 ext {
     configuration = [
         package             : "saulmm.avengers",
-        buildToolsVersion   : "23.0.2",
-        compileVersion      : 23,
+        buildToolsVersion   : "25.0.0",
+        compileVersion      : 25,
         minSdk              : 21,
-        targetSdk           : 23,
+        targetSdk           : 25,
         version_code        : 4,
         version_name        : "0.4",
     ]
 
     libraries = [
-        supportVersion      : "23.3.0",
+        supportVersion      : "25.1.0",
         dagger              : "2.0",
         rxjava              : "1.0.0",
         rxandroid           : "0.24.0",
@@ -39,7 +39,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0-rc1'
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta3'
         classpath 'com.android.databinding:dataBinder:1.0-rc4'
@@ -49,5 +49,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+    }
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.7
+        targetCompatibility = 1.7
     }
 }
